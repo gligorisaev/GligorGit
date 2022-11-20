@@ -7,32 +7,32 @@ Library    CryptoLibrary    variable_decryption=True
 # Suite Teardown         SSHLibrary.Close All Connections
 
 *** Variables ***
-${DUT}              192.168.1.200
+${DUT}              192.168.1.120
 ${USERNAME}         pi
 ${PASSWORD}         crypt:LO3wCxZPltyviM8gEyBkRylToqtWm+hvq9mMVEPxtn0BXB65v/5wxUu7EqicpOgGhgNZVgFjY0o=
 ${git_token}        crypt:yT+Kkob1/tnpuvwG6EOXIKza8E+pHbM7UllYMpSExRXQ0V/bV/xKBvlRRxpT12OZ2lAALRxDxGegEPUxFggdm0v224H4EFz19W/vTaV/QyhiksZiVP0H6Q==
-${RUN_ID}           3472227402
+${RUN_ID}           3498740838
 ${DIRECTORY}        /home/pi/
 ${ARCH}
 ${FILENAME}
 
 *** Test Cases ***
-Define Device ID and debian package
-    DUT Connection                                 #Connecting to the device under test
-    Create Timestamp                               #Timestamp is used to achieve unique ID
-    Define Device id                               #Setting up device id which is created with prefix ST before the timestamp
-    Check Architecture                             #Checking architecture to define the debian package name
-    Set File Name                                  #Definning debian package name 
-    Close Connection                               #Closing the connection to device under test
+# Define Device ID and debian package
+#     DUT Connection                                 #Connecting to the device under test
+#     Create Timestamp                               #Timestamp is used to achieve unique ID
+#     Define Device id                               #Setting up device id which is created with prefix ST before the timestamp
+#     Check Architecture                             #Checking architecture to define the debian package name
+#     Set File Name                                  #Definning debian package name 
+#     Close Connection                               #Closing the connection to device under test
 Download debian package
     Authorize gh                                   #gh cli is used and for that gh authorisation with token is needed
     Download debian package                        #Downloading the debian package from Github repo
-Copy debian package to DUT
-    DUT Connection                                 #Connecting to the device under test
-    Copy debian package to DUT                     #Copy the debian package to device under test
-    Close Connection                               #Closing the connection to device under test
-Delete directory on master
-    Run    sudo rm -rf ${DIRECTORY}${FILENAME}     #Delete with the download created directory
+# Copy debian package to DUT
+#     DUT Connection                                 #Connecting to the device under test
+#     Copy debian package to DUT                     #Copy the debian package to device under test
+#     Close Connection                               #Closing the connection to device under test
+# Delete directory on master
+#     Run    sudo rm -rf ${DIRECTORY}${FILENAME}     #Delete with the download created directory
 
 *** Keywords ***
 DUT Connection
@@ -65,8 +65,11 @@ Authorize gh
     Run    export GITHUB_TOKEN=${git_token}
 
 Download debian package
-    Run    gh run download -R thin-edge/thin-edge.io ${RUN_ID} --pattern "${FILENAME}*"
-    Sleep    5s
+    ${rc}=    Run And Return Rc    gh run download -R thin-edge/thin-edge.io 3498740838 --pattern "debian-packages-armv7-unknown-linux-gnueabihf"
+    Log To Console    ${rc}
+    Should Be Equal    ${rc}    0
+    # Run    gh run download -R thin-edge/thin-edge.io 3498740838 --pattern "debian-packages-armv7-unknown-linux-gnueabihf"
+    # Wait Until Created    ${DIRECTORY}${FILENAME}
 Copy debian package to DUT
     Put Directory    ${FILENAME}
     
