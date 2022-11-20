@@ -19,13 +19,10 @@ ${FILENAME}
 *** Test Cases ***
 Define Device ID and debian package
     DUT Connection                                 #Connecting to the device under test
-    # Create Timestamp                               #Timestamp is used to achieve unique ID
-    # Define Device id                               #Setting up device id which is created with prefix ST before the timestamp
     Check Architecture                             #Checking architecture to define the debian package name
     Set File Name                                  #Definning debian package name 
     Close Connection                               #Closing the connection to device under test
 Download debian package
-    # Authorize gh                                   #gh cli is used and for that gh authorisation with token is needed
     Download debian package                        #Downloading the debian package from Github repo
 Copy debian package to DUT
     DUT Connection                                 #Connecting to the device under test
@@ -38,12 +35,6 @@ Delete directory on master
 DUT Connection
     Open Connection     ${DUT}
     Login               ${USERNAME}    ${PASSWORD}
-# Create Timestamp
-#     ${timestamp}=    get current date    result_format=%d%m%Y%H%M%S
-#     Set Suite Variable    ${timestamp}
-# Define Device id
-#     ${DeviceID}   Set Variable    ST${timestamp}
-#     Set Suite Variable    ${DeviceID}
 Check Architecture
     ${output}=    Execute Command   uname -m
     ${ARCH}    Set Variable    ${output}
@@ -61,9 +52,6 @@ armv7
     ${FILENAME}    Set Variable    debian-packages-armv7-unknown-linux-gnueabihf
     Log    ${FILENAME}
     Set Suite Variable    ${FILENAME}
-Authorize gh
-    Run    export GITHUB_TOKEN=${git_token}
-
 Download debian package
     ${rc}=    Run And Return Rc    gh run download -R thin-edge/thin-edge.io ${RUN_ID} --pattern "${FILENAME}*"    
     Wait Until Created    ${FILENAME}*
