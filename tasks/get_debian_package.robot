@@ -67,8 +67,8 @@ Authorize gh
     Run    export GITHUB_TOKEN=${git_token}
 
 Download debian package
-    ${rc}=    Run And Return Rc    gh run download -D /Users/home/pi -R thin-edge/thin-edge.io 3498740838 --pattern "debian-packages-armv7-unknown-linux-gnueabihf"    
-    Wait Until Created    /Users/home/pi/debian-packages-armv7-unknown-linux-gnueabihf
+    ${rc}=    Run And Return Rc    gh run download -D -R thin-edge/thin-edge.io 3498740838 --pattern "debian-packages-armv7-unknown-linux-gnueabihf"    
+    Wait Until Created    debian-packages-armv7-unknown-linux-gnueabihf
     Log To Console    ${rc}
 Copy debian package to DUT
     Put Directory    ${FILENAME}
