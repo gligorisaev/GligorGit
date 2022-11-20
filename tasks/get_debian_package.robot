@@ -2,8 +2,9 @@
 Library    OperatingSystem
 Library    SSHLibrary
 Library    DateTime
+Library    Process
 Library    CryptoLibrary    variable_decryption=True
-# Suite Setup            Open Connection And Log In
+# Suite Setup            DUT Connection
 # Suite Teardown         SSHLibrary.Close All Connections
 
 *** Variables ***
@@ -15,6 +16,7 @@ ${RUN_ID}           3498740838
 ${DIRECTORY}        /home/pi/
 ${ARCH}
 ${FILENAME}
+${command}        gh run download -R thin-edge/thin-edge.io 3498740838 --pattern "debian-packages-armv7-unknown-linux-gnueabihf"
 
 *** Test Cases ***
 # Define Device ID and debian package
@@ -25,7 +27,7 @@ ${FILENAME}
 #     Set File Name                                  #Definning debian package name 
 #     Close Connection                               #Closing the connection to device under test
 Download debian package
-    Authorize gh                                   #gh cli is used and for that gh authorisation with token is needed
+    # Authorize gh                                   #gh cli is used and for that gh authorisation with token is needed
     Download debian package                        #Downloading the debian package from Github repo
 # Copy debian package to DUT
 #     DUT Connection                                 #Connecting to the device under test
@@ -65,11 +67,9 @@ Authorize gh
     Run    export GITHUB_TOKEN=${git_token}
 
 Download debian package
-    ${rc}=    Run And Return Rc    gh run download -R thin-edge/thin-edge.io 3498740838 --pattern "debian-packages-armv7-unknown-linux-gnueabihf"
+    ${rc}=    Run And Return Rc    gh run download -D /Users/home/pi -R thin-edge/thin-edge.io 3498740838 --pattern "debian-packages-armv7-unknown-linux-gnueabihf"    
+    Wait Until Created    /Users/home/pi/debian-packages-armv7-unknown-linux-gnueabihf
     Log To Console    ${rc}
-    Should Be Equal    ${rc}    0
-    # Run    gh run download -R thin-edge/thin-edge.io 3498740838 --pattern "debian-packages-armv7-unknown-linux-gnueabihf"
-    # Wait Until Created    ${DIRECTORY}${FILENAME}
 Copy debian package to DUT
     Put Directory    ${FILENAME}
     
