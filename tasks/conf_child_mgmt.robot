@@ -18,10 +18,10 @@ ${USERNAME}              pi
 ${PASSWORD}              crypt:LO3wCxZPltyviM8gEyBkRylToqtWm+hvq9mMVEPxtn0BXB65v/5wxUu7EqicpOgGhgNZVgFjY0o=
 ${url_tedge}             qaenvironment.eu-latest.cumulocity.com
 ${user}                  systest_preparation
-${pass}                  crypt:OBusFTXwz00ge67sjHgP8kkH0jLrso7rp6Bp4sHKhwULvkr/nd8WHGezY37/fmMBeNvn+Xxk558glujxb5Pj
+${pass}                  crypt:34mpoxueRYy/gDerrLeBThQ2wp9F+2cw50XaNyjiGUpK488+1fgEfE6drOEcR+qZQ6dcjIWETukbqLU= 
 ${config}                "files = [\n\t { path = '/home/pi/config1', type = 'config1' },\n ]\n"
 
-${DeviceID}              CH_DEV_CONF_MGMT
+${DeviceID}              CH_DV_CONF
 ${CHILD}                 sensor1
 ${topic_snap}           "tedge/${CHILD}/commands/res/config_snapshot"
 ${topic_upd}            "tedge/${CHILD}/commands/res/config_update"
