@@ -11,7 +11,7 @@ Library    Collections
 
 *** Variables ***
 
-${PARENT_IP}             192.168.1.120
+${PARENT_IP}             192.168.1.110
 ${CHILD_IP}              192.168.1.200
 ${HTTP_PORT}             8000
 ${USERNAME}              pi
@@ -21,8 +21,8 @@ ${user}                  systest_preparation
 ${pass}                  crypt:34mpoxueRYy/gDerrLeBThQ2wp9F+2cw50XaNyjiGUpK488+1fgEfE6drOEcR+qZQ6dcjIWETukbqLU= 
 ${config}                "files = [\n\t { path = '/home/pi/config1', type = 'config1' },\n ]\n"
 
-${DeviceID}              CH_DV_CONF
-${CHILD}                 sensor1
+${DeviceID}              ST29112022133451
+${CHILD}                 CDsensor1
 ${topic_snap}           "tedge/${CHILD}/commands/res/config_snapshot"
 ${topic_upd}            "tedge/${CHILD}/commands/res/config_update"
 ${topic_restart}        "c8y/s/us/${CHILD}"
@@ -31,8 +31,7 @@ ${payl_notify}          '{"status": null,  "path": "", "type":"c8y-configuration
 ${payl_exec}            '{"status": "executing", "path": "/home/pi/config1", "type": "config1", "reason": null}'
 ${payl_succ}            '{"status": "successful", "path": "/home/pi/config1", "type": "config1", "reason": null}'
 
-
-*** Test Cases ***
+*** Tasks ***
 Prerequisite Parent
     Parent Connection
     Delete child related content                    #Delete any previous created child related configuration files/folders on the parent device
@@ -58,7 +57,6 @@ Child device config update
     Send configuration to device                    #Using the cloud command Send configuration to device
     Child device get configuration file             #Child device is sending 'executing' and 'successful' MQTT responses
 
-
 *** Keywords ***
 Parent Connection
     Open Connection     ${PARENT_IP}
@@ -72,48 +70,31 @@ Set external MQTT bind address
 Set external MQTT port
     ${rc}=    Execute Command    sudo tedge config set mqtt.external.port 1883    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
-
 Delete child related content
     Execute Command    sudo rm -rf /etc/tedge/operations/c8y/CD*
     Execute Command    sudo rm c8y-configuration-plugin.toml
     Execute Command    sudo rm -rf /etc/tedge/c8y/CD*
     Execute Command    sudo rm -rf /var/tedge/*
-
 GET Parent ID
     ${auth}=    Create List    ${user}    ${pass}
     Create Session    API_Testing    https://${url_tedge}    auth=${auth}
-    ${Get_Response}=    GET On Session    API_Testing    /inventory/managedObjects?fragmentType\=c8y_IsDevice
+    ${Get_Response}=    GET On Session    API_Testing    identity/externalIds/c8y_Serial/${DeviceID}    #c8y identity list --device ${DeviceID}
     ${json_response}=    Set Variable    ${Get_Response.json()}  
     @{id}=    Get Value From Json    ${json_response}    $..id   
     ${parent_id}    Get From List    ${id}    0
     Set Suite Variable    ${parent_id}
-GET Parent name
+Get Child ID
     ${auth}=    Create List    ${user}    ${pass}
     Create Session    API_Testing    https://${url_tedge}    auth=${auth}
-    ${Get_Response}=    GET On Session    API_Testing    /identity/globalIds/${parent_id}/externalIds
-    ${json_response}=    Set Variable    ${Get_Response.json()}
-    @{pd_name}=    Get Value From Json    ${json_response}    $..externalId
-    ${pardev_name}    Get From List    ${pd_name}    0
-    Set Suite Variable    ${pardev_name}
-GET Child ID
-    ${auth}=    Create List     ${user}    ${pass}
-    Create Session    API_Testing    https://${url_tedge}    auth=${auth}
-    ${Get_Response}=    GET On Session    API_Testing    /inventory/managedObjects?fragmentType\=c8y_IsDevice
+    ${Get_Response}=    GET On Session    API_Testing    /inventory/managedObjects/${parent_id}    #c8y inventory get --id ${parent_id}
     ${json_response}=    Set Variable    ${Get_Response.json()}  
-    @{id}=    Get Value From Json    ${json_response}    $..managedObject.id
-    ${child_id}    Get From List    ${id}    0
+    @{id}=    Get Value From Json    ${json_response}    $..id   
+    ${child_id}    Get From List    ${id}    1
     Set Suite Variable    ${child_id}
-GET Child name
+Check parent child relationship
     ${auth}=    Create List    ${user}    ${pass}
     Create Session    API_Testing    https://${url_tedge}    auth=${auth}
-    ${Get_Response}=    GET On Session    API_Testing    /inventory/managedObjects?fragmentType\=c8y_IsDevice
-    ${json_response}=    Set Variable    ${Get_Response.json()}  
-    @{name}=    Get Value From Json    ${json_response}    $..managedObject.name
-    ${child_name}    Get From List    ${name}    0
-    Set Suite Variable    ${child_name}
-Validate child name
-    ${validate}=    ${child_name}
-    Should Be Equal    ${validate}    ${CHILD} 
+    ${Get_Response}=    GET On Session    API_Testing    /inventory/managedObjects/${parent_id}/childDevices/${child_id}    expected_status=200    #c8y inventory children get --childType device --id ${parent_id} --child ${child_id}
 Reconnect c8y
     ${rc}=    Execute Command    sudo tedge disconnect c8y    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}   
@@ -124,6 +105,27 @@ Restart Configuration plugin
     Should Be Equal    ${rc}    ${0} 
     ${rc}=    Execute Command    sudo systemctl start c8y-configuration-plugin.service    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0} 
+Child device delete configuration files
+    Child Connection
+    Execute Command    sudo rm config1
+    Execute Command    sudo rm c8y-configuration-plugin
+    Close Connection
+GET Parent name
+    ${auth}=    Create List    ${user}    ${pass}
+    Create Session    API_Testing    https://${url_tedge}    auth=${auth}
+    ${Get_Response}=    GET On Session    API_Testing    /identity/globalIds/${parent_id}/externalIds
+    ${json_response}=    Set Variable    ${Get_Response.json()}
+    @{pd_name}=    Get Value From Json    ${json_response}    $..externalId
+    ${pardev_name}    Get From List    ${pd_name}    0
+    Set Suite Variable    ${pardev_name}
+GET Child name
+    ${auth}=    Create List    ${user}    ${pass}
+    Create Session    API_Testing    https://${url_tedge}    auth=${auth}
+    ${Get_Response}=    GET On Session    API_Testing    /inventory/managedObjects?fragmentType\=c8y_IsDevice
+    ${json_response}=    Set Variable    ${Get_Response.json()}  
+    @{name}=    Get Value From Json    ${json_response}    $..managedObject.name
+    ${child_name}    Get From List    ${name}    0
+    Set Suite Variable    ${child_name}
 Startup child device
     Child Connection
     ${rc}=    Execute Command    printf ${config} > c8y-configuration-plugin    return_stdout=False    return_rc=True
@@ -147,21 +149,6 @@ Request snapshot from child device
     @{listen}=    Listen    tedge/${CHILD}/commands/req/config_snapshot    timeout=20    limit=1
     Should Be Equal    @{listen}    {"url":"http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/config_snapshot/config1","path":"/home/pi/config1","type":"config1"}
     [Teardown]    Disconnect
-Send configuration to device
-    ${json_conf}=    Set Variable    {"deviceId":"${child_id}","description":"Send configuration snapshot config1 of configuration type config1 to device ${CHILD}","c8y_DownloadConfigFile":{"url":"https://${url_tedge}/inventory/binaries/21315","type":"config1"}}
-    Connect    ${PARENT_IP}   
-    @{messages}=    Subscribe    tedge/${CHILD}/commands/req/config_update    qos=1    timeout=0   limit=0
-    Set Client Authentication    basic    ${user}    ${pass} 
-    Rest.POST    /devicecontrol/operations    ${json_conf}
-    @{listen}=    Listen    tedge/${CHILD}/commands/req/config_update    timeout=20    limit=1
-    Should Be Equal    @{listen}    {"url":"http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/config_update/config1","path":"/home/pi/config1","type":"config1"}
-    [Teardown]    Disconnect
-Child device delete configuration files
-    Child Connection
-    Execute Command    sudo rm config1
-    Execute Command    sudo rm c8y-configuration-plugin
-    Close Connection
-
 Child device response on snapshot request    
     Child Connection
     ${rc}=    Execute Command    mosquitto_pub -h ${PARENT_IP} -t ${topic_snap} -m ${payl_exec}    return_stdout=False    return_rc=True
@@ -173,7 +160,15 @@ Child device response on snapshot request
     Should Be Equal    ${rc}    ${0}
     Sleep    2s
     Close Connection
-
+Send configuration to device
+    ${json_conf}=    Set Variable    {"deviceId":"${child_id}","description":"Send configuration snapshot config1 of configuration type config1 to device ${CHILD}","c8y_DownloadConfigFile":{"url":"https://${url_tedge}/inventory/binaries/21315","type":"config1"}}
+    Connect    ${PARENT_IP}   
+    @{messages}=    Subscribe    tedge/${CHILD}/commands/req/config_update    qos=1    timeout=0   limit=0
+    Set Client Authentication    basic    ${user}    ${pass} 
+    Rest.POST    /devicecontrol/operations    ${json_conf}
+    @{listen}=    Listen    tedge/${CHILD}/commands/req/config_update    timeout=20    limit=1
+    Should Be Equal    @{listen}    {"url":"http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/config_update/config1","path":"/home/pi/config1","type":"config1"}
+    [Teardown]    Disconnect
 Child device get configuration file
     Child Connection
     ${rc}=    Execute Command    mosquitto_pub -h ${PARENT_IP} -t ${topic_upd} -m ${payl_exec}    return_stdout=False    return_rc=True
