@@ -1,6 +1,6 @@
 #PRECONDITION: 
 #Device CH_DEV_CONF_MGMT is existing on tenant, if not
-#use -v DeviceID:xxxxxxxxxxx in the command line
+#use -v DeviceID:xxxxxxxxxxx in the command line to use your existing device
 
 *** Settings ***
 # Library    Dialogs
@@ -16,7 +16,7 @@ Library    Collections
 *** Variables ***
 
 ${PARENT_IP}             192.168.1.110
-${CHILD_IP}              192.168.1.200
+${CHILD_IP}              192.168.1.140
 ${HTTP_PORT}             8000
 ${USERNAME}              pi
 ${PASSWORD}              crypt:LO3wCxZPltyviM8gEyBkRylToqtWm+hvq9mMVEPxtn0BXB65v/5wxUu7EqicpOgGhgNZVgFjY0o=
@@ -24,23 +24,24 @@ ${url_tedge}             qaenvironment.eu-latest.cumulocity.com
 ${user}                  systest_preparation
 ${pass}                  crypt:34mpoxueRYy/gDerrLeBThQ2wp9F+2cw50XaNyjiGUpK488+1fgEfE6drOEcR+qZQ6dcjIWETukbqLU= 
 ${config}                "files = [\n\t { path = '/home/pi/config1', type = 'config1' },\n ]\n"
-
-${DeviceID}              CH_DEV_CONF_MGMT
-${CHILD}                 CDsensor1
+${PARENT_NAME}           CH_DEV_CONF_MGMT
+${CHILD}                 ${PARENT_NAME}_CDsensor1
 ${topic_snap}           "tedge/${CHILD}/commands/res/config_snapshot"
 ${topic_upd}            "tedge/${CHILD}/commands/res/config_update"
-${topic_restart}        "c8y/s/us/${CHILD}"
-${payl_restart}         "114,c8y_UploadConfigFile,c8y_DownloadConfigFile"
 ${payl_notify}          '{"status": null,  "path": "", "type":"c8y-configuration-plugin", "reason": null}'
 ${payl_exec}            '{"status": "executing", "path": "/home/pi/config1", "type": "config1", "reason": null}'
 ${payl_succ}            '{"status": "successful", "path": "/home/pi/config1", "type": "config1", "reason": null}'
-${child_id}             33234
-${timeout_msg}          Timeout due to lack of response from child device: CDsensor1 for config type: config1
+
 
 *** Tasks ***
 Prerequisite Parent
+    # Get all existing managedObjects
+    # Delete existing managedObjects
+
     Parent Connection                               #Creates ssh connection to the parent device
+    #Delete child device    
     Delete child related content                    #Delete any previous created child related configuration files/folders on the parent device
+    Check for child related content                 #Checks if folders that will trigger child device creation are existing
     Set external MQTT bind address                  #Setting external MQTT bind address which child will use for communication 
     Set external MQTT port                          #Setting external MQTT port which child will use for communication Default:1883
     Reconnect c8y                                   #Disconnect and Connect to c8y
@@ -63,7 +64,7 @@ Snapshot from device
     No response from child device                   #Tests the failing of request after timeout of 10s  
 Child device config update
     Send configuration to device                    #Using the cloud command Send configuration to device
-    Child device get configuration file             #Child device is sending 'executing' and 'successful' MQTT responses
+    Child device response on update request         #Child device is sending 'executing' and 'successful' MQTT responses
 Remove child device
     Delete child device                             #Deleting the during test run created child device
 
@@ -81,15 +82,22 @@ Set external MQTT bind address
 Set external MQTT port
     ${rc}=    Execute Command    sudo tedge config set mqtt.external.port 1883    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
+Check for child related content
+    @{dir_cont}    List Directories In Directory    /etc/tedge/operations/c8y
+    Should Be Empty   ${dir_cont}
+    @{dir_cont}    List Directories In Directory    /etc/tedge/c8y
+    Should Be Empty   ${dir_cont}
+    @{dir_cont}    List Directories In Directory    /var/tedge
+    Should Be Empty   ${dir_cont}
 Delete child related content
-    Execute Command    sudo rm -rf /etc/tedge/operations/c8y/${CHILD}         #if folder exists child device will be created
+    Execute Command    sudo rm -rf /etc/tedge/operations/c8y/*         #if folder exists child device will be created
     Execute Command    sudo rm c8y-configuration-plugin.toml
-    Execute Command    sudo rm -rf /etc/tedge/c8y/${CHILD}                    #if folder exists child device will be created
+    Execute Command    sudo rm -rf /etc/tedge/c8y/*                    #if folder exists child device will be created
     Execute Command    sudo rm -rf /var/tedge/*
 GET Parent ID
     ${auth}=    Create List    ${user}    ${pass}
     Create Session    API_Testing    https://${url_tedge}    auth=${auth}
-    ${Get_Response}=    GET On Session    API_Testing    identity/externalIds/c8y_Serial/${DeviceID}    #c8y identity list --device ${DeviceID}
+    ${Get_Response}=    GET On Session    API_Testing    identity/externalIds/c8y_Serial/${PARENT_NAME}   #c8y identity list --device ${DeviceID}
     ${json_response}=    Set Variable    ${Get_Response.json()}  
     @{id}=    Get Value From Json    ${json_response}    $..id   
     ${parent_id}    Get From List    ${id}    0
@@ -97,7 +105,7 @@ GET Parent ID
 Get Child ID
     ${auth}=    Create List    ${user}    ${pass}
     Create Session    API_Testing    https://${url_tedge}    auth=${auth}
-    ${Get_Response}=    GET On Session    API_Testing    /inventory/managedObjects/${parent_id}    #c8y inventory get --id ${parent_id}
+    ${Get_Response}=    GET On Session    API_Testing    /inventory/managedObjects/${parent_id}    #Command: c8y inventory get --id ${parent_id}
     ${json_response}=    Set Variable    ${Get_Response.json()}  
     @{id}=    Get Value From Json    ${json_response}    $..id   
     ${child_id}    Get From List    ${id}    1
@@ -105,7 +113,7 @@ Get Child ID
 Check parent child relationship
     ${auth}=    Create List    ${user}    ${pass}
     Create Session    API_Testing    https://${url_tedge}    auth=${auth}
-    ${Get_Response}=    GET On Session    API_Testing    /inventory/managedObjects/${parent_id}/childDevices/${child_id}    expected_status=200    #c8y inventory children get --childType device --id ${parent_id} --child ${child_id}
+    ${Get_Response}=    GET On Session    API_Testing    /inventory/managedObjects/${parent_id}/childDevices/${child_id}    expected_status=200    #Command: c8y inventory children get --childType device --id ${parent_id} --child ${child_id}
 Reconnect c8y
     ${rc}=    Execute Command    sudo tedge disconnect c8y    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}   
@@ -149,7 +157,7 @@ Startup child device
     Write        { path = '/home/pi/config1', type = 'config1' },
     Write    ]
     Write  EOF 
-    Execute Command    sudo apt-get install mosquitto mosquitto-clients -y
+    Execute Command    sudo apt-get install mosquitto-clients -y
     ${rc}=    Execute Command    mosquitto_pub -h ${PARENT_IP} -t ${topic_snap} -m ${payl_notify}    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
     Close Connection
@@ -217,16 +225,16 @@ Send configuration to device
     ${third}    Get From List    ${pd_name}    2
     ${fourth}    Get From List    ${pd_name}    3
     Should Be Equal    ${second}    DELIVERED
-Child device get configuration file
+Child device response on update request
     Child Connection
     ${rc}=    Execute Command    mosquitto_pub -h ${PARENT_IP} -t ${topic_upd} -m ${payl_exec}    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
     ${rc}=    Execute Command    curl http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/config_update/config1 --output config1    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
-    Sleep    5s
+    # Sleep    5s             #Enable if tests starts to fail
     ${rc}=    Execute Command    mosquitto_pub -h ${PARENT_IP} -t ${topic_upd} -m ${payl_succ}    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
-    Sleep    2s
+    # Sleep    2s             #Enable if tests starts to fail
     ${auth}=    Create List    ${user}    ${pass}
     Create Session    API_Testing    https://${url_tedge}    auth=${auth}
     ${Get_Response}=    GET On Session    API_Testing    /devicecontrol/operations
@@ -240,7 +248,7 @@ Child device get configuration file
 Delete child device
     ${auth}=    Create List    ${user}    ${pass}
     Create Session    API_Testing    https://${url_tedge}    auth=${auth}
-    ${Get_Response}=    DELETE On Session    API_Testing     /inventory/managedObjects/${child_id}    expected_status=204    #c8y inventory delete --id ${child_id}
+    ${Get_Response}=    DELETE On Session    API_Testing     /inventory/managedObjects/#${child_id}    #expected_status=204    #Command: c8y inventory delete --id ${child_id}
 No response from child device
     ${json_snap}=    Set Variable    {"deviceId":"${child_id}","description":"Retrieve config1 configuration snapshot from device ${CHILD}","c8y_UploadConfigFile":{"type":"config1"}}
     Connect    ${PARENT_IP}
@@ -260,21 +268,16 @@ No response from child device
     @{pd_name}=    Get Value From Json    ${json_response}    $..failureReason
     Should Contain    ${pd_name}    Timeout due to lack of response from child device: ${CHILD} for config type: config1
 
-
-
-    
-
-
-
-GET Operations
-    Sleep    11s
+Get all existing managedObjects
     ${auth}=    Create List    ${user}    ${pass}
     Create Session    API_Testing    https://${url_tedge}    auth=${auth}
-    ${Get_Response}=    GET On Session    API_Testing    /devicecontrol/operations
-    ${json_response}=    Set Variable    ${Get_Response.json()}
-    @{pd_name}=    Get Value From Json    ${json_response}    $..failureReason
-    # @{pd_name}=    Get Value From Json    ${json_response}    $..status
-    Log    ${pd_name}
-    # ${pardev_name}    Get From List    ${pd_name}    0
-    # Set Suite Variable    ${pardev_name}
+    ${Get_Response}=    GET On Session    API_Testing    url=/inventory/managedObjects?fragmentType=c8y_IsDevice
+    ${json_response}=    Set Variable    ${Get_Response.json()}  
+    @{id}=    Get Value From Json    ${json_response}    $..id   
+    ${man_Obj_id}    Get From List    ${id}    1
+    Set Suite Variable    ${man_Obj_id}
+Delete existing managedObjects
+    ${auth}=    Create List    ${user}    ${pass}
+    Create Session    API_Testing    https://${url_tedge}    auth=${auth}
+    ${Get_Response}=    DELETE On Session    API_Testing     /inventory/managedObjects/#${man_Obj_id}    #expected_status=204    #Command: c8y inventory delete --id ${child_id}
 
