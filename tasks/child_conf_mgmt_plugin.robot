@@ -1,4 +1,6 @@
-
+#PRECONDITION: 
+#Device CH_DEV_CONF_MGMT is existing on tenant, if not
+#use -v DeviceID:xxxxxxxxxxx in the command line
 
 *** Settings ***
 # Library    Dialogs
