@@ -7,9 +7,9 @@ Suite Setup            DUT Connection
 Suite Teardown         SSHLibrary.Close All Connections
 
 *** Variables ***
-${DUT}              192.168.1.110
-${USERNAME}         pi
-${PASSWORD}         crypt:LO3wCxZPltyviM8gEyBkRylToqtWm+hvq9mMVEPxtn0BXB65v/5wxUu7EqicpOgGhgNZVgFjY0o=
+${DUT}              217.160.212.171    #192.168.1.110
+${USERNAME}         root    #pi
+${PASSWORD}         P_oCtb5#T!    #crypt:LO3wCxZPltyviM8gEyBkRylToqtWm+hvq9mMVEPxtn0BXB65v/5wxUu7EqicpOgGhgNZVgFjY0o=
 ${url_tedge}        qaenvironment.eu-latest.cumulocity.com
 ${user}             systest_preparation
 ${pass}             crypt:34mpoxueRYy/gDerrLeBThQ2wp9F+2cw50XaNyjiGUpK488+1fgEfE6drOEcR+qZQ6dcjIWETukbqLU= 
@@ -48,7 +48,7 @@ Create Timestamp
     ${timestamp}=    get current date    result_format=%d%m%Y%H%M%S
     Set Suite Variable    ${timestamp}
 Define Device id
-    ${DeviceID}   Set Variable    ST${timestamp}
+    ${DeviceID}   Set Variable    CH_DEV_CONF_MGMT    #ST${timestamp}
     Set Suite Variable    ${DeviceID}
 Disconnect from c8y        #Disconnects from Cumulocity IoT if connected
     Execute Command    sudo tedge disconnect c8y
@@ -66,28 +66,28 @@ Install Collectd-core
     ${rc}=    Execute Command    sudo apt-get --assume-yes install collectd-core    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
 Install thin-edge.io
-    ${rc}=    Execute Command    sudo dpkg -i ./debian*/tedge_0*_arm*.deb    return_stdout=False    return_rc=True
+    ${rc}=    Execute Command    sudo dpkg -i ./debian*/tedge_0*.deb    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
 Install tedge mapper
-    ${rc}=    Execute Command    sudo dpkg -i ./debian*/tedge_mapper_0*_arm*.deb    return_stdout=False    return_rc=True
+    ${rc}=    Execute Command    sudo dpkg -i ./debian*/tedge-mapper_0*.deb    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
 Install tedge agent
-    ${rc}=    Execute Command    sudo dpkg -i ./debian*/tedge_agent_0*_arm*.deb    return_stdout=False    return_rc=True
+    ${rc}=    Execute Command    sudo dpkg -i ./debian*/tedge-agent_0*.deb    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
 Install tedge apama plugin
-    ${rc}=    Execute Command    sudo dpkg -i ./debian*/tedge_apama_plugin_0*_arm*.deb    return_stdout=False    return_rc=True
+    ${rc}=    Execute Command    sudo dpkg -i ./debian*/tedge-apama-plugin_0*.deb    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
 Install tedge apt plugin
-   ${rc}=    Execute Command    sudo dpkg -i ./debian*/tedge_apt_plugin_0*_arm*.deb    return_stdout=False    return_rc=True
+   ${rc}=    Execute Command    sudo dpkg -i ./debian*/tedge-apt-plugin_0*.deb    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
 Install tedge logfile request plugin
-   ${rc}=    Execute Command    sudo dpkg -i ./debian*/c8y_log_plugin_0*_arm*.deb    return_stdout=False    return_rc=True
+   ${rc}=    Execute Command    sudo dpkg -i ./debian*/c8y-log-plugin_0*.deb    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
 Install c8y configuration plugin
-    ${rc}=    Execute Command    sudo dpkg -i ./debian*/c8y_configuration_plugin_0*_arm*.deb    return_stdout=False    return_rc=True
+    ${rc}=    Execute Command    sudo dpkg -i ./debian*/c8y-configuration-plugin_0*.deb    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
 Install Watchdog
-    ${rc}=    Execute Command    sudo dpkg -i ./debian*/tedge_watchdog_0*_arm*.deb    return_stdout=False    return_rc=True
+    ${rc}=    Execute Command    sudo dpkg -i ./debian*/tedge-watchdog_0*.deb    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
 Create self-signed certificate
     ${rc}=    Execute Command    sudo tedge cert create --device-id ${DeviceID}    return_stdout=False    return_rc=True

@@ -41,7 +41,8 @@ Check Architecture
     Set Suite Variable    ${ARCH}
 Set File Name    #Setting the file name for download
     Run Keyword If    '${ARCH}'=='aarch64'    aarch64
-    ...  ELSE    armv7   
+    ...  ELSE IF      '${ARCH}'=='armv7'    armv7
+    ...  ELSE          amd64
 aarch64
     [Documentation]    Setting file name according architecture
     ${FILENAME}    Set Variable    debian-packages-aarch64-unknown-linux-gnu
@@ -52,10 +53,15 @@ armv7
     ${FILENAME}    Set Variable    debian-packages-armv7-unknown-linux-gnueabihf
     Log    ${FILENAME}
     Set Suite Variable    ${FILENAME}
+amd64
+    [Documentation]    Setting file name according architecture
+    ${FILENAME}    Set Variable    debian-packages-amd64
+    Log    ${FILENAME}
+    Set Suite Variable    ${FILENAME}
 Download debian package
     ${rc}=    Run And Return Rc    gh run download -R thin-edge/thin-edge.io ${RUN_ID} --pattern "${FILENAME}*"    
     Wait Until Created    ${FILENAME}*
-    Log To Console    ${rc}
+    Should Be Equal    ${rc}    ${0}
 Copy debian package to DUT
     Put Directory    ${FILENAME}
     

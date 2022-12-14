@@ -32,30 +32,8 @@ ${payl_succ}             '{"status": "successful", "path": "/home/pi/config1", "
 
 
 *** Test Cases ***
-Create child device name
-    Create Timestamp                                    #Timestamp is used for unique names
-    Define Child Device name                            #Adding CD in front of the timestamp
-Clean devices from the cloud
-    Remove all managedObjects from cloud                #Removing all existing devices from the tenant 
-Prerequisite Parent
-    Parent Connection                                   #Creates ssh connection to the parent device  
-    ${rc}=    Execute Command    sudo tedge disconnect c8y    return_stdout=False    return_rc=True
-    Should Be Equal    ${rc}    ${0}  
-    
-    Delete child related content                        #Delete any previous created child related configuration files/folders on the parent device
-    Check for child related content                     #Checks if folders that will trigger child device creation are existing
-    Set external MQTT bind address                      #Setting external MQTT bind address which child will use for communication 
-    Set external MQTT port                              #Setting external MQTT port which child will use for communication Default:1883
-    
-    ${rc}=    Execute Command    sudo tedge connect c8y    return_stdout=False    return_rc=True
-    Should Be Equal    ${rc}    ${0} 
-    Restart Configuration plugin                        #Stop and Start c8y-configuration-plugin
-    Close Connection                                    #Closes the connection to the parent device
-Prerequisite Child
-    Child device delete configuration files             #Delete any previous created child related configuration files/folders on the child device
-Prerequisite Cloud
-    GET Parent ID                                       #Get the Parent ID from the cloud
-    GET Parent name                                     #Get the Parent name from the cloud
+Prerequisite   
+    Prerequisite
 Child device bootstrapping
     Startup child device                                #Setting up/Bootstrapping of a child device
 Get child credentials
@@ -74,6 +52,34 @@ Child device config update
 
 
 *** Keywords ***
+Prerequisite
+#Create child device name
+    Create Timestamp                                    #Timestamp is used for unique names
+    Define Child Device name                            #Adding CD in front of the timestamp
+#Clean devices from the cloud
+    Remove all managedObjects from cloud                #Removing all existing devices from the tenant 
+#Prerequisite Parent
+    Parent Connection                                   #Creates ssh connection to the parent device  
+    ${rc}=    Execute Command    sudo tedge disconnect c8y    return_stdout=False    return_rc=True
+    Should Be Equal    ${rc}    ${0}  
+    
+    Delete child related content                        #Delete any previous created child related configuration files/folders on the parent device
+    Check for child related content                     #Checks if folders that will trigger child device creation are existing
+    Set external MQTT bind address                      #Setting external MQTT bind address which child will use for communication 
+    Set external MQTT port                              #Setting external MQTT port which child will use for communication Default:1883
+    
+    ${rc}=    Execute Command    sudo tedge connect c8y    return_stdout=False    return_rc=True
+    Should Be Equal    ${rc}    ${0} 
+    Restart Configuration plugin                        #Stop and Start c8y-configuration-plugin
+    Close Connection                                    #Closes the connection to the parent device
+#Prerequisite Child
+    Child device delete configuration files             #Delete any previous created child related configuration files/folders on the child device
+#Prerequisite Cloud
+    GET Parent ID                                       #Get the Parent ID from the cloud
+    GET Parent name                                     #Get the Parent name from the cloud
+
+
+
 Create Timestamp
     ${timestamp}=    get current date    result_format=%H%M%S
     Set Suite Variable    ${timestamp}

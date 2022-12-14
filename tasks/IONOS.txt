@@ -1,0 +1,270 @@
+==============================================================================
+20221214 15:53:50.201 - INFO - + START SUITE: Install Debian Pckg [ ]
+==============================================================================
+20221214 15:53:52.954 - INFO - +- START SETUP: DUT Connection [ ]
+20221214 15:53:52.955 - INFO - +-- START KEYWORD: SSHLibrary.Open Connection [ ${DUT} ]
+20221214 15:53:52.955 - INFO - +-- END KEYWORD: SSHLibrary.Open Connection (0)
+20221214 15:53:52.955 - INFO - +-- START KEYWORD: SSHLibrary.Login [ ${USERNAME} | ${PASSWORD} ]
+20221214 15:53:52.955 - INFO - Logging into '217.160.212.171:22' as 'root'.
+20221214 15:53:53.383 - DEBUG - Adding ssh-ed25519 host key for 217.160.212.171: b'6e9c453155bc3dd1c490b92024c48701'
+20221214 15:53:53.790 - DEBUG - [chan 0] Max packet in: 32768 bytes
+20221214 15:53:55.145 - INFO - Read output: Linux localhost 5.10.0-19-amd64 #1 SMP Debian 5.10.149-2 (2022-10-21) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Wed Dec 14 14:52:56 2022 from 77.28.117.157
+[?2004hroot@localhost:~#
+20221214 15:53:55.146 - INFO - +-- END KEYWORD: SSHLibrary.Login (2191)
+20221214 15:53:55.147 - INFO - +- END SETUP: DUT Connection (2193)
+------------------------------------------------------------------------------
+20221214 15:53:55.147 - INFO - +- START TEST: Prerequisites DUT [ ]
+------------------------------------------------------------------------------
+20221214 15:53:55.151 - INFO - +-- START KEYWORD: Create Timestamp [ ]
+20221214 15:53:55.152 - INFO - +--- START KEYWORD: DateTime.Get Current Date [ result_format=%d%m%Y%H%M%S ]
+20221214 15:53:55.152 - INFO - ${timestamp} = 14122022155355
+20221214 15:53:55.152 - INFO - +--- END KEYWORD: DateTime.Get Current Date (0)
+20221214 15:53:55.153 - INFO - +--- START KEYWORD: BuiltIn.Set Suite Variable [ ${timestamp} ]
+20221214 15:53:55.153 - INFO - ${timestamp} = 14122022155355
+20221214 15:53:55.153 - INFO - +--- END KEYWORD: BuiltIn.Set Suite Variable (1)
+20221214 15:53:55.153 - INFO - +-- END KEYWORD: Create Timestamp (2)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:53:55.153 - INFO - +-- START KEYWORD: Define Device id [ ]
+20221214 15:53:55.153 - INFO - +--- START KEYWORD: BuiltIn.Set Variable [ CH_DEV_CONF_MGMT ]
+20221214 15:53:55.154 - INFO - ${DeviceID} = CH_DEV_CONF_MGMT
+20221214 15:53:55.154 - INFO - +--- END KEYWORD: BuiltIn.Set Variable (1)
+20221214 15:53:55.154 - INFO - +--- START KEYWORD: BuiltIn.Set Suite Variable [ ${DeviceID} ]
+20221214 15:53:55.154 - INFO - ${DeviceID} = CH_DEV_CONF_MGMT
+20221214 15:53:55.154 - INFO - +--- END KEYWORD: BuiltIn.Set Suite Variable (0)
+20221214 15:53:55.154 - INFO - +-- END KEYWORD: Define Device id (1)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:53:55.154 - INFO - +-- START KEYWORD: Disconnect from c8y [ ]
+20221214 15:53:55.154 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo tedge disconnect c8y ]
+20221214 15:53:55.154 - INFO - Executing command 'sudo tedge disconnect c8y'.
+20221214 15:53:55.155 - DEBUG - [chan 1] Max packet in: 32768 bytes
+20221214 15:53:55.361 - INFO - Command exited with return code 0.
+20221214 15:53:55.362 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (208)
+20221214 15:53:55.363 - INFO - +-- END KEYWORD: Disconnect from c8y (209)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:53:55.364 - INFO - +-- START KEYWORD: Uninstall tedge with purge [ ]
+20221214 15:53:55.365 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ wget https://raw.githubusercontent.com/thin-edge/thin-edge.io/main/uninstall-thin-edge_io.sh ]
+20221214 15:53:55.365 - INFO - Executing command 'wget https://raw.githubusercontent.com/thin-edge/thin-edge.io/main/uninstall-thin-edge_io.sh'.
+20221214 15:53:55.366 - DEBUG - [chan 2] Max packet in: 32768 bytes
+20221214 15:53:55.676 - INFO - Command exited with return code 127.
+20221214 15:53:55.676 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (311)
+20221214 15:53:55.676 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ chmod a+x uninstall-thin-edge_io.sh ]
+20221214 15:53:55.676 - INFO - Executing command 'chmod a+x uninstall-thin-edge_io.sh'.
+20221214 15:53:55.676 - DEBUG - [chan 3] Max packet in: 32768 bytes
+20221214 15:53:55.988 - INFO - Command exited with return code 1.
+20221214 15:53:55.989 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (313)
+20221214 15:53:55.989 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ ./uninstall-thin-edge_io.sh purge ]
+20221214 15:53:55.990 - INFO - Executing command './uninstall-thin-edge_io.sh purge'.
+20221214 15:53:55.990 - DEBUG - [chan 4] Max packet in: 32768 bytes
+20221214 15:53:56.307 - INFO - Command exited with return code 127.
+20221214 15:53:56.308 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (319)
+20221214 15:53:56.309 - INFO - +-- END KEYWORD: Uninstall tedge with purge (946)
+------------------------------------------------------------------------------
+20221214 15:53:56.310 - INFO - +- END TEST: Prerequisites DUT (1163)
+------------------------------------------------------------------------------
+20221214 15:53:56.311 - INFO - +- START TEST: Installing tedge on DUT [ ]
+------------------------------------------------------------------------------
+20221214 15:53:56.315 - INFO - +-- START KEYWORD: Install Mosquitto [ ]
+20221214 15:53:56.315 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo apt-get --assume-yes install mosquitto | return_stdout=False | return_rc=True ]
+20221214 15:53:56.316 - INFO - Executing command 'sudo apt-get --assume-yes install mosquitto'.
+20221214 15:53:56.316 - DEBUG - [chan 5] Max packet in: 32768 bytes
+20221214 15:53:57.281 - INFO - Command exited with return code 0.
+20221214 15:53:57.282 - INFO - ${rc} = 0
+20221214 15:53:57.283 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (968)
+20221214 15:53:57.284 - INFO - +--- START KEYWORD: BuiltIn.Should Be Equal [ ${rc} | ${0} ]
+20221214 15:53:57.286 - DEBUG - Argument types are:
+<class 'int'>
+<class 'int'>
+20221214 15:53:57.286 - INFO - +--- END KEYWORD: BuiltIn.Should Be Equal (2)
+20221214 15:53:57.286 - INFO - +-- END KEYWORD: Install Mosquitto (971)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:53:57.287 - INFO - +-- START KEYWORD: Install Libmosquitto1 [ ]
+20221214 15:53:57.288 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo apt-get --assume-yes install libmosquitto1 | return_stdout=False | return_rc=True ]
+20221214 15:53:57.288 - INFO - Executing command 'sudo apt-get --assume-yes install libmosquitto1'.
+20221214 15:53:57.288 - DEBUG - [chan 6] Max packet in: 32768 bytes
+20221214 15:53:58.088 - INFO - Command exited with return code 0.
+20221214 15:53:58.089 - INFO - ${rc} = 0
+20221214 15:53:58.090 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (802)
+20221214 15:53:58.091 - INFO - +--- START KEYWORD: BuiltIn.Should Be Equal [ ${rc} | ${0} ]
+20221214 15:53:58.092 - DEBUG - Argument types are:
+<class 'int'>
+<class 'int'>
+20221214 15:53:58.092 - INFO - +--- END KEYWORD: BuiltIn.Should Be Equal (1)
+20221214 15:53:58.093 - INFO - +-- END KEYWORD: Install Libmosquitto1 (806)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:53:58.093 - INFO - +-- START KEYWORD: Install Collectd-core [ ]
+20221214 15:53:58.094 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo apt-get --assume-yes install collectd-core | return_stdout=False | return_rc=True ]
+20221214 15:53:58.094 - INFO - Executing command 'sudo apt-get --assume-yes install collectd-core'.
+20221214 15:53:58.094 - DEBUG - [chan 7] Max packet in: 32768 bytes
+20221214 15:53:58.862 - INFO - Command exited with return code 0.
+20221214 15:53:58.863 - INFO - ${rc} = 0
+20221214 15:53:58.864 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (769)
+20221214 15:53:58.864 - INFO - +--- START KEYWORD: BuiltIn.Should Be Equal [ ${rc} | ${0} ]
+20221214 15:53:58.866 - DEBUG - Argument types are:
+<class 'int'>
+<class 'int'>
+20221214 15:53:58.866 - INFO - +--- END KEYWORD: BuiltIn.Should Be Equal (2)
+20221214 15:53:58.866 - INFO - +-- END KEYWORD: Install Collectd-core (773)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:53:58.867 - INFO - +-- START KEYWORD: Install thin-edge.io [ ]
+20221214 15:53:58.867 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo dpkg -i ./debian*/tedge_0*.deb | return_stdout=False | return_rc=True ]
+20221214 15:53:58.867 - INFO - Executing command 'sudo dpkg -i ./debian*/tedge_0*.deb'.
+20221214 15:53:58.868 - DEBUG - [chan 8] Max packet in: 32768 bytes
+20221214 15:53:59.572 - INFO - Command exited with return code 0.
+20221214 15:53:59.572 - INFO - ${rc} = 0
+20221214 15:53:59.573 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (706)
+20221214 15:53:59.573 - INFO - +--- START KEYWORD: BuiltIn.Should Be Equal [ ${rc} | ${0} ]
+20221214 15:53:59.574 - DEBUG - Argument types are:
+<class 'int'>
+<class 'int'>
+20221214 15:53:59.574 - INFO - +--- END KEYWORD: BuiltIn.Should Be Equal (1)
+20221214 15:53:59.575 - INFO - +-- END KEYWORD: Install thin-edge.io (709)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:53:59.575 - INFO - +-- START KEYWORD: Install tedge mapper [ ]
+20221214 15:53:59.576 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo dpkg -i ./debian*/tedge-mapper_0*.deb | return_stdout=False | return_rc=True ]
+20221214 15:53:59.576 - INFO - Executing command 'sudo dpkg -i ./debian*/tedge-mapper_0*.deb'.
+20221214 15:53:59.577 - DEBUG - [chan 9] Max packet in: 32768 bytes
+20221214 15:54:01.580 - INFO - Command exited with return code 0.
+20221214 15:54:01.581 - INFO - ${rc} = 0
+20221214 15:54:01.582 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (2005)
+20221214 15:54:01.582 - INFO - +--- START KEYWORD: BuiltIn.Should Be Equal [ ${rc} | ${0} ]
+20221214 15:54:01.584 - DEBUG - Argument types are:
+<class 'int'>
+<class 'int'>
+20221214 15:54:01.584 - INFO - +--- END KEYWORD: BuiltIn.Should Be Equal (2)
+20221214 15:54:01.585 - INFO - +-- END KEYWORD: Install tedge mapper (2010)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:54:01.585 - INFO - +-- START KEYWORD: Install tedge agent [ ]
+20221214 15:54:01.586 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo dpkg -i ./debian*/tedge-agent_0*.deb | return_stdout=False | return_rc=True ]
+20221214 15:54:01.587 - INFO - Executing command 'sudo dpkg -i ./debian*/tedge-agent_0*.deb'.
+20221214 15:54:01.587 - DEBUG - [chan 10] Max packet in: 32768 bytes
+20221214 15:54:02.804 - INFO - Command exited with return code 0.
+20221214 15:54:02.805 - INFO - ${rc} = 0
+20221214 15:54:02.806 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (1219)
+20221214 15:54:02.806 - INFO - +--- START KEYWORD: BuiltIn.Should Be Equal [ ${rc} | ${0} ]
+20221214 15:54:02.808 - DEBUG - Argument types are:
+<class 'int'>
+<class 'int'>
+20221214 15:54:02.808 - INFO - +--- END KEYWORD: BuiltIn.Should Be Equal (2)
+20221214 15:54:02.809 - INFO - +-- END KEYWORD: Install tedge agent (1223)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:54:02.809 - INFO - +-- START KEYWORD: Install tedge apama plugin [ ]
+20221214 15:54:02.809 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo dpkg -i ./debian*/tedge-apama-plugin_0*.deb | return_stdout=False | return_rc=True ]
+20221214 15:54:02.810 - INFO - Executing command 'sudo dpkg -i ./debian*/tedge-apama-plugin_0*.deb'.
+20221214 15:54:02.810 - DEBUG - [chan 11] Max packet in: 32768 bytes
+20221214 15:54:03.259 - INFO - Command exited with return code 0.
+20221214 15:54:03.260 - INFO - ${rc} = 0
+20221214 15:54:03.261 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (451)
+20221214 15:54:03.261 - INFO - +--- START KEYWORD: BuiltIn.Should Be Equal [ ${rc} | ${0} ]
+20221214 15:54:03.262 - DEBUG - Argument types are:
+<class 'int'>
+<class 'int'>
+20221214 15:54:03.262 - INFO - +--- END KEYWORD: BuiltIn.Should Be Equal (1)
+20221214 15:54:03.263 - INFO - +-- END KEYWORD: Install tedge apama plugin (453)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:54:03.263 - INFO - +-- START KEYWORD: Install tedge apt plugin [ ]
+20221214 15:54:03.263 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo dpkg -i ./debian*/tedge-apt-plugin_0*.deb | return_stdout=False | return_rc=True ]
+20221214 15:54:03.264 - INFO - Executing command 'sudo dpkg -i ./debian*/tedge-apt-plugin_0*.deb'.
+20221214 15:54:03.264 - DEBUG - [chan 12] Max packet in: 32768 bytes
+20221214 15:54:03.711 - INFO - Command exited with return code 0.
+20221214 15:54:03.711 - INFO - ${rc} = 0
+20221214 15:54:03.712 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (449)
+20221214 15:54:03.712 - INFO - +--- START KEYWORD: BuiltIn.Should Be Equal [ ${rc} | ${0} ]
+20221214 15:54:03.713 - DEBUG - Argument types are:
+<class 'int'>
+<class 'int'>
+20221214 15:54:03.714 - INFO - +--- END KEYWORD: BuiltIn.Should Be Equal (2)
+20221214 15:54:03.714 - INFO - +-- END KEYWORD: Install tedge apt plugin (451)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:54:03.714 - INFO - +-- START KEYWORD: Install tedge logfile request plugin [ ]
+20221214 15:54:03.715 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo dpkg -i ./debian*/c8y-log-plugin_0*.deb | return_stdout=False | return_rc=True ]
+20221214 15:54:03.715 - INFO - Executing command 'sudo dpkg -i ./debian*/c8y-log-plugin_0*.deb'.
+20221214 15:54:03.715 - DEBUG - [chan 13] Max packet in: 32768 bytes
+20221214 15:54:04.879 - INFO - Command exited with return code 0.
+20221214 15:54:04.880 - INFO - ${rc} = 0
+20221214 15:54:04.880 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (1165)
+20221214 15:54:04.881 - INFO - +--- START KEYWORD: BuiltIn.Should Be Equal [ ${rc} | ${0} ]
+20221214 15:54:04.883 - DEBUG - Argument types are:
+<class 'int'>
+<class 'int'>
+20221214 15:54:04.883 - INFO - +--- END KEYWORD: BuiltIn.Should Be Equal (2)
+20221214 15:54:04.884 - INFO - +-- END KEYWORD: Install tedge logfile request plugin (1169)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:54:04.884 - INFO - +-- START KEYWORD: Install c8y configuration plugin [ ]
+20221214 15:54:04.884 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo dpkg -i ./debian*/c8y-configuration-plugin_0*.deb | return_stdout=False | return_rc=True ]
+20221214 15:54:04.884 - INFO - Executing command 'sudo dpkg -i ./debian*/c8y-configuration-plugin_0*.deb'.
+20221214 15:54:04.885 - DEBUG - [chan 14] Max packet in: 32768 bytes
+20221214 15:54:06.052 - INFO - Command exited with return code 0.
+20221214 15:54:06.053 - INFO - ${rc} = 0
+20221214 15:54:06.054 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (1169)
+20221214 15:54:06.054 - INFO - +--- START KEYWORD: BuiltIn.Should Be Equal [ ${rc} | ${0} ]
+20221214 15:54:06.055 - DEBUG - Argument types are:
+<class 'int'>
+<class 'int'>
+20221214 15:54:06.055 - INFO - +--- END KEYWORD: BuiltIn.Should Be Equal (1)
+20221214 15:54:06.056 - INFO - +-- END KEYWORD: Install c8y configuration plugin (1172)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:54:06.056 - INFO - +-- START KEYWORD: Install Watchdog [ ]
+20221214 15:54:06.056 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo dpkg -i ./debian*/tedge-watchdog_0*.deb | return_stdout=False | return_rc=True ]
+20221214 15:54:06.057 - INFO - Executing command 'sudo dpkg -i ./debian*/tedge-watchdog_0*.deb'.
+20221214 15:54:06.057 - DEBUG - [chan 15] Max packet in: 32768 bytes
+20221214 15:54:07.499 - INFO - Command exited with return code 0.
+20221214 15:54:07.500 - INFO - ${rc} = 0
+20221214 15:54:07.501 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (1444)
+20221214 15:54:07.501 - INFO - +--- START KEYWORD: BuiltIn.Should Be Equal [ ${rc} | ${0} ]
+20221214 15:54:07.503 - DEBUG - Argument types are:
+<class 'int'>
+<class 'int'>
+20221214 15:54:07.503 - INFO - +--- END KEYWORD: BuiltIn.Should Be Equal (2)
+20221214 15:54:07.504 - INFO - +-- END KEYWORD: Install Watchdog (1448)
+------------------------------------------------------------------------------
+20221214 15:54:07.504 - INFO - +- END TEST: Installing tedge on DUT (11193)
+------------------------------------------------------------------------------
+20221214 15:54:07.504 - INFO - +- START TEST: Connecting to c8y [ ]
+------------------------------------------------------------------------------
+20221214 15:54:07.508 - INFO - +-- START KEYWORD: Create self-signed certificate [ ]
+20221214 15:54:07.508 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo tedge cert create --device-id ${DeviceID} | return_stdout=False | return_rc=True ]
+20221214 15:54:07.509 - INFO - Executing command 'sudo tedge cert create --device-id CH_DEV_CONF_MGMT'.
+20221214 15:54:07.509 - DEBUG - [chan 16] Max packet in: 32768 bytes
+20221214 15:54:07.900 - INFO - Command exited with return code 1.
+20221214 15:54:07.901 - INFO - ${rc} = 1
+20221214 15:54:07.901 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (393)
+20221214 15:54:07.902 - INFO - +--- START KEYWORD: BuiltIn.Should Be Equal [ ${rc} | ${0} ]
+20221214 15:54:07.904 - DEBUG - Argument types are:
+<class 'int'>
+<class 'int'>
+20221214 15:54:07.904 - FAIL - 1 != 0
+20221214 15:54:07.904 - DEBUG - Traceback (most recent call last):
+  None
+AssertionError: 1 != 0
+20221214 15:54:07.904 - INFO - +--- END KEYWORD: BuiltIn.Should Be Equal (2)
+20221214 15:54:07.905 - INFO - +--- START KEYWORD: SSHLibrary.Execute Command [ sudo tedge cert show ]
+20221214 15:54:07.905 - INFO - +--- END KEYWORD: SSHLibrary.Execute Command (0)
+20221214 15:54:07.905 - INFO - +--- START KEYWORD: BuiltIn.Should Contain [ ${output} | Device certificate: /etc/tedge/device-certs/tedge-certificate.pem ]
+20221214 15:54:07.905 - INFO - +--- END KEYWORD: BuiltIn.Should Contain (0)
+20221214 15:54:07.905 - INFO - +-- END KEYWORD: Create self-signed certificate (397)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:54:07.906 - INFO - +-- START KEYWORD: Set c8y URL [ ]
+20221214 15:54:07.906 - INFO - +-- END KEYWORD: Set c8y URL (1)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:54:07.906 - INFO - +-- START KEYWORD: Upload certificate [ ]
+20221214 15:54:07.906 - INFO - +-- END KEYWORD: Upload certificate (0)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20221214 15:54:07.906 - INFO - +-- START KEYWORD: Connect to c8y [ ]
+20221214 15:54:07.906 - INFO - +-- END KEYWORD: Connect to c8y (0)
+------------------------------------------------------------------------------
+20221214 15:54:07.907 - INFO - +- END TEST: Connecting to c8y (402)
+------------------------------------------------------------------------------
+20221214 15:54:07.907 - INFO - +- START TEARDOWN: SSHLibrary.Close All Connections [ ]
+20221214 15:54:07.908 - DEBUG - [chan 0] EOF sent (0)
+20221214 15:54:07.908 - INFO - +- END TEARDOWN: SSHLibrary.Close All Connections (1)
+==============================================================================
+20221214 15:54:07.909 - INFO - + END SUITE: Install Debian Pckg (17860)
+==============================================================================
