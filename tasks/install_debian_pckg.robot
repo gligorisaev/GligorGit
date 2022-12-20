@@ -7,7 +7,7 @@ Suite Setup            DUT Connection
 Suite Teardown         Close All Connections
 
 *** Variables ***
-${DUT}              217.160.212.171    #192.168.1.110
+${DUT}              192.168.1.110
 ${USERNAME}         pi
 ${PASSWORD}         crypt:LO3wCxZPltyviM8gEyBkRylToqtWm+hvq9mMVEPxtn0BXB65v/5wxUu7EqicpOgGhgNZVgFjY0o=
 ${url_tedge}        qaenvironment.eu-latest.cumulocity.com
