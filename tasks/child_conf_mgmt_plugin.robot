@@ -10,6 +10,8 @@ Library    CryptoLibrary    variable_decryption=True
 Library    RequestsLibrary
 Library    JSONLibrary
 Library    Collections
+Library    Browser
+
 
 *** Variables ***
 
@@ -36,7 +38,7 @@ Create child device name
     Create Timestamp                                    #Timestamp is used for unique names
     Define Child Device name                            #Adding CD in front of the timestamp
 Clean devices from the cloud
-    Remove all managedObjects from cloud                #Removing all existing devices from the tenant 
+    Run Keyword And Continue On Failure    Remove all managedObjects from cloud                #Removing all existing devices from the tenant 
 Prerequisite Parent
     Parent Connection                                   #Creates ssh connection to the parent device  
     ${rc}=    Execute Command    sudo tedge disconnect c8y    return_stdout=False    return_rc=True
@@ -85,7 +87,7 @@ Parent Connection
     Login               ${USERNAME}    ${PASSWORD}
 Child Connection
     Open Connection     ${CHILD_IP}
-    Login               ${USERNAME}    ${PASSWORD}
+    Login               pi    thinedge    #${USERNAME}    ${PASSWORD}
 Set external MQTT bind address
     ${rc}=    Execute Command    sudo tedge config set mqtt.external.bind_address ${PARENT_IP}    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}

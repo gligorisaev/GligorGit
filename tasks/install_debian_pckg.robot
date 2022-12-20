@@ -4,12 +4,12 @@ Library    SSHLibrary
 Library    DateTime
 Library    CryptoLibrary    variable_decryption=True
 Suite Setup            DUT Connection
-Suite Teardown         SSHLibrary.Close All Connections
+Suite Teardown         Close All Connections
 
 *** Variables ***
 ${DUT}              217.160.212.171    #192.168.1.110
-${USERNAME}         root    #pi
-${PASSWORD}         P_oCtb5#T!    #crypt:LO3wCxZPltyviM8gEyBkRylToqtWm+hvq9mMVEPxtn0BXB65v/5wxUu7EqicpOgGhgNZVgFjY0o=
+${USERNAME}         pi
+${PASSWORD}         crypt:LO3wCxZPltyviM8gEyBkRylToqtWm+hvq9mMVEPxtn0BXB65v/5wxUu7EqicpOgGhgNZVgFjY0o=
 ${url_tedge}        qaenvironment.eu-latest.cumulocity.com
 ${user}             systest_preparation
 ${pass}             crypt:34mpoxueRYy/gDerrLeBThQ2wp9F+2cw50XaNyjiGUpK488+1fgEfE6drOEcR+qZQ6dcjIWETukbqLU= 
@@ -20,7 +20,6 @@ Prerequisites DUT
     Define Device id                               #Setting up device id which is created with prefix ST before the timestamp
     Disconnect from c8y                            #Disconnects from Cumulocity IoT if connected
     Uninstall tedge with purge                     #Uninstalling eventual previous installations
-    # Execute Command    cd debian*
 Installing tedge on DUT
     Install Mosquitto
     Install Libmosquitto1
@@ -28,7 +27,7 @@ Installing tedge on DUT
     Install thin-edge.io
     Install tedge mapper
     Install tedge agent
-    Install tedge apama plugin
+    # Install tedge apama plugin
     Install tedge apt plugin
     Install tedge logfile request plugin
     Install c8y configuration plugin
@@ -90,6 +89,7 @@ Install Watchdog
     ${rc}=    Execute Command    sudo dpkg -i ./debian*/tedge-watchdog_0*.deb    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
 Create self-signed certificate
+    Execute Command    tedge cert remove
     ${rc}=    Execute Command    sudo tedge cert create --device-id ${DeviceID}    return_stdout=False    return_rc=True
     Should Be Equal    ${rc}    ${0}
     ${output}=    Execute Command    sudo tedge cert show    #You can then check the content of that certificate.

@@ -7,7 +7,7 @@ Library    CryptoLibrary    variable_decryption=True
 # Suite Teardown         SSHLibrary.Close All Connections
 
 *** Variables ***
-${DUT}              192.168.1.120
+${DUT}              192.168.1.130
 ${USERNAME}         pi
 ${PASSWORD}         crypt:LO3wCxZPltyviM8gEyBkRylToqtWm+hvq9mMVEPxtn0BXB65v/5wxUu7EqicpOgGhgNZVgFjY0o=
 ${git_token}        crypt:yT+Kkob1/tnpuvwG6EOXIKza8E+pHbM7UllYMpSExRXQ0V/bV/xKBvlRRxpT12OZ2lAALRxDxGegEPUxFggdm0v224H4EFz19W/vTaV/QyhiksZiVP0H6Q==
@@ -41,7 +41,7 @@ Check Architecture
     Set Suite Variable    ${ARCH}
 Set File Name    #Setting the file name for download
     Run Keyword If    '${ARCH}'=='aarch64'    aarch64
-    ...  ELSE IF      '${ARCH}'=='armv7'    armv7
+    ...  ELSE IF      '${ARCH}'=='armv7l'    armv7
     ...  ELSE          amd64
 aarch64
     [Documentation]    Setting file name according architecture
@@ -59,7 +59,7 @@ amd64
     Log    ${FILENAME}
     Set Suite Variable    ${FILENAME}
 Download debian package
-    ${rc}=    Run And Return Rc    gh run download -R thin-edge/thin-edge.io ${RUN_ID} --pattern "${FILENAME}*"    
+    ${rc}=    Run And Return Rc    gh run download -R thin-edge/thin-edge.io ${RUN_ID} --pattern "*${FILENAME}"    
     Wait Until Created    ${FILENAME}*
     Should Be Equal    ${rc}    ${0}
 Copy debian package to DUT

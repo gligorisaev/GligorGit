@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.11.1 on darwin)" generated="20221220 09:14:10.100" rpa="false" schemaversion="3">
+<suite id="s1" name="Get Debian Package" source="/Users/glis/GligorGit/tasks/get_debian_package.robot">
+<test id="s1-t1" name="Define Device ID and debian package" line="20">
+<kw name="DUT Connection">
+<kw name="Open Connection" library="SSHLibrary">
+<arg>${DUT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" starttime="20221220 09:14:13.010" endtime="20221220 09:14:13.010"/>
+</kw>
+<kw name="Login" library="SSHLibrary">
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
+<msg timestamp="20221220 09:14:13.011" level="INFO">Logging into '192.168.1.130:22' as 'pi'.</msg>
+<msg timestamp="20221220 09:14:14.274" level="INFO">Read output: Linux raspberrypi 5.15.76-v7l+ #1597 SMP Fri Nov 4 12:14:58 GMT 2022 armv7l
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Tue Dec 20 09:12:07 2022 from 192.168.1.4
+
+Wi-Fi is currently blocked by rfkill.
+Use raspi-config to set the country before use.
+
+[?2004hpi@raspberrypi:~$</msg>
+<status status="PASS" starttime="20221220 09:14:13.011" endtime="20221220 09:14:14.276"/>
+</kw>
+<status status="PASS" starttime="20221220 09:14:13.010" endtime="20221220 09:14:14.279"/>
+</kw>
+<kw name="Check Architecture">
+<kw name="Execute Command" library="SSHLibrary">
+<var>${output}</var>
+<arg>uname -m</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 09:14:14.281" level="INFO">Executing command 'uname -m'.</msg>
+<msg timestamp="20221220 09:14:14.322" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20221220 09:14:14.323" level="INFO">${output} = armv7l</msg>
+<status status="PASS" starttime="20221220 09:14:14.281" endtime="20221220 09:14:14.323"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${ARCH}</var>
+<arg>${output}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20221220 09:14:14.324" level="INFO">${ARCH} = armv7l</msg>
+<status status="PASS" starttime="20221220 09:14:14.324" endtime="20221220 09:14:14.324"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${ARCH}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20221220 09:14:14.325" level="INFO">${ARCH} = armv7l</msg>
+<status status="PASS" starttime="20221220 09:14:14.324" endtime="20221220 09:14:14.325"/>
+</kw>
+<status status="PASS" starttime="20221220 09:14:14.279" endtime="20221220 09:14:14.325"/>
+</kw>
+<kw name="Set File Name">
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'${ARCH}'=='aarch64'</arg>
+<arg>aarch64</arg>
+<arg>ELSE IF</arg>
+<arg>'${ARCH}'=='armv7l'</arg>
+<arg>armv7</arg>
+<arg>ELSE</arg>
+<arg>amd64</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="armv7">
+<doc>Setting file name according architecture</doc>
+<kw name="Set Variable" library="BuiltIn">
+<var>${FILENAME}</var>
+<arg>debian-packages-armv7-unknown-linux-gnueabihf</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20221220 09:14:14.327" level="INFO">${FILENAME} = debian-packages-armv7-unknown-linux-gnueabihf</msg>
+<status status="PASS" starttime="20221220 09:14:14.327" endtime="20221220 09:14:14.328"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${FILENAME}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20221220 09:14:14.328" level="INFO">debian-packages-armv7-unknown-linux-gnueabihf</msg>
+<status status="PASS" starttime="20221220 09:14:14.328" endtime="20221220 09:14:14.328"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${FILENAME}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20221220 09:14:14.329" level="INFO">${FILENAME} = debian-packages-armv7-unknown-linux-gnueabihf</msg>
+<status status="PASS" starttime="20221220 09:14:14.328" endtime="20221220 09:14:14.329"/>
+</kw>
+<status status="PASS" starttime="20221220 09:14:14.327" endtime="20221220 09:14:14.329"/>
+</kw>
+<status status="PASS" starttime="20221220 09:14:14.326" endtime="20221220 09:14:14.329"/>
+</kw>
+<status status="PASS" starttime="20221220 09:14:14.325" endtime="20221220 09:14:14.329"/>
+</kw>
+<kw name="Close Connection" library="SSHLibrary">
+<doc>Closes the current connection.</doc>
+<status status="PASS" starttime="20221220 09:14:14.330" endtime="20221220 09:14:14.331"/>
+</kw>
+<status status="PASS" starttime="20221220 09:14:13.009" endtime="20221220 09:14:14.331"/>
+</test>
+<test id="s1-t2" name="Download debian package" line="25">
+<kw name="Download debian package">
+<kw name="Run And Return Rc" library="OperatingSystem">
+<var>${rc}</var>
+<arg>gh run download -R thin-edge/thin-edge.io ${RUN_ID} --pattern "*${FILENAME}"</arg>
+<doc>Runs the given command in the system and returns the return code.</doc>
+<msg timestamp="20221220 09:14:14.337" level="INFO">Running command 'gh run download -R thin-edge/thin-edge.io 3498740838 --pattern "*debian-packages-armv7-unknown-linux-gnueabihf" 2&gt;&amp;1'.</msg>
+<msg timestamp="20221220 09:14:18.180" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20221220 09:14:14.333" endtime="20221220 09:14:18.180"/>
+</kw>
+<kw name="Wait Until Created" library="OperatingSystem">
+<arg>${FILENAME}*</arg>
+<doc>Waits until the given file or directory is created.</doc>
+<msg timestamp="20221220 09:14:18.181" level="INFO" html="true">'&lt;a href="file:///Users/glis/GligorGit/debian-packages-armv7-unknown-linux-gnueabihf*"&gt;/Users/glis/GligorGit/debian-packages-armv7-unknown-linux-gnueabihf*&lt;/a&gt;' was created.</msg>
+<status status="PASS" starttime="20221220 09:14:18.180" endtime="20221220 09:14:18.181"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20221220 09:14:18.181" endtime="20221220 09:14:18.182"/>
+</kw>
+<status status="PASS" starttime="20221220 09:14:14.333" endtime="20221220 09:14:18.182"/>
+</kw>
+<status status="PASS" starttime="20221220 09:14:14.332" endtime="20221220 09:14:18.182"/>
+</test>
+<test id="s1-t3" name="Copy debian package to DUT" line="27">
+<kw name="DUT Connection">
+<kw name="Open Connection" library="SSHLibrary">
+<arg>${DUT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" starttime="20221220 09:14:18.185" endtime="20221220 09:14:18.185"/>
+</kw>
+<kw name="Login" library="SSHLibrary">
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
+<msg timestamp="20221220 09:14:18.185" level="INFO">Logging into '192.168.1.130:22' as 'pi'.</msg>
+<msg timestamp="20221220 09:14:19.486" level="INFO">Read output: Linux raspberrypi 5.15.76-v7l+ #1597 SMP Fri Nov 4 12:14:58 GMT 2022 armv7l
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Tue Dec 20 09:14:13 2022 from 192.168.1.4
+
+Wi-Fi is currently blocked by rfkill.
+Use raspi-config to set the country before use.
+
+[?2004hpi@raspberrypi:~$</msg>
+<status status="PASS" starttime="20221220 09:14:18.185" endtime="20221220 09:14:19.487"/>
+</kw>
+<status status="PASS" starttime="20221220 09:14:18.184" endtime="20221220 09:14:19.488"/>
+</kw>
+<kw name="Copy debian package to DUT">
+<kw name="Put Directory" library="SSHLibrary">
+<arg>${FILENAME}</arg>
+<doc>Uploads a directory, including its content, from the local machine to the remote machine.</doc>
+<msg timestamp="20221220 09:14:19.540" level="INFO">[chan 1] Opened sftp connection (server version 3)</msg>
+<msg timestamp="20221220 09:14:20.386" level="INFO">'debian-packages-armv7-unknown-linux-gnueabihf/tedge_watchdog_0.8.1_armhf.deb' -&gt; '/home/pi/./debian-packages-armv7-unknown-linux-gnueabihf/tedge_watchdog_0.8.1_armhf.deb'</msg>
+<msg timestamp="20221220 09:14:20.386" level="INFO">'debian-packages-armv7-unknown-linux-gnueabihf/tedge_0.8.1_armhf.deb' -&gt; '/home/pi/./debian-packages-armv7-unknown-linux-gnueabihf/tedge_0.8.1_armhf.deb'</msg>
+<msg timestamp="20221220 09:14:20.387" level="INFO">'debian-packages-armv7-unknown-linux-gnueabihf/tedge_apama_plugin_0.8.1_armhf.deb' -&gt; '/home/pi/./debian-packages-armv7-unknown-linux-gnueabihf/tedge_apama_plugin_0.8.1_armhf.deb'</msg>
+<msg timestamp="20221220 09:14:20.387" level="INFO">'debian-packages-armv7-unknown-linux-gnueabihf/tedge_agent_0.8.1_armhf.deb' -&gt; '/home/pi/./debian-packages-armv7-unknown-linux-gnueabihf/tedge_agent_0.8.1_armhf.deb'</msg>
+<msg timestamp="20221220 09:14:20.387" level="INFO">'debian-packages-armv7-unknown-linux-gnueabihf/c8y_log_plugin_0.8.1_armhf.deb' -&gt; '/home/pi/./debian-packages-armv7-unknown-linux-gnueabihf/c8y_log_plugin_0.8.1_armhf.deb'</msg>
+<msg timestamp="20221220 09:14:20.387" level="INFO">'debian-packages-armv7-unknown-linux-gnueabihf/tedge_mapper_0.8.1_armhf.deb' -&gt; '/home/pi/./debian-packages-armv7-unknown-linux-gnueabihf/tedge_mapper_0.8.1_armhf.deb'</msg>
+<msg timestamp="20221220 09:14:20.387" level="INFO">'debian-packages-armv7-unknown-linux-gnueabihf/c8y_configuration_plugin_0.8.1_armhf.deb' -&gt; '/home/pi/./debian-packages-armv7-unknown-linux-gnueabihf/c8y_configuration_plugin_0.8.1_armhf.deb'</msg>
+<msg timestamp="20221220 09:14:20.387" level="INFO">'debian-packages-armv7-unknown-linux-gnueabihf/tedge_apt_plugin_0.8.1_armhf.deb' -&gt; '/home/pi/./debian-packages-armv7-unknown-linux-gnueabihf/tedge_apt_plugin_0.8.1_armhf.deb'</msg>
+<status status="PASS" starttime="20221220 09:14:19.498" endtime="20221220 09:14:20.387"/>
+</kw>
+<status status="PASS" starttime="20221220 09:14:19.491" endtime="20221220 09:14:20.387"/>
+</kw>
+<kw name="Close Connection" library="SSHLibrary">
+<doc>Closes the current connection.</doc>
+<status status="PASS" starttime="20221220 09:14:20.387" endtime="20221220 09:14:20.388"/>
+</kw>
+<status status="PASS" starttime="20221220 09:14:18.183" endtime="20221220 09:14:20.388"/>
+</test>
+<test id="s1-t4" name="Delete directory on master" line="31">
+<kw name="Run" library="OperatingSystem">
+<arg>sudo rm -rf ${FILENAME}</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20221220 09:14:20.392" level="INFO">Running command 'sudo rm -rf debian-packages-armv7-unknown-linux-gnueabihf 2&gt;&amp;1'.</msg>
+<status status="PASS" starttime="20221220 09:14:20.390" endtime="20221220 09:15:13.413"/>
+</kw>
+<status status="PASS" starttime="20221220 09:14:20.388" endtime="20221220 09:15:13.414"/>
+</test>
+<status status="PASS" starttime="20221220 09:14:10.103" endtime="20221220 09:15:13.414"/>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="4" fail="0" skip="0" id="s1" name="Get Debian Package">Get Debian Package</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
