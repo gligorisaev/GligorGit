@@ -7,11 +7,11 @@ Library    CryptoLibrary    variable_decryption=True
 # Suite Teardown         SSHLibrary.Close All Connections
 
 *** Variables ***
-${DUT}              192.168.1.130
+${DUT}              192.168.1.110
 ${USERNAME}         pi
 ${PASSWORD}         crypt:LO3wCxZPltyviM8gEyBkRylToqtWm+hvq9mMVEPxtn0BXB65v/5wxUu7EqicpOgGhgNZVgFjY0o=
 ${git_token}        crypt:yT+Kkob1/tnpuvwG6EOXIKza8E+pHbM7UllYMpSExRXQ0V/bV/xKBvlRRxpT12OZ2lAALRxDxGegEPUxFggdm0v224H4EFz19W/vTaV/QyhiksZiVP0H6Q==
-${RUN_ID}           3498740838
+${RUN_ID}           3738426159
 ${DIRECTORY}        /home/pi/
 ${ARCH}
 ${FILENAME}

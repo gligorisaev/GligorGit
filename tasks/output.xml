@@ -1,0 +1,1099 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.11.1 on darwin)" generated="20221220 11:28:03.885" rpa="false" schemaversion="3">
+<suite id="s1" name="Child Conf Mgmt Plugin" source="/Users/glis/GligorGit/tasks/child_conf_mgmt_plugin.robot">
+<test id="s1-t1" name="Create child device name" line="37">
+<kw name="Create Timestamp">
+<kw name="Get Current Date" library="DateTime">
+<var>${timestamp}</var>
+<arg>result_format=%H%M%S</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<msg timestamp="20221220 11:28:09.888" level="INFO">${timestamp} = 112809</msg>
+<status status="PASS" starttime="20221220 11:28:09.888" endtime="20221220 11:28:09.888"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${timestamp}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20221220 11:28:09.889" level="INFO">${timestamp} = 112809</msg>
+<status status="PASS" starttime="20221220 11:28:09.889" endtime="20221220 11:28:09.889"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:09.888" endtime="20221220 11:28:09.889"/>
+</kw>
+<kw name="Define Child Device name">
+<kw name="Set Variable" library="BuiltIn">
+<var>${CHILD}</var>
+<arg>CD${timestamp}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20221220 11:28:09.889" level="INFO">${CHILD} = CD112809</msg>
+<status status="PASS" starttime="20221220 11:28:09.889" endtime="20221220 11:28:09.889"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${CHILD}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20221220 11:28:09.889" level="INFO">${CHILD} = CD112809</msg>
+<status status="PASS" starttime="20221220 11:28:09.889" endtime="20221220 11:28:09.889"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:09.889" endtime="20221220 11:28:09.889"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:09.884" endtime="20221220 11:28:09.889"/>
+</test>
+<test id="s1-t2" name="Clean devices from the cloud" line="40">
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<arg>Remove all managedObjects from cloud</arg>
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<kw name="Remove all managedObjects from cloud">
+<kw name="Get all existing managedObjects">
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>${user}</arg>
+<arg>${pass}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20221220 11:28:09.894" level="INFO">${auth} = ['systest_preparation', '***']</msg>
+<status status="PASS" starttime="20221220 11:28:09.894" endtime="20221220 11:28:09.894"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>API_Testing</arg>
+<arg>https://${url_tedge}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20221220 11:28:09.894" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x1063bb410&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20221220 11:28:09.894" endtime="20221220 11:28:09.894"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${Get_Response}</var>
+<arg>API_Testing</arg>
+<arg>url=/inventory/managedObjects?fragmentType=c8y_IsDevice</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20221220 11:28:12.343" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?fragmentType=c8y_IsDevice 
+ path_url=/inventory/managedObjects?fragmentType=c8y_IsDevice 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
+ body=None 
+ </msg>
+<msg timestamp="20221220 11:28:12.343" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?fragmentType=c8y_IsDevice 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 20 Dec 2022 10:28:12 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.managedobjectcollection+json;charset=UTF-8;ver=0.9', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Content-Encoding': 'gzip', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
+ body={"next":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?pageSize=5&amp;fragmentType=c8y_IsDevice&amp;currentPage=2","self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?pageSize=5&amp;fragmentType=c8y_IsDevice&amp;currentPage=1","managedObjects":[{"additionParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202/additionParents"},"owner":"device_CH_DEV_CONF_MGMT","childDevices":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202/childDevices"},"childAssets":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202/childAssets"},"creationTime":"2022-12-20T07:53:03.043Z","type":"thin-edge.io","lastUpdated":"2022-12-20T10:19:55.503Z","childAdditions":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202/childAdditions"},"name":"CH_DEV_CONF_MGMT","deviceParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202/deviceParents"},"assetParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202/assetParents"},"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202","id":"41202","c8y_Agent":{"name":"thin-edge.io","version":"0.8.1-121-gba41ee37","url":"https://thin-edge.io"},"com_cumulocity_model_Agent":{},"c8y_IsDevice":{},"c8y_SupportedOperations":["c8y_DownloadConfigFile","c8y_LogfileRequest","c8y_Restart","c8y_SoftwareUpdate","c8y_UploadConfigFile"],"c8y_SoftwareList":[{"name":"adduser","version":"3.118::apt","url":""},{"name":"apt-utils","version":"2.2.4::apt","url":""},{"name":"apt","version":"2.2.4::apt","url":""},{"name":"base-files","version":"11.1+deb11u5::apt","url":""},{"name":"base-passwd","version":"3.5.51::apt","url":""},{"name":"bash","version":"5.1-2+deb11u1::apt","url":""},{"name":"bsdutils","version":"1:2.36.1-8+deb11u1::apt","url":""},{"name":"busybox","version":"1:1.30.1-6+b3::apt","url":""},{"name":"c8y-configuration-plugin","version":"0.8.1-121-gba41ee37::apt","url":""},{"name":"c8y-log-plugin","version":"0.8.1-121-gba41ee37::apt","url":""},{"name":"cloud-init","version":"20.4.1-2+deb11u1::apt","url":""},{"name":"collectd-core","version":"5.12.0-7::apt","url":""},{"name":"console-setup","version":"1.205::apt","url":""},{"name":"coreutils","version":"8.32-4+b1::apt","url":""},{"name":"cpio","version":"2.13+dfsg-4::apt","url":""},{"name":"cron","version":"3.0pl1-137::apt","url":""},{"name":"curl","version":"7.74.0-1.3+deb11u3::apt","url":""},{"name":"dash","version":"0.5.11+git20200708+dd9ef66-5::apt","url":""},{"name":"debconf-i18n","version":"1.5.77::apt","url":""},{"name":"debconf","version":"1.5.77::apt","url":""},{"name":"debian-archive-keyring","version":"2021.1.1::apt","url":""},{"name":"debianutils","version":"4.11.2::apt","url":""},{"name":"diffutils","version":"1:3.7-5::apt","url":""},{"name":"discover","version":"2.1.2-8::apt","url":""},{"name":"dmidecode","version":"3.3-2::apt","url":""},{"name":"dmsetup","version":"2:1.02.175-2.1::apt","url":""},{"name":"dpkg","version":"1.20.12::apt","url":""},{"name":"e2fsprogs","version":"1.46.2-2::apt","url":""},{"name":"eject","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"fdisk","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"findutils","version":"4.8.0-1::apt","url":""},{"name":"gcc-10-base","version":"10.2.1-6::apt","url":""},{"name":"gcc-9-base","version":"9.3.0-22::apt","url":""},{"name":"gpgv","version":"2.2.27-2+deb11u2::apt","url":""},{"name":"grep","version":"3.6-1::apt","url":""},{"name":"grub-common","version":"2.06-3~deb11u4::apt","url":""},{"name":"grub-pc","version":"2.06-3~deb11u4::apt","url":""},{"name":"gzip","version":"1.10-4+deb11u1::apt","url":""},{"name":"hostname","version":"3.23::apt","url":""},{"name":"ifupdown","version":"0.8.36::apt","url":""},{"name":"init-system-helpers","version":"1.60::apt","url":""},{"name":"init","version":"1.60::apt","url":""},{"name":"initramfs-tools","version":"0.140::apt","url":""},{"name":"iproute2","version":"5.10.0-4::apt","url":""},{"name":"iputils-ping","version":"3:20210202-1::apt","url":""},{"name":"isc-dhcp-client","version":"4.4.1-2.3+deb11u1::apt","url":""},{"name":"isc-dhcp-common","version":"4.4.1-2.3+deb11u1::apt","url":""},{"name":"keyboard-configuration","version":"1.205::apt","url":""},{"name":"kmod","version":"28-1::apt","url":""},{"name":"laptop-detect","version":"0.16::apt","url":""},{"name":"less","version":"551-2::apt","url":""},{"name":"libacl1","version":"2.2.53-10::apt","url":""},{"name":"libapparmor1","version":"2.13.6-10::apt","url":""},{"name":"libapt-pkg6.0","version":"2.2.4::apt","url":""},{"name":"libargon2-1","version":"0~20171227-0.2::apt","url":""},{"name":"libattr1","version":"1:2.4.48-6::apt","url":""},{"name":"libaudit-common","version":"1:3.0-2::apt","url":""},{"name":"libaudit1","version":"1:3.0-2::apt","url":""},{"name":"libblkid1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libbpf0","version":"1:0.3-2::apt","url":""},{"name":"libbsd0","version":"0.11.3-1::apt","url":""},{"name":"libbz2-1.0","version":"1.0.8-4::apt","url":""},{"name":"libc-bin","version":"2.31-13+deb11u5::apt","url":""},{"name":"libc6","version":"2.31-13+deb11u5::apt","url":""},{"name":"libcap-ng0","version":"0.7.9-2.2+b1::apt","url":""},{"name":"libcap2-bin","version":"1:2.44-1::apt","url":""},{"name":"libcap2","version":"1:2.44-1::apt","url":""},{"name":"libcom-err2","version":"1.46.2-2::apt","url":""},{"name":"libcrypt1","version":"1:4.4.18-4::apt","url":""},{"name":"libcryptsetup12","version":"2:2.3.7-1+deb11u1::apt","url":""},{"name":"libdb5.3","version":"5.3.28+dfsg1-0.8::apt","url":""},{"name":"libdebconfclient0","version":"0.260::apt","url":""},{"name":"libdevmapper1.02.1","version":"2:1.02.175-2.1::apt","url":""},{"name":"libdns-export1110","version":"1:9.11.19+dfsg-2.1::apt","url":""},{"name":"libedit2","version":"3.1-20191231-2+b1::apt","url":""},{"name":"libelf1","version":"0.183-1::apt","url":""},{"name":"libestr0","version":"0.1.10-2.1+b1::apt","url":""},{"name":"libext2fs2","version":"1.46.2-2::apt","url":""},{"name":"libfastjson4","version":"0.99.9-1::apt","url":""},{"name":"libfdisk1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libffi7","version":"3.3-6::apt","url":""},{"name":"libgcc-s1","version":"10.2.1-6::apt","url":""},{"name":"libgcrypt20","version":"1.8.7-6::apt","url":""},{"name":"libgmp10","version":"2:6.2.1+dfsg-1+deb11u1::apt","url":""},{"name":"libgnutls30","version":"3.7.1-5+deb11u2::apt","url":""},{"name":"libgpg-error0","version":"1.38-2::apt","url":""},{"name":"libgssapi-krb5-2","version":"1.18.3-6+deb11u3::apt","url":""},{"name":"libhogweed6","version":"3.7.3-1::apt","url":""},{"name":"libidn2-0","version":"2.3.0-5::apt","url":""},{"name":"libip4tc2","version":"1.8.7-1::apt","url":""},{"name":"libisc-export1105","version":"1:9.11.19+dfsg-2.1::apt","url":""},{"name":"libjansson4","version":"2.13.1-1.1::apt","url":""},{"name":"libjson-c5","version":"0.15-2::apt","url":""},{"name":"libk5crypto3","version":"1.18.3-6+deb11u3::apt","url":""},{"name":"libkeyutils1","version":"1.6.1-2::apt","url":""},{"name":"libkmod2","version":"28-1::apt","url":""},{"name":"libkrb5-3","version":"1.18.3-6+deb11u3::apt","url":""},{"name":"libkrb5support0","version":"1.18.3-6+deb11u3::apt","url":""},{"name":"liblocale-gettext-perl","version":"1.07-4+b1::apt","url":""},{"name":"liblognorm5","version":"2.0.5-1.1::apt","url":""},{"name":"liblz4-1","version":"1.9.3-2::apt","url":""},{"name":"liblzma5","version":"5.2.5-2.1~deb11u1::apt","url":""},{"name":"libmd0","version":"1.0.3-3::apt","url":""},{"name":"libmnl0","version":"1.0.4-3::apt","url":""},{"name":"libmosquitto1","version":"2.0.11-1::apt","url":""},{"name":"libmount1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libncurses6","version":"6.2+20201114-2::apt","url":""},{"name":"libncursesw6","version":"6.2+20201114-2::apt","url":""},{"name":"libnettle8","version":"3.7.3-1::apt","url":""},{"name":"libnewt0.52","version":"0.52.21-4+b3::apt","url":""},{"name":"libnftables1","version":"0.9.8-3.1::apt","url":""},{"name":"libnftnl11","version":"1.1.9-1::apt","url":""},{"name":"libnsl2","version":"1.3.0-2::apt","url":""},{"name":"libp11-kit0","version":"0.23.22-1::apt","url":""},{"name":"libpam-modules-bin","version":"1.4.0-9+deb11u1::apt","url":""},{"name":"libpam-modules","version":"1.4.0-9+deb11u1::apt","url":""},{"name":"libpam-runtime","version":"1.4.0-9+deb11u1::apt","url":""},{"name":"libpam0g","version":"1.4.0-9+deb11u1::apt","url":""},{"name":"libpcre2-8-0","version":"10.36-2+deb11u1::apt","url":""},{"name":"libpcre3","version":"2:8.39-13::apt","url":""},{"name":"libpopt0","version":"1.18-2::apt","url":""},{"name":"libprocps8","version":"2:3.3.17-5::apt","url":""},{"name":"libreadline8","version":"8.1-1::apt","url":""},{"name":"libseccomp2","version":"2.5.1-1+deb11u1::apt","url":""},{"name":"libselinux1","version":"3.1-3::apt","url":""},{"name":"libsemanage-common","version":"3.1-1::apt","url":""},{"name":"libsemanage1","version":"3.1-1+b2::apt","url":""},{"name":"libsepol1","version":"3.1-1::apt","url":""},{"name":"libslang2","version":"2.3.2-5::apt","url":""},{"name":"libsmartcols1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libss2","version":"1.46.2-2::apt","url":""},{"name":"libssl1.1","version":"1.1.1n-0+deb11u3::apt","url":""},{"name":"libstdc++6","version":"10.2.1-6::apt","url":""},{"name":"libsystemd0","version":"247.3-7+deb11u1::apt","url":""},{"name":"libtasn1-6","version":"4.16.0-2::apt","url":""},{"name":"libtext-charwidth-perl","version":"0.04-10+b1::apt","url":""},{"name":"libtext-iconv-perl","version":"1.7-7+b1::apt","url":""},{"name":"libtext-wrapi18n-perl","version":"0.06-9::apt","url":""},{"name":"libtinfo6","version":"6.2+20201114-2::apt","url":""},{"name":"libtirpc-common","version":"1.3.1-1+deb11u... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg timestamp="20221220 11:28:12.344" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20221220 11:28:12.344" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221220 11:28:09.894" endtime="20221220 11:28:12.344"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${Get_Response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20221220 11:28:12.345" level="INFO">${json_response} = {'next': 'https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?pageSize=5&amp;fragmentType=c8y_IsDevice&amp;currentPage=2', 'self': 'https://qaenvironment.eu-latest.cumulocity.com/inventory...</msg>
+<status status="PASS" starttime="20221220 11:28:12.344" endtime="20221220 11:28:12.345"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>@{id}</var>
+<arg>${json_response}</arg>
+<arg>$..id</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20221220 11:28:12.400" level="INFO">@{id} = [ 41202 ]</msg>
+<status status="PASS" starttime="20221220 11:28:12.345" endtime="20221220 11:28:12.400"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${man_Obj_id}</var>
+<arg>${id}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20221220 11:28:12.400" level="FAIL">IndexError: Given index 1 is out of the range 0-0.</msg>
+<status status="FAIL" starttime="20221220 11:28:12.400" endtime="20221220 11:28:12.414"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${man_Obj_id}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="NOT RUN" starttime="20221220 11:28:12.415" endtime="20221220 11:28:12.415"/>
+</kw>
+<status status="FAIL" starttime="20221220 11:28:09.894" endtime="20221220 11:28:12.415"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>${user}</arg>
+<arg>${pass}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="NOT RUN" starttime="20221220 11:28:12.415" endtime="20221220 11:28:12.415"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>API_Testing</arg>
+<arg>https://${url_tedge}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" starttime="20221220 11:28:12.415" endtime="20221220 11:28:12.415"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${Get_Response}</var>
+<arg>API_Testing</arg>
+<arg>url=/inventory/managedObjects?fragmentType=c8y_IsDevice</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20221220 11:28:12.415" endtime="20221220 11:28:12.415"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${Get_Response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20221220 11:28:12.416" endtime="20221220 11:28:12.416"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>@{id}</var>
+<arg>${json_response}</arg>
+<arg>$..id</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20221220 11:28:12.416" endtime="20221220 11:28:12.416"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${man_Obj_id}</var>
+<arg>${id}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="NOT RUN" starttime="20221220 11:28:12.416" endtime="20221220 11:28:12.416"/>
+</kw>
+<for flavor="IN">
+<var>${element}</var>
+<value>@{id}</value>
+<iter>
+<var name="${element}"/>
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<var>${delete}</var>
+<arg>Delete existing managedObject</arg>
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<status status="NOT RUN" starttime="20221220 11:28:12.416" endtime="20221220 11:28:12.416"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${element}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="NOT RUN" starttime="20221220 11:28:12.416" endtime="20221220 11:28:12.416"/>
+</kw>
+<status status="NOT RUN" starttime="20221220 11:28:12.416" endtime="20221220 11:28:12.416"/>
+</iter>
+<status status="NOT RUN" starttime="20221220 11:28:12.416" endtime="20221220 11:28:12.416"/>
+</for>
+<status status="FAIL" starttime="20221220 11:28:09.893" endtime="20221220 11:28:12.417"/>
+</kw>
+<status status="FAIL" starttime="20221220 11:28:09.893" endtime="20221220 11:28:12.417"/>
+</kw>
+<status status="FAIL" starttime="20221220 11:28:09.891" endtime="20221220 11:28:12.417">IndexError: Given index 1 is out of the range 0-0.</status>
+</test>
+<test id="s1-t3" name="Prerequisite Parent" line="42">
+<kw name="Parent Connection">
+<kw name="Open Connection" library="SSHLibrary">
+<arg>${PARENT_IP}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" starttime="20221220 11:28:12.423" endtime="20221220 11:28:12.423"/>
+</kw>
+<kw name="Login" library="SSHLibrary">
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
+<msg timestamp="20221220 11:28:12.423" level="INFO">Logging into '217.160.212.171:22' as 'pi'.</msg>
+<msg timestamp="20221220 11:28:14.178" level="INFO">Read output: Linux localhost 5.10.0-19-amd64 #1 SMP Debian 5.10.149-2 (2022-10-21) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Tue Dec 20 10:19:43 2022 from 46.217.50.113
+Could not chdir to home directory /home/pi: No such file or directory
+$</msg>
+<status status="PASS" starttime="20221220 11:28:12.423" endtime="20221220 11:28:14.179"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:12.422" endtime="20221220 11:28:14.180"/>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo tedge disconnect c8y</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:14.181" level="INFO">Executing command 'sudo tedge disconnect c8y'.</msg>
+<msg timestamp="20221220 11:28:15.141" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20221220 11:28:15.142" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20221220 11:28:14.180" endtime="20221220 11:28:15.142"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20221220 11:28:15.142" endtime="20221220 11:28:15.143"/>
+</kw>
+<kw name="Delete child related content">
+<kw name="Execute Command" library="SSHLibrary">
+<arg>sudo rm -rf /etc/tedge/operations/c8y/CD*</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:15.144" level="INFO">Executing command 'sudo rm -rf /etc/tedge/operations/c8y/CD*'.</msg>
+<msg timestamp="20221220 11:28:15.354" level="INFO">Command exited with return code 0.</msg>
+<status status="PASS" starttime="20221220 11:28:15.144" endtime="20221220 11:28:15.355"/>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<arg>sudo rm c8y-configuration-plugin.toml</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:15.356" level="INFO">Executing command 'sudo rm c8y-configuration-plugin.toml'.</msg>
+<msg timestamp="20221220 11:28:15.551" level="INFO">Command exited with return code 1.</msg>
+<status status="PASS" starttime="20221220 11:28:15.355" endtime="20221220 11:28:15.552"/>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<arg>sudo rm -rf /etc/tedge/c8y/CD*</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:15.553" level="INFO">Executing command 'sudo rm -rf /etc/tedge/c8y/CD*'.</msg>
+<msg timestamp="20221220 11:28:15.753" level="INFO">Command exited with return code 0.</msg>
+<status status="PASS" starttime="20221220 11:28:15.552" endtime="20221220 11:28:15.753"/>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<arg>sudo rm -rf /var/tedge/*</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:15.754" level="INFO">Executing command 'sudo rm -rf /var/tedge/*'.</msg>
+<msg timestamp="20221220 11:28:15.956" level="INFO">Command exited with return code 0.</msg>
+<status status="PASS" starttime="20221220 11:28:15.753" endtime="20221220 11:28:15.956"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:15.143" endtime="20221220 11:28:15.957"/>
+</kw>
+<kw name="Check for child related content">
+<kw name="List Directories In Directory" library="SSHLibrary">
+<var>@{dir_cont}</var>
+<arg>/etc/tedge/operations/c8y</arg>
+<doc>A wrapper for `List Directory` that returns only directories.</doc>
+<msg timestamp="20221220 11:28:16.190" level="INFO">[chan 6] Opened sftp connection (server version 3)</msg>
+<msg timestamp="20221220 11:28:16.491" level="INFO">0 directories:</msg>
+<msg timestamp="20221220 11:28:16.491" level="INFO">@{dir_cont} = [ ]</msg>
+<status status="PASS" starttime="20221220 11:28:15.958" endtime="20221220 11:28:16.491"/>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<arg>${dir_cont}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<msg timestamp="20221220 11:28:16.492" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20221220 11:28:16.492" endtime="20221220 11:28:16.492"/>
+</kw>
+<kw name="List Directories In Directory" library="SSHLibrary">
+<var>@{dir_cont}</var>
+<arg>/etc/tedge/c8y</arg>
+<doc>A wrapper for `List Directory` that returns only directories.</doc>
+<msg timestamp="20221220 11:28:16.735" level="INFO">0 directories:</msg>
+<msg timestamp="20221220 11:28:16.736" level="INFO">@{dir_cont} = [ ]</msg>
+<status status="PASS" starttime="20221220 11:28:16.492" endtime="20221220 11:28:16.736"/>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<arg>${dir_cont}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<msg timestamp="20221220 11:28:16.736" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20221220 11:28:16.736" endtime="20221220 11:28:16.736"/>
+</kw>
+<kw name="List Directories In Directory" library="SSHLibrary">
+<var>@{dir_cont}</var>
+<arg>/var/tedge</arg>
+<doc>A wrapper for `List Directory` that returns only directories.</doc>
+<msg timestamp="20221220 11:28:16.979" level="INFO">0 directories:</msg>
+<msg timestamp="20221220 11:28:16.979" level="INFO">@{dir_cont} = [ ]</msg>
+<status status="PASS" starttime="20221220 11:28:16.737" endtime="20221220 11:28:16.979"/>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<arg>${dir_cont}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<msg timestamp="20221220 11:28:16.980" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20221220 11:28:16.979" endtime="20221220 11:28:16.980"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:15.957" endtime="20221220 11:28:16.980"/>
+</kw>
+<kw name="Set external MQTT bind address">
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo tedge config set mqtt.external.bind_address ${PARENT_IP}</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:16.980" level="INFO">Executing command 'sudo tedge config set mqtt.external.bind_address 217.160.212.171'.</msg>
+<msg timestamp="20221220 11:28:17.103" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20221220 11:28:17.103" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20221220 11:28:16.980" endtime="20221220 11:28:17.103"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20221220 11:28:17.104" endtime="20221220 11:28:17.106"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:16.980" endtime="20221220 11:28:17.106"/>
+</kw>
+<kw name="Set external MQTT port">
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo tedge config set mqtt.external.port 1883</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:17.108" level="INFO">Executing command 'sudo tedge config set mqtt.external.port 1883'.</msg>
+<msg timestamp="20221220 11:28:17.308" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20221220 11:28:17.308" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20221220 11:28:17.107" endtime="20221220 11:28:17.308"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20221220 11:28:17.309" endtime="20221220 11:28:17.310"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:17.106" endtime="20221220 11:28:17.310"/>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo tedge connect c8y</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:17.311" level="INFO">Executing command 'sudo tedge connect c8y'.</msg>
+<msg timestamp="20221220 11:28:24.833" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20221220 11:28:24.834" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20221220 11:28:17.311" endtime="20221220 11:28:24.834"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20221220 11:28:24.835" endtime="20221220 11:28:24.837"/>
+</kw>
+<kw name="Restart Configuration plugin">
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo systemctl stop c8y-configuration-plugin.service</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:24.840" level="INFO">Executing command 'sudo systemctl stop c8y-configuration-plugin.service'.</msg>
+<msg timestamp="20221220 11:28:25.065" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20221220 11:28:25.066" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20221220 11:28:24.840" endtime="20221220 11:28:25.066"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20221220 11:28:25.067" endtime="20221220 11:28:25.068"/>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo systemctl start c8y-configuration-plugin.service</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:25.068" level="INFO">Executing command 'sudo systemctl start c8y-configuration-plugin.service'.</msg>
+<msg timestamp="20221220 11:28:25.289" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20221220 11:28:25.290" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20221220 11:28:25.068" endtime="20221220 11:28:25.290"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20221220 11:28:25.291" endtime="20221220 11:28:25.293"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:24.839" endtime="20221220 11:28:25.297"/>
+</kw>
+<kw name="Close Connection" library="SSHLibrary">
+<doc>Closes the current connection.</doc>
+<status status="PASS" starttime="20221220 11:28:25.298" endtime="20221220 11:28:25.302"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:12.419" endtime="20221220 11:28:25.304"/>
+</test>
+<test id="s1-t4" name="Prerequisite Child" line="56">
+<kw name="Child device delete configuration files">
+<kw name="Child Connection">
+<kw name="Open Connection" library="SSHLibrary">
+<arg>${CHILD_IP}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" starttime="20221220 11:28:25.325" endtime="20221220 11:28:25.326"/>
+</kw>
+<kw name="Login" library="SSHLibrary">
+<arg>pi</arg>
+<arg>thinedge</arg>
+<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
+<msg timestamp="20221220 11:28:25.326" level="INFO">Logging into '192.168.1.110:22' as 'pi'.</msg>
+<msg timestamp="20221220 11:28:26.880" level="INFO">Read output: Linux raspberrypi 5.15.61-v8+ #1579 SMP PREEMPT Fri Aug 26 11:16:44 BST 2022 aarch64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Mon Dec 19 14:17:20 2022 from 192.168.1.100
+
+Wi-Fi is currently blocked by rfkill.
+Use raspi-config to set the country before use.
+
+[?2004h(pi:110) pi@raspberrypi:~$</msg>
+<status status="PASS" starttime="20221220 11:28:25.326" endtime="20221220 11:28:26.880"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:25.325" endtime="20221220 11:28:26.881"/>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<arg>sudo rm config1</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:26.881" level="INFO">Executing command 'sudo rm config1'.</msg>
+<msg timestamp="20221220 11:28:26.910" level="INFO">Command exited with return code 1.</msg>
+<status status="PASS" starttime="20221220 11:28:26.881" endtime="20221220 11:28:26.910"/>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<arg>sudo rm c8y-configuration-plugin</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:26.910" level="INFO">Executing command 'sudo rm c8y-configuration-plugin'.</msg>
+<msg timestamp="20221220 11:28:26.979" level="INFO">Command exited with return code 1.</msg>
+<status status="PASS" starttime="20221220 11:28:26.910" endtime="20221220 11:28:26.979"/>
+</kw>
+<kw name="Close Connection" library="SSHLibrary">
+<doc>Closes the current connection.</doc>
+<status status="PASS" starttime="20221220 11:28:26.980" endtime="20221220 11:28:26.980"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:25.325" endtime="20221220 11:28:26.980"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:25.313" endtime="20221220 11:28:26.980"/>
+</test>
+<test id="s1-t5" name="Prerequisite Cloud" line="58">
+<kw name="GET Parent ID">
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>${user}</arg>
+<arg>${pass}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20221220 11:28:26.988" level="INFO">${auth} = ['systest_preparation', '***']</msg>
+<status status="PASS" starttime="20221220 11:28:26.988" endtime="20221220 11:28:26.988"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>API_Testing</arg>
+<arg>https://${url_tedge}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20221220 11:28:26.988" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10651e610&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20221220 11:28:26.988" endtime="20221220 11:28:26.988"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${Get_Response}</var>
+<arg>API_Testing</arg>
+<arg>identity/externalIds/c8y_Serial/${PARENT_NAME}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20221220 11:28:27.452" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/identity/externalIds/c8y_Serial/CH_DEV_CONF_MGMT 
+ path_url=/identity/externalIds/c8y_Serial/CH_DEV_CONF_MGMT 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
+ body=None 
+ </msg>
+<msg timestamp="20221220 11:28:27.453" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/identity/externalIds/c8y_Serial/CH_DEV_CONF_MGMT 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 20 Dec 2022 10:28:27 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.externalid+json;charset=UTF-8;ver=0.9', 'Content-Length': '276', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
+ body={"managedObject":{"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202","id":"41202"},"externalId":"CH_DEV_CONF_MGMT","self":"https://qaenvironment.eu-latest.cumulocity.com/identity/externalIds/c8y_Serial/CH_DEV_CONF_MGMT","type":"c8y_Serial"} 
+ </msg>
+<msg timestamp="20221220 11:28:27.453" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20221220 11:28:27.453" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221220 11:28:26.988" endtime="20221220 11:28:27.454"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${Get_Response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20221220 11:28:27.456" level="INFO">${json_response} = {'managedObject': {'self': 'https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202', 'id': '41202'}, 'externalId': 'CH_DEV_CONF_MGMT', 'self': 'https://qaenvironment.eu-latest.c...</msg>
+<status status="PASS" starttime="20221220 11:28:27.454" endtime="20221220 11:28:27.456"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>@{id}</var>
+<arg>${json_response}</arg>
+<arg>$..id</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20221220 11:28:27.483" level="INFO">@{id} = [ 41202 ]</msg>
+<status status="PASS" starttime="20221220 11:28:27.456" endtime="20221220 11:28:27.483"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${parent_id}</var>
+<arg>${id}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20221220 11:28:27.483" level="INFO">${parent_id} = 41202</msg>
+<status status="PASS" starttime="20221220 11:28:27.483" endtime="20221220 11:28:27.483"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${parent_id}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20221220 11:28:27.483" level="INFO">${parent_id} = 41202</msg>
+<status status="PASS" starttime="20221220 11:28:27.483" endtime="20221220 11:28:27.483"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:26.987" endtime="20221220 11:28:27.483"/>
+</kw>
+<kw name="GET Parent name">
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>${user}</arg>
+<arg>${pass}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20221220 11:28:27.484" level="INFO">${auth} = ['systest_preparation', '***']</msg>
+<status status="PASS" starttime="20221220 11:28:27.484" endtime="20221220 11:28:27.484"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>API_Testing</arg>
+<arg>https://${url_tedge}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20221220 11:28:27.484" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10653c850&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20221220 11:28:27.484" endtime="20221220 11:28:27.484"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${Get_Response}</var>
+<arg>API_Testing</arg>
+<arg>/identity/globalIds/${parent_id}/externalIds</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20221220 11:28:27.639" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/identity/globalIds/41202/externalIds 
+ path_url=/identity/globalIds/41202/externalIds 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
+ body=None 
+ </msg>
+<msg timestamp="20221220 11:28:27.639" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/identity/globalIds/41202/externalIds 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 20 Dec 2022 10:28:27 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.externalidcollection+json;charset=UTF-8;ver=0.9', 'Content-Length': '387', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
+ body={"externalIds":[{"managedObject":{"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202","id":"41202"},"externalId":"CH_DEV_CONF_MGMT","self":"https://qaenvironment.eu-latest.cumulocity.com/identity/externalIds/c8y_Serial/CH_DEV_CONF_MGMT","type":"c8y_Serial"}],"self":"https://qaenvironment.eu-latest.cumulocity.com/identity/globalIds/41202/externalIds"} 
+ </msg>
+<msg timestamp="20221220 11:28:27.639" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20221220 11:28:27.640" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221220 11:28:27.484" endtime="20221220 11:28:27.640"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${Get_Response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20221220 11:28:27.642" level="INFO">${json_response} = {'externalIds': [{'managedObject': {'self': 'https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202', 'id': '41202'}, 'externalId': 'CH_DEV_CONF_MGMT', 'self': 'https://qaenviro...</msg>
+<status status="PASS" starttime="20221220 11:28:27.640" endtime="20221220 11:28:27.642"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>@{pd_name}</var>
+<arg>${json_response}</arg>
+<arg>$..externalId</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20221220 11:28:27.670" level="INFO">@{pd_name} = [ CH_DEV_CONF_MGMT ]</msg>
+<status status="PASS" starttime="20221220 11:28:27.642" endtime="20221220 11:28:27.670"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${pardev_name}</var>
+<arg>${pd_name}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20221220 11:28:27.670" level="INFO">${pardev_name} = CH_DEV_CONF_MGMT</msg>
+<status status="PASS" starttime="20221220 11:28:27.670" endtime="20221220 11:28:27.670"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${pardev_name}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20221220 11:28:27.671" level="INFO">${pardev_name} = CH_DEV_CONF_MGMT</msg>
+<status status="PASS" starttime="20221220 11:28:27.670" endtime="20221220 11:28:27.671"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:27.483" endtime="20221220 11:28:27.671"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:26.984" endtime="20221220 11:28:27.671"/>
+</test>
+<test id="s1-t6" name="Child device bootstrapping" line="61">
+<kw name="Startup child device">
+<kw name="Child Connection">
+<kw name="Open Connection" library="SSHLibrary">
+<arg>${CHILD_IP}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" starttime="20221220 11:28:27.681" endtime="20221220 11:28:27.681"/>
+</kw>
+<kw name="Login" library="SSHLibrary">
+<arg>pi</arg>
+<arg>thinedge</arg>
+<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
+<msg timestamp="20221220 11:28:27.682" level="INFO">Logging into '192.168.1.110:22' as 'pi'.</msg>
+<msg timestamp="20221220 11:28:29.182" level="INFO">Read output: Linux raspberrypi 5.15.61-v8+ #1579 SMP PREEMPT Fri Aug 26 11:16:44 BST 2022 aarch64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Tue Dec 20 10:28:25 2022 from 192.168.1.4
+
+Wi-Fi is currently blocked by rfkill.
+Use raspi-config to set the country before use.
+
+[?2004h(pi:110) pi@raspberrypi:~$</msg>
+<status status="PASS" starttime="20221220 11:28:27.681" endtime="20221220 11:28:29.183"/>
+</kw>
+<status status="PASS" starttime="20221220 11:28:27.681" endtime="20221220 11:28:29.183"/>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>printf ${config} &gt; c8y-configuration-plugin</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:29.185" level="INFO">Executing command 'printf "files = [
+	 { path = '/home/pi/config1', type = 'config1' },
+ ]
+" &gt; c8y-configuration-plugin'.</msg>
+<msg timestamp="20221220 11:28:29.204" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20221220 11:28:29.204" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20221220 11:28:29.184" endtime="20221220 11:28:29.204"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20221220 11:28:29.204" endtime="20221220 11:28:29.206"/>
+</kw>
+<kw name="Write" library="SSHLibrary">
+<arg>curl -X PUT http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/c8y-configuration-plugin \\</arg>
+<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
+<msg timestamp="20221220 11:28:29.245" level="INFO">curl -X PUT http://217.160.212.171:8000/tedge/file-transfer/CD112809/c8y-configuration-plugin \</msg>
+<status status="PASS" starttime="20221220 11:28:29.207" endtime="20221220 11:28:29.245"/>
+</kw>
+<kw name="Write" library="SSHLibrary">
+<arg>--data-binary @- &lt;&lt; EOF</arg>
+<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
+<msg timestamp="20221220 11:28:29.248" level="INFO">[?2004l[?2004h&gt; --data-binary @- &lt;&lt; EOF</msg>
+<status status="PASS" starttime="20221220 11:28:29.245" endtime="20221220 11:28:29.248"/>
+</kw>
+<kw name="Write" library="SSHLibrary">
+<arg>files = [</arg>
+<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
+<msg timestamp="20221220 11:28:29.250" level="INFO">[?2004l[?2004h&gt; files = [</msg>
+<status status="PASS" starttime="20221220 11:28:29.248" endtime="20221220 11:28:29.250"/>
+</kw>
+<kw name="Write" library="SSHLibrary">
+<arg>{ path = '/home/pi/config1', type = 'config1' },</arg>
+<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
+<msg timestamp="20221220 11:28:29.253" level="INFO">[?2004l[?2004h&gt; { path = '/home/pi/config1', type = 'config1' },</msg>
+<status status="PASS" starttime="20221220 11:28:29.250" endtime="20221220 11:28:29.253"/>
+</kw>
+<kw name="Write" library="SSHLibrary">
+<arg>]</arg>
+<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
+<msg timestamp="20221220 11:28:29.255" level="INFO">[?2004l[?2004h&gt; ]</msg>
+<status status="PASS" starttime="20221220 11:28:29.253" endtime="20221220 11:28:29.255"/>
+</kw>
+<kw name="Write" library="SSHLibrary">
+<arg>EOF</arg>
+<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
+<msg timestamp="20221220 11:28:29.257" level="INFO">[?2004l[?2004h&gt; EOF</msg>
+<status status="PASS" starttime="20221220 11:28:29.255" endtime="20221220 11:28:29.257"/>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<arg>sudo apt-get install mosquitto-clients -y</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:29.257" level="INFO">Executing command 'sudo apt-get install mosquitto-clients -y'.</msg>
+<msg timestamp="20221220 11:28:33.763" level="INFO">Command exited with return code 0.</msg>
+<status status="PASS" starttime="20221220 11:28:29.257" endtime="20221220 11:28:33.763"/>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>mosquitto_pub -h ${PARENT_IP} -t "tedge/${CHILD}${topic_snap} -m ${payl_notify}</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20221220 11:28:33.765" level="INFO">Executing command 'mosquitto_pub -h 217.160.212.171 -t "tedge/CD112809/commands/res/config_snapshot" -m '{"status": null, "path": "", "type":"c8y-configuration-plugin", "reason": null}''.</msg>
+<msg timestamp="20221220 11:30:43.247" level="INFO">Command exited with return code 1.</msg>
+<msg timestamp="20221220 11:30:43.248" level="INFO">${rc} = 1</msg>
+<status status="PASS" starttime="20221220 11:28:33.764" endtime="20221220 11:30:43.248"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<msg timestamp="20221220 11:30:43.249" level="FAIL">1 != 0</msg>
+<status status="FAIL" starttime="20221220 11:30:43.248" endtime="20221220 11:30:43.249"/>
+</kw>
+<kw name="Close Connection" library="SSHLibrary">
+<doc>Closes the current connection.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:43.249" endtime="20221220 11:30:43.250"/>
+</kw>
+<status status="FAIL" starttime="20221220 11:28:27.680" endtime="20221220 11:30:43.250"/>
+</kw>
+<status status="FAIL" starttime="20221220 11:28:27.675" endtime="20221220 11:30:43.252">1 != 0</status>
+</test>
+<test id="s1-t7" name="Get child credentials" line="63">
+<kw name="Get Child ID">
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>${user}</arg>
+<arg>${pass}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20221220 11:30:43.260" level="INFO">${auth} = ['systest_preparation', '***']</msg>
+<status status="PASS" starttime="20221220 11:30:43.259" endtime="20221220 11:30:43.260"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>API_Testing</arg>
+<arg>https://${url_tedge}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20221220 11:30:43.260" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x105eed590&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20221220 11:30:43.260" endtime="20221220 11:30:43.260"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${Get_Response}</var>
+<arg>API_Testing</arg>
+<arg>/inventory/managedObjects/${parent_id}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20221220 11:30:45.671" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202 
+ path_url=/inventory/managedObjects/41202 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
+ body=None 
+ </msg>
+<msg timestamp="20221220 11:30:45.672" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 20 Dec 2022 10:30:45 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.managedobject+json;charset=UTF-8;ver=0.9', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Content-Encoding': 'gzip', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
+ body={"additionParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202/additionParents"},"owner":"device_CH_DEV_CONF_MGMT","childDevices":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202/childDevices"},"childAssets":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202/childAssets"},"creationTime":"2022-12-20T07:53:03.043Z","type":"thin-edge.io","lastUpdated":"2022-12-20T10:28:25.728Z","childAdditions":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202/childAdditions"},"name":"CH_DEV_CONF_MGMT","assetParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202/assetParents"},"deviceParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202/deviceParents"},"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202","id":"41202","c8y_Agent":{"name":"thin-edge.io","version":"0.8.1-121-gba41ee37","url":"https://thin-edge.io"},"com_cumulocity_model_Agent":{},"c8y_IsDevice":{},"c8y_SupportedOperations":["c8y_DownloadConfigFile","c8y_LogfileRequest","c8y_Restart","c8y_SoftwareUpdate","c8y_UploadConfigFile"],"c8y_SoftwareList":[{"name":"adduser","version":"3.118::apt","url":""},{"name":"apt-utils","version":"2.2.4::apt","url":""},{"name":"apt","version":"2.2.4::apt","url":""},{"name":"base-files","version":"11.1+deb11u5::apt","url":""},{"name":"base-passwd","version":"3.5.51::apt","url":""},{"name":"bash","version":"5.1-2+deb11u1::apt","url":""},{"name":"bsdutils","version":"1:2.36.1-8+deb11u1::apt","url":""},{"name":"busybox","version":"1:1.30.1-6+b3::apt","url":""},{"name":"c8y-configuration-plugin","version":"0.8.1-121-gba41ee37::apt","url":""},{"name":"c8y-log-plugin","version":"0.8.1-121-gba41ee37::apt","url":""},{"name":"cloud-init","version":"20.4.1-2+deb11u1::apt","url":""},{"name":"collectd-core","version":"5.12.0-7::apt","url":""},{"name":"console-setup","version":"1.205::apt","url":""},{"name":"coreutils","version":"8.32-4+b1::apt","url":""},{"name":"cpio","version":"2.13+dfsg-4::apt","url":""},{"name":"cron","version":"3.0pl1-137::apt","url":""},{"name":"curl","version":"7.74.0-1.3+deb11u3::apt","url":""},{"name":"dash","version":"0.5.11+git20200708+dd9ef66-5::apt","url":""},{"name":"debconf-i18n","version":"1.5.77::apt","url":""},{"name":"debconf","version":"1.5.77::apt","url":""},{"name":"debian-archive-keyring","version":"2021.1.1::apt","url":""},{"name":"debianutils","version":"4.11.2::apt","url":""},{"name":"diffutils","version":"1:3.7-5::apt","url":""},{"name":"discover","version":"2.1.2-8::apt","url":""},{"name":"dmidecode","version":"3.3-2::apt","url":""},{"name":"dmsetup","version":"2:1.02.175-2.1::apt","url":""},{"name":"dpkg","version":"1.20.12::apt","url":""},{"name":"e2fsprogs","version":"1.46.2-2::apt","url":""},{"name":"eject","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"fdisk","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"findutils","version":"4.8.0-1::apt","url":""},{"name":"gcc-10-base","version":"10.2.1-6::apt","url":""},{"name":"gcc-9-base","version":"9.3.0-22::apt","url":""},{"name":"gpgv","version":"2.2.27-2+deb11u2::apt","url":""},{"name":"grep","version":"3.6-1::apt","url":""},{"name":"grub-common","version":"2.06-3~deb11u4::apt","url":""},{"name":"grub-pc","version":"2.06-3~deb11u4::apt","url":""},{"name":"gzip","version":"1.10-4+deb11u1::apt","url":""},{"name":"hostname","version":"3.23::apt","url":""},{"name":"ifupdown","version":"0.8.36::apt","url":""},{"name":"init-system-helpers","version":"1.60::apt","url":""},{"name":"init","version":"1.60::apt","url":""},{"name":"initramfs-tools","version":"0.140::apt","url":""},{"name":"iproute2","version":"5.10.0-4::apt","url":""},{"name":"iputils-ping","version":"3:20210202-1::apt","url":""},{"name":"isc-dhcp-client","version":"4.4.1-2.3+deb11u1::apt","url":""},{"name":"isc-dhcp-common","version":"4.4.1-2.3+deb11u1::apt","url":""},{"name":"keyboard-configuration","version":"1.205::apt","url":""},{"name":"kmod","version":"28-1::apt","url":""},{"name":"laptop-detect","version":"0.16::apt","url":""},{"name":"less","version":"551-2::apt","url":""},{"name":"libacl1","version":"2.2.53-10::apt","url":""},{"name":"libapparmor1","version":"2.13.6-10::apt","url":""},{"name":"libapt-pkg6.0","version":"2.2.4::apt","url":""},{"name":"libargon2-1","version":"0~20171227-0.2::apt","url":""},{"name":"libattr1","version":"1:2.4.48-6::apt","url":""},{"name":"libaudit-common","version":"1:3.0-2::apt","url":""},{"name":"libaudit1","version":"1:3.0-2::apt","url":""},{"name":"libblkid1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libbpf0","version":"1:0.3-2::apt","url":""},{"name":"libbsd0","version":"0.11.3-1::apt","url":""},{"name":"libbz2-1.0","version":"1.0.8-4::apt","url":""},{"name":"libc-bin","version":"2.31-13+deb11u5::apt","url":""},{"name":"libc6","version":"2.31-13+deb11u5::apt","url":""},{"name":"libcap-ng0","version":"0.7.9-2.2+b1::apt","url":""},{"name":"libcap2-bin","version":"1:2.44-1::apt","url":""},{"name":"libcap2","version":"1:2.44-1::apt","url":""},{"name":"libcom-err2","version":"1.46.2-2::apt","url":""},{"name":"libcrypt1","version":"1:4.4.18-4::apt","url":""},{"name":"libcryptsetup12","version":"2:2.3.7-1+deb11u1::apt","url":""},{"name":"libdb5.3","version":"5.3.28+dfsg1-0.8::apt","url":""},{"name":"libdebconfclient0","version":"0.260::apt","url":""},{"name":"libdevmapper1.02.1","version":"2:1.02.175-2.1::apt","url":""},{"name":"libdns-export1110","version":"1:9.11.19+dfsg-2.1::apt","url":""},{"name":"libedit2","version":"3.1-20191231-2+b1::apt","url":""},{"name":"libelf1","version":"0.183-1::apt","url":""},{"name":"libestr0","version":"0.1.10-2.1+b1::apt","url":""},{"name":"libext2fs2","version":"1.46.2-2::apt","url":""},{"name":"libfastjson4","version":"0.99.9-1::apt","url":""},{"name":"libfdisk1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libffi7","version":"3.3-6::apt","url":""},{"name":"libgcc-s1","version":"10.2.1-6::apt","url":""},{"name":"libgcrypt20","version":"1.8.7-6::apt","url":""},{"name":"libgmp10","version":"2:6.2.1+dfsg-1+deb11u1::apt","url":""},{"name":"libgnutls30","version":"3.7.1-5+deb11u2::apt","url":""},{"name":"libgpg-error0","version":"1.38-2::apt","url":""},{"name":"libgssapi-krb5-2","version":"1.18.3-6+deb11u3::apt","url":""},{"name":"libhogweed6","version":"3.7.3-1::apt","url":""},{"name":"libidn2-0","version":"2.3.0-5::apt","url":""},{"name":"libip4tc2","version":"1.8.7-1::apt","url":""},{"name":"libisc-export1105","version":"1:9.11.19+dfsg-2.1::apt","url":""},{"name":"libjansson4","version":"2.13.1-1.1::apt","url":""},{"name":"libjson-c5","version":"0.15-2::apt","url":""},{"name":"libk5crypto3","version":"1.18.3-6+deb11u3::apt","url":""},{"name":"libkeyutils1","version":"1.6.1-2::apt","url":""},{"name":"libkmod2","version":"28-1::apt","url":""},{"name":"libkrb5-3","version":"1.18.3-6+deb11u3::apt","url":""},{"name":"libkrb5support0","version":"1.18.3-6+deb11u3::apt","url":""},{"name":"liblocale-gettext-perl","version":"1.07-4+b1::apt","url":""},{"name":"liblognorm5","version":"2.0.5-1.1::apt","url":""},{"name":"liblz4-1","version":"1.9.3-2::apt","url":""},{"name":"liblzma5","version":"5.2.5-2.1~deb11u1::apt","url":""},{"name":"libmd0","version":"1.0.3-3::apt","url":""},{"name":"libmnl0","version":"1.0.4-3::apt","url":""},{"name":"libmosquitto1","version":"2.0.11-1::apt","url":""},{"name":"libmount1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libncurses6","version":"6.2+20201114-2::apt","url":""},{"name":"libncursesw6","version":"6.2+20201114-2::apt","url":""},{"name":"libnettle8","version":"3.7.3-1::apt","url":""},{"name":"libnewt0.52","version":"0.52.21-4+b3::apt","url":""},{"name":"libnftables1","version":"0.9.8-3.1::apt","url":""},{"name":"libnftnl11","version":"1.1.9-1::apt","url":""},{"name":"libnsl2","version":"1.3.0-2::apt","url":""},{"name":"libp11-kit0","version":"0.23.22-1::apt","url":""},{"name":"libpam-modules-bin","version":"1.4.0-9+deb11u1::apt","url":""},{"name":"libpam-modules","version":"1.4.0-9+deb11u1::apt","url":""},{"name":"libpam-runtime","version":"1.4.0-9+deb11u1::apt","url":""},{"name":"libpam0g","version":"1.4.0-9+deb11u1::apt","url":""},{"name":"libpcre2-8-0","version":"10.36-2+deb11u1::apt","url":""},{"name":"libpcre3","version":"2:8.39-13::apt","url":""},{"name":"libpopt0","version":"1.18-2::apt","url":""},{"name":"libprocps8","version":"2:3.3.17-5::apt","url":""},{"name":"libreadline8","version":"8.1-1::apt","url":""},{"name":"libseccomp2","version":"2.5.1-1+deb11u1::apt","url":""},{"name":"libselinux1","version":"3.1-3::apt","url":""},{"name":"libsemanage-common","version":"3.1-1::apt","url":""},{"name":"libsemanage1","version":"3.1-1+b2::apt","url":""},{"name":"libsepol1","version":"3.1-1::apt","url":""},{"name":"libslang2","version":"2.3.2-5::apt","url":""},{"name":"libsmartcols1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libss2","version":"1.46.2-2::apt","url":""},{"name":"libssl1.1","version":"1.1.1n-0+deb11u3::apt","url":""},{"name":"libstdc++6","version":"10.2.1-6::apt","url":""},{"name":"libsystemd0","version":"247.3-7+deb11u1::apt","url":""},{"name":"libtasn1-6","version":"4.16.0-2::apt","url":""},{"name":"libtext-charwidth-perl","version":"0.04-10+b1::apt","url":""},{"name":"libtext-iconv-perl","version":"1.7-7+b1::apt","url":""},{"name":"libtext-wrapi18n-perl","version":"0.06-9::apt","url":""},{"name":"libtinfo6","version":"6.2+20201114-2::apt","url":""},{"name":"libtirpc-common","version":"1.3.1-1+deb11u1::apt","url":""},{"name":"libtirpc3","version":"1.3.1-1+deb11u1::apt","url":""},{"name":"libudev1","version":"247.3-7+deb11u1::apt","url":""},{"name":"libunistring2","version":"0.9.10-4::apt","url":""},{"name":"libuuid1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libxtabl... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg timestamp="20221220 11:30:45.673" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20221220 11:30:45.673" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221220 11:30:43.260" endtime="20221220 11:30:45.673"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${Get_Response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20221220 11:30:45.676" level="INFO">${json_response} = {'additionParents': {'references': [], 'self': 'https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/41202/additionParents'}, 'owner': 'device_CH_DEV_CONF_MGMT', 'childDevices': {'r...</msg>
+<status status="PASS" starttime="20221220 11:30:45.674" endtime="20221220 11:30:45.676"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>@{id}</var>
+<arg>${json_response}</arg>
+<arg>$..id</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20221220 11:30:45.696" level="INFO">@{id} = [ 41202 ]</msg>
+<status status="PASS" starttime="20221220 11:30:45.676" endtime="20221220 11:30:45.696"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${child_id}</var>
+<arg>${id}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20221220 11:30:45.696" level="FAIL">IndexError: Given index 1 is out of the range 0-0.</msg>
+<status status="FAIL" starttime="20221220 11:30:45.696" endtime="20221220 11:30:45.696"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${child_id}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.696" endtime="20221220 11:30:45.696"/>
+</kw>
+<status status="FAIL" starttime="20221220 11:30:43.259" endtime="20221220 11:30:45.697"/>
+</kw>
+<kw name="GET Child name">
+<status status="NOT RUN" starttime="20221220 11:30:45.697" endtime="20221220 11:30:45.697"/>
+</kw>
+<kw name="Validate child Name">
+<status status="NOT RUN" starttime="20221220 11:30:45.697" endtime="20221220 11:30:45.697"/>
+</kw>
+<status status="FAIL" starttime="20221220 11:30:43.255" endtime="20221220 11:30:45.697">IndexError: Given index 1 is out of the range 0-0.</status>
+</test>
+<test id="s1-t8" name="Snapshot from device" line="67">
+<kw name="Request snapshot from child device">
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_snap}</var>
+<arg>{"deviceId":"${child_id}","description":"Retrieve config1 configuration snapshot from device ${CHILD}","c8y_UploadConfigFile":{"type":"config1"}}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20221220 11:30:45.704" level="FAIL">Variable '${child_id}' not found. Did you mean:
+    ${CHILD_IP}
+    ${CHILD}</msg>
+<status status="FAIL" starttime="20221220 11:30:45.703" endtime="20221220 11:30:45.704"/>
+</kw>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${PARENT_IP}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.704" endtime="20221220 11:30:45.704"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>tedge/${CHILD}/commands/req/config_snapshot</arg>
+<arg>qos=1</arg>
+<arg>timeout=0</arg>
+<arg>limit=0</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.704" endtime="20221220 11:30:45.704"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>${user}</arg>
+<arg>${pass}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.704" endtime="20221220 11:30:45.704"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>API_Testing</arg>
+<arg>https://${url_tedge}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.704" endtime="20221220 11:30:45.704"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${Get_Response}</var>
+<arg>API_Testing</arg>
+<arg>/devicecontrol/operations</arg>
+<arg>${json_snap}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.704" endtime="20221220 11:30:45.704"/>
+</kw>
+<kw name="Listen" library="MQTTLibrary">
+<var>@{listen}</var>
+<arg>tedge/${CHILD}/commands/req/config_snapshot</arg>
+<arg>timeout=20</arg>
+<arg>limit=1</arg>
+<doc>Listen to a topic and return a list of message payloads received
+    within the specified time. Requires an async Subscribe to have been called previously.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.704" endtime="20221220 11:30:45.704"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>@{listen}</arg>
+<arg>{"url":"http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/config_snapshot/config1","path":"/home/pi/config1","type":"config1"}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.704" endtime="20221220 11:30:45.704"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>${user}</arg>
+<arg>${pass}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.705" endtime="20221220 11:30:45.705"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>API_Testing</arg>
+<arg>https://${url_tedge}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.705" endtime="20221220 11:30:45.705"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${Get_Response}</var>
+<arg>API_Testing</arg>
+<arg>/devicecontrol/operations</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.705" endtime="20221220 11:30:45.705"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${Get_Response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.705" endtime="20221220 11:30:45.705"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>@{pd_name}</var>
+<arg>${json_response}</arg>
+<arg>$..status</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.705" endtime="20221220 11:30:45.705"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${first}</var>
+<arg>${pd_name}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.705" endtime="20221220 11:30:45.705"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${second}</var>
+<arg>${pd_name}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.705" endtime="20221220 11:30:45.705"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${third}</var>
+<arg>${pd_name}</arg>
+<arg>2</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.705" endtime="20221220 11:30:45.705"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${fourth}</var>
+<arg>${pd_name}</arg>
+<arg>3</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.706" endtime="20221220 11:30:45.706"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${first}</arg>
+<arg>PENDING</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.706" endtime="20221220 11:30:45.706"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<msg timestamp="20221220 11:30:45.706" level="INFO">No MQTT Client instance found so nothing to disconnect from.</msg>
+<status status="PASS" starttime="20221220 11:30:45.706" endtime="20221220 11:30:45.706"/>
+</kw>
+<status status="FAIL" starttime="20221220 11:30:45.703" endtime="20221220 11:30:45.706"/>
+</kw>
+<kw name="Child device response on snapshot request">
+<status status="NOT RUN" starttime="20221220 11:30:45.706" endtime="20221220 11:30:45.706"/>
+</kw>
+<kw name="No response from child device on snapshot request">
+<status status="NOT RUN" starttime="20221220 11:30:45.707" endtime="20221220 11:30:45.707"/>
+</kw>
+<status status="FAIL" starttime="20221220 11:30:45.699" endtime="20221220 11:30:45.707">Variable '${child_id}' not found. Did you mean:
+    ${CHILD_IP}
+    ${CHILD}</status>
+</test>
+<test id="s1-t9" name="Child device config update" line="71">
+<kw name="Send configuration to device">
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_conf}</var>
+<arg>{"deviceId":"${child_id}","description":"Send configuration snapshot config1 of configuration type config1 to device ${CHILD}","c8y_DownloadConfigFile":{"url":"https://${url_tedge}/inventory/binaries/21315","type":"config1"}}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20221220 11:30:45.712" level="FAIL">Variable '${child_id}' not found. Did you mean:
+    ${CHILD_IP}
+    ${CHILD}</msg>
+<status status="FAIL" starttime="20221220 11:30:45.711" endtime="20221220 11:30:45.712"/>
+</kw>
+<kw name="Connect" library="MQTTLibrary">
+<arg>${PARENT_IP}</arg>
+<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
+and subscribe keywords.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.712" endtime="20221220 11:30:45.712"/>
+</kw>
+<kw name="Subscribe" library="MQTTLibrary">
+<var>@{messages}</var>
+<arg>tedge/${CHILD}/commands/req/config_update</arg>
+<arg>qos=1</arg>
+<arg>timeout=0</arg>
+<arg>limit=0</arg>
+<doc>Subscribe to a topic and return a list of message payloads received
+    within the specified time.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.712" endtime="20221220 11:30:45.712"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>${user}</arg>
+<arg>${pass}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.712" endtime="20221220 11:30:45.713"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>API_Testing</arg>
+<arg>https://${url_tedge}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.713" endtime="20221220 11:30:45.713"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${Get_Response}</var>
+<arg>API_Testing</arg>
+<arg>/devicecontrol/operations</arg>
+<arg>${json_conf}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.713" endtime="20221220 11:30:45.713"/>
+</kw>
+<kw name="Listen" library="MQTTLibrary">
+<var>@{listen}</var>
+<arg>tedge/${CHILD}/commands/req/config_update</arg>
+<arg>timeout=20</arg>
+<arg>limit=1</arg>
+<doc>Listen to a topic and return a list of message payloads received
+    within the specified time. Requires an async Subscribe to have been called previously.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.713" endtime="20221220 11:30:45.713"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>@{listen}</arg>
+<arg>{"url":"http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/config_update/config1","path":"/home/pi/config1","type":"config1"}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.713" endtime="20221220 11:30:45.713"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>${user}</arg>
+<arg>${pass}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.713" endtime="20221220 11:30:45.713"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>API_Testing</arg>
+<arg>https://${url_tedge}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.713" endtime="20221220 11:30:45.713"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${Get_Response}</var>
+<arg>API_Testing</arg>
+<arg>/devicecontrol/operations</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.713" endtime="20221220 11:30:45.713"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${Get_Response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.713" endtime="20221220 11:30:45.713"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>@{pd_name}</var>
+<arg>${json_response}</arg>
+<arg>$..status</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.713" endtime="20221220 11:30:45.713"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${first}</var>
+<arg>${pd_name}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.713" endtime="20221220 11:30:45.713"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${second}</var>
+<arg>${pd_name}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.714" endtime="20221220 11:30:45.714"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${third}</var>
+<arg>${pd_name}</arg>
+<arg>2</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.714" endtime="20221220 11:30:45.714"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${fourth}</var>
+<arg>${pd_name}</arg>
+<arg>3</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.714" endtime="20221220 11:30:45.714"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${second}</arg>
+<arg>DELIVERED</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="NOT RUN" starttime="20221220 11:30:45.714" endtime="20221220 11:30:45.714"/>
+</kw>
+<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
+<doc>Disconnect from MQTT Broker.</doc>
+<msg timestamp="20221220 11:30:45.714" level="INFO">No MQTT Client instance found so nothing to disconnect from.</msg>
+<status status="PASS" starttime="20221220 11:30:45.714" endtime="20221220 11:30:45.714"/>
+</kw>
+<status status="FAIL" starttime="20221220 11:30:45.711" endtime="20221220 11:30:45.714"/>
+</kw>
+<kw name="Child device response on update request">
+<status status="NOT RUN" starttime="20221220 11:30:45.714" endtime="20221220 11:30:45.714"/>
+</kw>
+<kw name="No response from child device on config update">
+<status status="NOT RUN" starttime="20221220 11:30:45.714" endtime="20221220 11:30:45.714"/>
+</kw>
+<status status="FAIL" starttime="20221220 11:30:45.708" endtime="20221220 11:30:45.715">Variable '${child_id}' not found. Did you mean:
+    ${CHILD_IP}
+    ${CHILD}</status>
+</test>
+<status status="FAIL" starttime="20221220 11:28:03.887" endtime="20221220 11:30:45.716"/>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="5" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="4" fail="5" skip="0" id="s1" name="Child Conf Mgmt Plugin">Child Conf Mgmt Plugin</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
