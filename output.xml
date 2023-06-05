@@ -1,193 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 5.0.1 (Python 3.11.1 on darwin)" generated="20221220 12:57:49.711" rpa="false" schemaversion="3">
-<suite id="s1" name="Child Conf Mgmt Plugin" source="/Users/glis/GligorGit/tasks/child_conf_mgmt_plugin.robot">
-<test id="s1-t1" name="Create child device name" line="37">
-<kw name="Create Timestamp">
-<kw name="Get Current Date" library="DateTime">
-<var>${timestamp}</var>
-<arg>result_format=%H%M%S</arg>
-<doc>Returns current local or UTC time with an optional increment.</doc>
-<msg timestamp="20221220 12:57:54.057" level="INFO">${timestamp} = 125754</msg>
-<status status="PASS" starttime="20221220 12:57:54.057" endtime="20221220 12:57:54.060"/>
-</kw>
-<kw name="Set Suite Variable" library="BuiltIn">
-<arg>${timestamp}</arg>
-<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
-<msg timestamp="20221220 12:57:54.061" level="INFO">${timestamp} = 125754</msg>
-<status status="PASS" starttime="20221220 12:57:54.061" endtime="20221220 12:57:54.061"/>
-</kw>
-<status status="PASS" starttime="20221220 12:57:54.056" endtime="20221220 12:57:54.061"/>
-</kw>
-<kw name="Define Child Device name">
-<kw name="Set Variable" library="BuiltIn">
-<var>${CHILD}</var>
-<arg>CD${timestamp}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:57:54.062" level="INFO">${CHILD} = CD125754</msg>
-<status status="PASS" starttime="20221220 12:57:54.062" endtime="20221220 12:57:54.062"/>
-</kw>
-<kw name="Set Suite Variable" library="BuiltIn">
-<arg>${CHILD}</arg>
-<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
-<msg timestamp="20221220 12:57:54.062" level="INFO">${CHILD} = CD125754</msg>
-<status status="PASS" starttime="20221220 12:57:54.062" endtime="20221220 12:57:54.062"/>
-</kw>
-<status status="PASS" starttime="20221220 12:57:54.061" endtime="20221220 12:57:54.062"/>
-</kw>
-<status status="PASS" starttime="20221220 12:57:54.052" endtime="20221220 12:57:54.062"/>
-</test>
-<test id="s1-t2" name="Clean devices from the cloud" line="40">
-<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
-<arg>Remove all managedObjects from cloud</arg>
-<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
-<kw name="Remove all managedObjects from cloud">
-<kw name="Get all existing managedObjects">
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:57:54.067" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:57:54.067" endtime="20221220 12:57:54.067"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:57:54.067" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b431950&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:57:54.067" endtime="20221220 12:57:54.068"/>
-</kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>url=/inventory/managedObjects?fragmentType=c8y_IsDevice</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:57:54.302" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?fragmentType=c8y_IsDevice 
- path_url=/inventory/managedObjects?fragmentType=c8y_IsDevice 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:57:54.302" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?fragmentType=c8y_IsDevice 
- status=200, reason=OK 
- headers={'Date': 'Tue, 20 Dec 2022 11:57:54 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.managedobjectcollection+json;charset=UTF-8;ver=0.9', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Content-Encoding': 'gzip', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body={"next":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?pageSize=5&amp;fragmentType=c8y_IsDevice&amp;currentPage=2","self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?pageSize=5&amp;fragmentType=c8y_IsDevice&amp;currentPage=1","managedObjects":[{"additionParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/additionParents"},"owner":"device_CH_DEV_CONF_MGMT","childDevices":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/childDevices"},"childAssets":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/childAssets"},"creationTime":"2022-12-20T11:56:46.090Z","type":"thin-edge.io","lastUpdated":"2022-12-20T11:57:04.082Z","childAdditions":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/childAdditions"},"name":"CH_DEV_CONF_MGMT","assetParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/assetParents"},"deviceParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/deviceParents"},"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214","id":"40214","c8y_Agent":{"name":"thin-edge.io","version":"0.8.1","url":"https://thin-edge.io"},"com_cumulocity_model_Agent":{},"c8y_IsDevice":{},"c8y_SupportedOperations":["c8y_DownloadConfigFile","c8y_LogfileRequest","c8y_Restart","c8y_SoftwareUpdate","c8y_UploadConfigFile"],"c8y_SoftwareList":[{"name":"adduser","version":"3.118::apt","url":""},{"name":"apt-listchanges","version":"3.24::apt","url":""},{"name":"apt-utils","version":"2.2.4::apt","url":""},{"name":"apt","version":"2.2.4::apt","url":""},{"name":"avahi-daemon","version":"0.8-5+deb11u1::apt","url":""},{"name":"base-files","version":"11.1+deb11u5::apt","url":""},{"name":"base-passwd","version":"3.5.51::apt","url":""},{"name":"bash-completion","version":"1:2.11-2::apt","url":""},{"name":"bash","version":"5.1-2+deb11u1::apt","url":""},{"name":"bsdutils","version":"1:2.36.1-8+deb11u1::apt","url":""},{"name":"build-essential","version":"12.9::apt","url":""},{"name":"c8y-configuration-plugin","version":"0.8.1-125-g9eb87d44::apt","url":""},{"name":"c8y-log-plugin","version":"0.8.1-125-g9eb87d44::apt","url":""},{"name":"ca-certificates","version":"20210119::apt","url":""},{"name":"cifs-utils","version":"2:6.11-3.1+deb11u1::apt","url":""},{"name":"collectd-core","version":"5.12.0-7::apt","url":""},{"name":"console-setup","version":"1.205+rpt1::apt","url":""},{"name":"coreutils","version":"8.32-4::apt","url":""},{"name":"cpio","version":"2.13+dfsg-4::apt","url":""},{"name":"crda","version":"4.14+git20191112.9856751-1::apt","url":""},{"name":"cron","version":"3.0pl1-137::apt","url":""},{"name":"curl","version":"7.74.0-1.3+deb11u3::apt","url":""},{"name":"dash","version":"0.5.11+git20200708+dd9ef66-5::apt","url":""},{"name":"debconf-i18n","version":"1.5.77::apt","url":""},{"name":"debconf-utils","version":"1.5.77::apt","url":""},{"name":"debconf","version":"1.5.77::apt","url":""},{"name":"debian-archive-keyring","version":"2021.1.1::apt","url":""},{"name":"debianutils","version":"4.11.2::apt","url":""},{"name":"dhcpcd5","version":"1:8.1.2-1+rpt9::apt","url":""},{"name":"diffutils","version":"1:3.7-5::apt","url":""},{"name":"dmidecode","version":"3.3-2::apt","url":""},{"name":"dmsetup","version":"2:1.02.175-2.1::apt","url":""},{"name":"dosfstools","version":"4.2-1::apt","url":""},{"name":"dphys-swapfile","version":"20100506-7+rpt1::apt","url":""},{"name":"dpkg","version":"1.20.12::apt","url":""},{"name":"e2fsprogs","version":"1.46.2-2::apt","url":""},{"name":"ed","version":"1.17-1::apt","url":""},{"name":"ethtool","version":"1:5.9-1::apt","url":""},{"name":"fake-hwclock","version":"0.12::apt","url":""},{"name":"fbset","version":"2.1-32::apt","url":""},{"name":"fdisk","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"findutils","version":"4.8.0-1::apt","url":""},{"name":"firmware-atheros","version":"1:20210315-3+rpt7::apt","url":""},{"name":"firmware-brcm80211","version":"1:20210315-3+rpt7::apt","url":""},{"name":"firmware-libertas","version":"1:20210315-3+rpt7::apt","url":""},{"name":"firmware-misc-nonfree","version":"1:20210315-3+rpt7::apt","url":""},{"name":"firmware-realtek","version":"1:20210315-3+rpt7::apt","url":""},{"name":"gcc-10-base","version":"10.2.1-6::apt","url":""},{"name":"gcc-9-base","version":"9.3.0-22::apt","url":""},{"name":"gdb","version":"10.1-1.7::apt","url":""},{"name":"git","version":"1:2.30.2-1::apt","url":""},{"name":"gpgv","version":"2.2.27-2+deb11u2::apt","url":""},{"name":"grep","version":"3.6-1::apt","url":""},{"name":"gzip","version":"1.10-4+deb11u1::apt","url":""},{"name":"hardlink","version":"0.3.2+b1::apt","url":""},{"name":"hostname","version":"3.23::apt","url":""},{"name":"htop","version":"3.0.5-7::apt","url":""},{"name":"ifupdown","version":"0.8.36::apt","url":""},{"name":"init-system-helpers","version":"1.60::apt","url":""},{"name":"init","version":"1.60::apt","url":""},{"name":"iproute2","version":"5.10.0-4::apt","url":""},{"name":"iputils-ping","version":"3:20210202-1::apt","url":""},{"name":"isc-dhcp-client","version":"4.4.1-2.3+deb11u1::apt","url":""},{"name":"isc-dhcp-common","version":"4.4.1-2.3+deb11u1::apt","url":""},{"name":"keyboard-configuration","version":"1.205+rpt1::apt","url":""},{"name":"kmod","version":"28-1::apt","url":""},{"name":"less","version":"551-2::apt","url":""},{"name":"libacl1","version":"2.2.53-10::apt","url":""},{"name":"libapparmor1","version":"2.13.6-10::apt","url":""},{"name":"libapt-pkg6.0","version":"2.2.4::apt","url":""},{"name":"libargon2-1","version":"0~20171227-0.2::apt","url":""},{"name":"libattr1","version":"1:2.4.48-6::apt","url":""},{"name":"libaudit-common","version":"1:3.0-2::apt","url":""},{"name":"libaudit1","version":"1:3.0-2::apt","url":""},{"name":"libblkid1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libbpf0","version":"1:0.3-2::apt","url":""},{"name":"libbsd0","version":"0.11.3-1::apt","url":""},{"name":"libbz2-1.0","version":"1.0.8-4::apt","url":""},{"name":"libc-bin","version":"2.31-13+rpt2+rpi1+deb11u5::apt","url":""},{"name":"libc6","version":"2.31-13+rpt2+rpi1+deb11u5::apt","url":""},{"name":"libcamera-apps-lite","version":"0~git20221109+73ab09f-1::apt","url":""},{"name":"libcap-ng0","version":"0.7.9-2.2+b1::apt","url":""},{"name":"libcap2-bin","version":"1:2.44-1::apt","url":""},{"name":"libcap2","version":"1:2.44-1::apt","url":""},{"name":"libcom-err2","version":"1.46.2-2::apt","url":""},{"name":"libcrypt1","version":"1:4.4.18-4::apt","url":""},{"name":"libcryptsetup12","version":"2:2.3.7-1+deb11u1::apt","url":""},{"name":"libdb5.3","version":"5.3.28+dfsg1-0.8::apt","url":""},{"name":"libdebconfclient0","version":"0.260::apt","url":""},{"name":"libdevmapper1.02.1","version":"2:1.02.175-2.1::apt","url":""},{"name":"libdns-export1110","version":"1:9.11.19+dfsg-2.1::apt","url":""},{"name":"libedit2","version":"3.1-20191231-2+b1::apt","url":""},{"name":"libelf1","version":"0.183-1::apt","url":""},{"name":"libestr0","version":"0.1.10-2.1+b1::apt","url":""},{"name":"libext2fs2","version":"1.46.2-2::apt","url":""},{"name":"libfastjson4","version":"0.99.9-1::apt","url":""},{"name":"libfdisk1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libffi7","version":"3.3-6::apt","url":""},{"name":"libfreetype6-dev","version":"2.10.4+dfsg-1+deb11u1::apt","url":""},{"name":"libgcc-s1","version":"10.2.1-6::apt","url":""},{"name":"libgcrypt20","version":"1.8.7-6::apt","url":""},{"name":"libgmp10","version":"2:6.2.1+dfsg-1+deb11u1::apt","url":""},{"name":"libgnutls30","version":"3.7.1-5+deb11u2::apt","url":""},{"name":"libgpg-error0","version":"1.38-2::apt","url":""},{"name":"libgssapi-krb5-2","version":"1.18.3-6+deb11u2::apt","url":""},{"name":"libhogweed6","version":"3.7.3-1::apt","url":""},{"name":"libidn2-0","version":"2.3.0-5::apt","url":""},{"name":"libip4tc2","version":"1.8.7-1::apt","url":""},{"name":"libisc-export1105","version":"1:9.11.19+dfsg-2.1::apt","url":""},{"name":"libjansson4","version":"2.13.1-1.1::apt","url":""},{"name":"libjson-c5","version":"0.15-2::apt","url":""},{"name":"libk5crypto3","version":"1.18.3-6+deb11u2::apt","url":""},{"name":"libkeyutils1","version":"1.6.1-2::apt","url":""},{"name":"libkmod2","version":"28-1::apt","url":""},{"name":"libkrb5-3","version":"1.18.3-6+deb11u2::apt","url":""},{"name":"libkrb5support0","version":"1.18.3-6+deb11u2::apt","url":""},{"name":"liblocale-gettext-perl","version":"1.07-4+b1::apt","url":""},{"name":"liblognorm5","version":"2.0.5-1.1::apt","url":""},{"name":"liblz4-1","version":"1.9.3-2::apt","url":""},{"name":"liblzma5","version":"5.2.5-2.1~deb11u1::apt","url":""},{"name":"libmd0","version":"1.0.3-3::apt","url":""},{"name":"libmnl0","version":"1.0.4-3::apt","url":""},{"name":"libmosquitto1","version":"2.0.11-1::apt","url":""},{"name":"libmount1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libmtp-runtime","version":"1.1.17-3::apt","url":""},{"name":"libncurses6","version":"6.2+20201114-2::apt","url":""},{"name":"libncursesw6","version":"6.2+20201114-2::apt","url":""},{"name":"libnettle8","version":"3.7.3-1::apt","url":""},{"name":"libnewt0.52","version":"0.52.21-4+b3::apt","url":""},{"name":"libnftables1","version":"0.9.8-3.1::apt","url":""},{"name":"libnftnl11","version":"1.1.9-1::apt","url":""},{"name":"libnsl2","version":"1.3.0-2::apt","url":""},{"name":"libp11-kit0","version":"0.23.22-1::apt","url":""},{"name":"libpam-chksshpwd","version":"1.4.0-9+deb11u1+rpt2::apt","url":""},{"name":"libpam-modules-bin","version":"1.4.0-9+deb11u1+rpt2::apt","url":""},{"name":"libpam-modules","version":"1.4.0-9+deb11u1+rpt2::apt","url":""},{"name":"libpam-runtime","version":"1.4.0-9+deb11u1+rpt2::apt","url":""},{"name":"libpam0g","version":"1.4.0-9+deb11u1+rpt2::apt","url":""},{"name":"... (set the log level to DEBUG or TRACE to see the full content) 
- </msg>
-<msg timestamp="20221220 12:57:54.302" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:57:54.303" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221220 12:57:54.068" endtime="20221220 12:57:54.303"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_response}</var>
-<arg>${Get_Response.json()}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:57:54.304" level="INFO">${json_response} = {'next': 'https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?pageSize=5&amp;fragmentType=c8y_IsDevice&amp;currentPage=2', 'self': 'https://qaenvironment.eu-latest.cumulocity.com/inventory...</msg>
-<status status="PASS" starttime="20221220 12:57:54.303" endtime="20221220 12:57:54.304"/>
-</kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>@{id}</var>
-<arg>${json_response}</arg>
-<arg>$..id</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20221220 12:57:54.348" level="INFO">@{id} = [ 40214 ]</msg>
-<status status="PASS" starttime="20221220 12:57:54.304" endtime="20221220 12:57:54.348"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${man_Obj_id}</var>
-<arg>${id}</arg>
-<arg>1</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:57:54.348" level="FAIL">IndexError: Given index 1 is out of the range 0-0.</msg>
-<status status="FAIL" starttime="20221220 12:57:54.348" endtime="20221220 12:57:54.364"/>
-</kw>
-<kw name="Set Suite Variable" library="BuiltIn">
-<arg>${man_Obj_id}</arg>
-<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
-<status status="NOT RUN" starttime="20221220 12:57:54.365" endtime="20221220 12:57:54.365"/>
-</kw>
-<status status="FAIL" starttime="20221220 12:57:54.067" endtime="20221220 12:57:54.365"/>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<status status="NOT RUN" starttime="20221220 12:57:54.365" endtime="20221220 12:57:54.365"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<status status="NOT RUN" starttime="20221220 12:57:54.365" endtime="20221220 12:57:54.365"/>
-</kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>url=/inventory/managedObjects?fragmentType=c8y_IsDevice</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<status status="NOT RUN" starttime="20221220 12:57:54.365" endtime="20221220 12:57:54.365"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_response}</var>
-<arg>${Get_Response.json()}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="NOT RUN" starttime="20221220 12:57:54.365" endtime="20221220 12:57:54.366"/>
-</kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>@{id}</var>
-<arg>${json_response}</arg>
-<arg>$..id</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<status status="NOT RUN" starttime="20221220 12:57:54.366" endtime="20221220 12:57:54.366"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${man_Obj_id}</var>
-<arg>${id}</arg>
-<arg>1</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<status status="NOT RUN" starttime="20221220 12:57:54.366" endtime="20221220 12:57:54.366"/>
-</kw>
-<for flavor="IN">
-<var>${element}</var>
-<value>@{id}</value>
-<iter>
-<var name="${element}"/>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${delete}</var>
-<arg>Delete existing managedObject</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<status status="NOT RUN" starttime="20221220 12:57:54.366" endtime="20221220 12:57:54.366"/>
-</kw>
-<kw name="Set Suite Variable" library="BuiltIn">
-<arg>${element}</arg>
-<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
-<status status="NOT RUN" starttime="20221220 12:57:54.366" endtime="20221220 12:57:54.366"/>
-</kw>
-<status status="NOT RUN" starttime="20221220 12:57:54.366" endtime="20221220 12:57:54.366"/>
-</iter>
-<status status="NOT RUN" starttime="20221220 12:57:54.366" endtime="20221220 12:57:54.366"/>
-</for>
-<status status="FAIL" starttime="20221220 12:57:54.067" endtime="20221220 12:57:54.367"/>
-</kw>
-<status status="FAIL" starttime="20221220 12:57:54.066" endtime="20221220 12:57:54.367"/>
-</kw>
-<status status="FAIL" starttime="20221220 12:57:54.064" endtime="20221220 12:57:54.367">IndexError: Given index 1 is out of the range 0-0.</status>
-</test>
-<test id="s1-t3" name="Prerequisite Parent" line="42">
-<kw name="Parent Connection">
+<robot generator="Robot 5.0.1 (Python 3.11.1 on darwin)" generated="20230104 10:50:21.704" rpa="false" schemaversion="3">
+<suite id="s1" name="Install Debian Pckg" source="/Users/glis/GligorGit/tasks/install_debian_pckg.robot">
+<kw name="DUT Connection" type="SETUP">
 <kw name="Open Connection" library="SSHLibrary">
-<arg>${PARENT_IP}</arg>
+<arg>${DUT}</arg>
 <doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
-<status status="PASS" starttime="20221220 12:57:54.372" endtime="20221220 12:57:54.372"/>
+<status status="PASS" starttime="20230104 10:50:24.621" endtime="20230104 10:50:24.621"/>
 </kw>
 <kw name="Login" library="SSHLibrary">
 <arg>${USERNAME}</arg>
 <arg>${PASSWORD}</arg>
 <doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
-<msg timestamp="20221220 12:57:54.372" level="INFO">Logging into '192.168.1.110:22' as 'pi'.</msg>
-<msg timestamp="20221220 12:57:55.995" level="INFO">Read output: Linux raspberrypi 5.15.61-v8+ #1579 SMP PREEMPT Fri Aug 26 11:16:44 BST 2022 aarch64
+<msg timestamp="20230104 10:50:24.621" level="INFO">Logging into '192.168.1.110:22' as 'pi'.</msg>
+<msg timestamp="20230104 10:50:26.185" level="INFO">Read output: Linux raspberrypi 5.15.61-v8+ #1579 SMP PREEMPT Fri Aug 26 11:16:44 BST 2022 aarch64
 
 The programs included with the Debian GNU/Linux system are free software;
 the exact distribution terms for each program are described in the
@@ -195,1693 +20,426 @@ individual files in /usr/share/doc/*/copyright.
 
 Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
 permitted by applicable law.
-Last login: Tue Dec 20 11:55:22 2022 from 192.168.1.4
+Last login: Wed Jan  4 09:49:35 2023 from 192.168.1.4
 
 Wi-Fi is currently blocked by rfkill.
 Use raspi-config to set the country before use.
 
 [?2004h(pi:110) pi@raspberrypi:~$</msg>
-<status status="PASS" starttime="20221220 12:57:54.372" endtime="20221220 12:57:55.996"/>
+<status status="PASS" starttime="20230104 10:50:24.621" endtime="20230104 10:50:26.186"/>
 </kw>
-<status status="PASS" starttime="20221220 12:57:54.372" endtime="20221220 12:57:55.996"/>
+<status status="PASS" starttime="20230104 10:50:24.621" endtime="20230104 10:50:26.187"/>
 </kw>
+<test id="s1-t1" name="Prerequisites DUT" line="18">
+<kw name="Create Timestamp">
+<kw name="Get Current Date" library="DateTime">
+<var>${timestamp}</var>
+<arg>result_format=%d%m%Y%H%M%S</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<msg timestamp="20230104 10:50:26.194" level="INFO">${timestamp} = 04012023105026</msg>
+<status status="PASS" starttime="20230104 10:50:26.193" endtime="20230104 10:50:26.194"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${timestamp}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20230104 10:50:26.195" level="INFO">${timestamp} = 04012023105026</msg>
+<status status="PASS" starttime="20230104 10:50:26.194" endtime="20230104 10:50:26.195"/>
+</kw>
+<status status="PASS" starttime="20230104 10:50:26.193" endtime="20230104 10:50:26.195"/>
+</kw>
+<kw name="Define Device id">
+<kw name="Set Variable" library="BuiltIn">
+<var>${DeviceID}</var>
+<arg>CH_DEV_CONF_MGMT</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230104 10:50:26.196" level="INFO">${DeviceID} = CH_DEV_CONF_MGMT</msg>
+<status status="PASS" starttime="20230104 10:50:26.196" endtime="20230104 10:50:26.196"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${DeviceID}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20230104 10:50:26.197" level="INFO">${DeviceID} = CH_DEV_CONF_MGMT</msg>
+<status status="PASS" starttime="20230104 10:50:26.196" endtime="20230104 10:50:26.197"/>
+</kw>
+<status status="PASS" starttime="20230104 10:50:26.195" endtime="20230104 10:50:26.197"/>
+</kw>
+<kw name="Disconnect from c8y">
 <kw name="Execute Command" library="SSHLibrary">
-<var>${rc}</var>
 <arg>sudo tedge disconnect c8y</arg>
-<arg>return_stdout=False</arg>
-<arg>return_rc=True</arg>
 <doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:57:55.998" level="INFO">Executing command 'sudo tedge disconnect c8y'.</msg>
-<msg timestamp="20221220 12:57:57.352" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:57:57.352" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:57:55.997" endtime="20221220 12:57:57.352"/>
+<msg timestamp="20230104 10:50:26.198" level="INFO">Executing command 'sudo tedge disconnect c8y'.</msg>
+<msg timestamp="20230104 10:50:27.376" level="INFO">Command exited with return code 0.</msg>
+<status status="PASS" starttime="20230104 10:50:26.198" endtime="20230104 10:50:27.377"/>
 </kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${rc}</arg>
-<arg>${0}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:57:57.354" endtime="20221220 12:57:57.356"/>
+<status status="PASS" starttime="20230104 10:50:26.197" endtime="20230104 10:50:27.378"/>
 </kw>
-<kw name="Delete child related content">
+<kw name="Uninstall tedge with purge">
 <kw name="Execute Command" library="SSHLibrary">
-<arg>sudo rm -rf /etc/tedge/operations/c8y/CD*</arg>
+<arg>wget https://raw.githubusercontent.com/thin-edge/thin-edge.io/main/uninstall-thin-edge_io.sh</arg>
 <doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:57:57.361" level="INFO">Executing command 'sudo rm -rf /etc/tedge/operations/c8y/CD*'.</msg>
-<msg timestamp="20221220 12:57:57.431" level="INFO">Command exited with return code 0.</msg>
-<status status="PASS" starttime="20221220 12:57:57.361" endtime="20221220 12:57:57.431"/>
+<msg timestamp="20230104 10:50:27.380" level="INFO">Executing command 'wget https://raw.githubusercontent.com/thin-edge/thin-edge.io/main/uninstall-thin-edge_io.sh'.</msg>
+<msg timestamp="20230104 10:50:27.876" level="INFO">Command exited with return code 0.</msg>
+<status status="PASS" starttime="20230104 10:50:27.380" endtime="20230104 10:50:27.877"/>
 </kw>
 <kw name="Execute Command" library="SSHLibrary">
-<arg>sudo rm c8y-configuration-plugin.toml</arg>
+<arg>chmod a+x uninstall-thin-edge_io.sh</arg>
 <doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:57:57.432" level="INFO">Executing command 'sudo rm c8y-configuration-plugin.toml'.</msg>
-<msg timestamp="20221220 12:57:57.499" level="INFO">Command exited with return code 1.</msg>
-<status status="PASS" starttime="20221220 12:57:57.431" endtime="20221220 12:57:57.500"/>
+<msg timestamp="20230104 10:50:27.878" level="INFO">Executing command 'chmod a+x uninstall-thin-edge_io.sh'.</msg>
+<msg timestamp="20230104 10:50:27.939" level="INFO">Command exited with return code 0.</msg>
+<status status="PASS" starttime="20230104 10:50:27.878" endtime="20230104 10:50:27.939"/>
 </kw>
 <kw name="Execute Command" library="SSHLibrary">
-<arg>sudo rm -rf /etc/tedge/c8y/CD*</arg>
+<arg>./uninstall-thin-edge_io.sh purge</arg>
 <doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:57:57.500" level="INFO">Executing command 'sudo rm -rf /etc/tedge/c8y/CD*'.</msg>
-<msg timestamp="20221220 12:57:57.571" level="INFO">Command exited with return code 0.</msg>
-<status status="PASS" starttime="20221220 12:57:57.500" endtime="20221220 12:57:57.571"/>
+<msg timestamp="20230104 10:50:27.940" level="INFO">Executing command './uninstall-thin-edge_io.sh purge'.</msg>
+<msg timestamp="20230104 10:51:00.564" level="INFO">Command exited with return code 0.</msg>
+<status status="PASS" starttime="20230104 10:50:27.939" endtime="20230104 10:51:00.566"/>
 </kw>
-<kw name="Execute Command" library="SSHLibrary">
-<arg>sudo rm -rf /var/tedge/*</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:57:57.573" level="INFO">Executing command 'sudo rm -rf /var/tedge/*'.</msg>
-<msg timestamp="20221220 12:57:57.652" level="INFO">Command exited with return code 0.</msg>
-<status status="PASS" starttime="20221220 12:57:57.572" endtime="20221220 12:57:57.652"/>
+<status status="PASS" starttime="20230104 10:50:27.379" endtime="20230104 10:51:00.567"/>
 </kw>
-<status status="PASS" starttime="20221220 12:57:57.357" endtime="20221220 12:57:57.652"/>
-</kw>
-<kw name="Check for child related content">
-<kw name="List Directories In Directory" library="SSHLibrary">
-<var>@{dir_cont}</var>
-<arg>/etc/tedge/operations/c8y</arg>
-<doc>A wrapper for `List Directory` that returns only directories.</doc>
-<msg timestamp="20221220 12:57:57.714" level="INFO">[chan 6] Opened sftp connection (server version 3)</msg>
-<msg timestamp="20221220 12:57:57.732" level="INFO">0 directories:</msg>
-<msg timestamp="20221220 12:57:57.733" level="INFO">@{dir_cont} = [ ]</msg>
-<status status="PASS" starttime="20221220 12:57:57.654" endtime="20221220 12:57:57.733"/>
-</kw>
-<kw name="Should Be Empty" library="BuiltIn">
-<arg>${dir_cont}</arg>
-<doc>Verifies that the given item is empty.</doc>
-<msg timestamp="20221220 12:57:57.734" level="INFO">Length is 0</msg>
-<status status="PASS" starttime="20221220 12:57:57.733" endtime="20221220 12:57:57.734"/>
-</kw>
-<kw name="List Directories In Directory" library="SSHLibrary">
-<var>@{dir_cont}</var>
-<arg>/etc/tedge/c8y</arg>
-<doc>A wrapper for `List Directory` that returns only directories.</doc>
-<msg timestamp="20221220 12:57:57.744" level="INFO">0 directories:</msg>
-<msg timestamp="20221220 12:57:57.745" level="INFO">@{dir_cont} = [ ]</msg>
-<status status="PASS" starttime="20221220 12:57:57.734" endtime="20221220 12:57:57.746"/>
-</kw>
-<kw name="Should Be Empty" library="BuiltIn">
-<arg>${dir_cont}</arg>
-<doc>Verifies that the given item is empty.</doc>
-<msg timestamp="20221220 12:57:57.748" level="INFO">Length is 0</msg>
-<status status="PASS" starttime="20221220 12:57:57.747" endtime="20221220 12:57:57.749"/>
-</kw>
-<kw name="List Directories In Directory" library="SSHLibrary">
-<var>@{dir_cont}</var>
-<arg>/var/tedge</arg>
-<doc>A wrapper for `List Directory` that returns only directories.</doc>
-<msg timestamp="20221220 12:57:57.761" level="INFO">0 directories:</msg>
-<msg timestamp="20221220 12:57:57.761" level="INFO">@{dir_cont} = [ ]</msg>
-<status status="PASS" starttime="20221220 12:57:57.750" endtime="20221220 12:57:57.761"/>
-</kw>
-<kw name="Should Be Empty" library="BuiltIn">
-<arg>${dir_cont}</arg>
-<doc>Verifies that the given item is empty.</doc>
-<msg timestamp="20221220 12:57:57.762" level="INFO">Length is 0</msg>
-<status status="PASS" starttime="20221220 12:57:57.762" endtime="20221220 12:57:57.762"/>
-</kw>
-<status status="PASS" starttime="20221220 12:57:57.653" endtime="20221220 12:57:57.762"/>
-</kw>
-<kw name="Set external MQTT bind address">
-<kw name="Execute Command" library="SSHLibrary">
-<var>${rc}</var>
-<arg>sudo tedge config set mqtt.external.bind_address ${PARENT_IP}</arg>
-<arg>return_stdout=False</arg>
-<arg>return_rc=True</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:57:57.763" level="INFO">Executing command 'sudo tedge config set mqtt.external.bind_address 192.168.1.110'.</msg>
-<msg timestamp="20221220 12:57:57.802" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:57:57.802" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:57:57.762" endtime="20221220 12:57:57.802"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${rc}</arg>
-<arg>${0}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:57:57.803" endtime="20221220 12:57:57.803"/>
-</kw>
-<status status="PASS" starttime="20221220 12:57:57.762" endtime="20221220 12:57:57.803"/>
-</kw>
-<kw name="Set external MQTT port">
-<kw name="Execute Command" library="SSHLibrary">
-<var>${rc}</var>
-<arg>sudo tedge config set mqtt.external.port 1883</arg>
-<arg>return_stdout=False</arg>
-<arg>return_rc=True</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:57:57.803" level="INFO">Executing command 'sudo tedge config set mqtt.external.port 1883'.</msg>
-<msg timestamp="20221220 12:57:57.876" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:57:57.877" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:57:57.803" endtime="20221220 12:57:57.877"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${rc}</arg>
-<arg>${0}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:57:57.877" endtime="20221220 12:57:57.878"/>
-</kw>
-<status status="PASS" starttime="20221220 12:57:57.803" endtime="20221220 12:57:57.878"/>
-</kw>
-<kw name="Execute Command" library="SSHLibrary">
-<var>${rc}</var>
-<arg>sudo tedge connect c8y</arg>
-<arg>return_stdout=False</arg>
-<arg>return_rc=True</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:57:57.880" level="INFO">Executing command 'sudo tedge connect c8y'.</msg>
-<msg timestamp="20221220 12:58:06.812" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:58:06.813" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:57:57.879" endtime="20221220 12:58:06.813"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${rc}</arg>
-<arg>${0}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:06.814" endtime="20221220 12:58:06.816"/>
-</kw>
-<kw name="Restart Configuration plugin">
-<kw name="Execute Command" library="SSHLibrary">
-<var>${rc}</var>
-<arg>sudo systemctl stop c8y-configuration-plugin.service</arg>
-<arg>return_stdout=False</arg>
-<arg>return_rc=True</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:58:06.818" level="INFO">Executing command 'sudo systemctl stop c8y-configuration-plugin.service'.</msg>
-<msg timestamp="20221220 12:58:06.898" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:58:06.898" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:58:06.817" endtime="20221220 12:58:06.898"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${rc}</arg>
-<arg>${0}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:06.899" endtime="20221220 12:58:06.899"/>
-</kw>
-<kw name="Execute Command" library="SSHLibrary">
-<var>${rc}</var>
-<arg>sudo systemctl start c8y-configuration-plugin.service</arg>
-<arg>return_stdout=False</arg>
-<arg>return_rc=True</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:58:06.900" level="INFO">Executing command 'sudo systemctl start c8y-configuration-plugin.service'.</msg>
-<msg timestamp="20221220 12:58:07.005" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:58:07.006" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:58:06.900" endtime="20221220 12:58:07.006"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${rc}</arg>
-<arg>${0}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:07.006" endtime="20221220 12:58:07.007"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:06.816" endtime="20221220 12:58:07.007"/>
-</kw>
-<kw name="Close Connection" library="SSHLibrary">
-<doc>Closes the current connection.</doc>
-<status status="PASS" starttime="20221220 12:58:07.008" endtime="20221220 12:58:07.009"/>
-</kw>
-<status status="PASS" starttime="20221220 12:57:54.369" endtime="20221220 12:58:07.010"/>
+<status status="PASS" starttime="20230104 10:50:26.188" endtime="20230104 10:51:00.568"/>
 </test>
-<test id="s1-t4" name="Prerequisite Child" line="56">
-<kw name="Child device delete configuration files">
-<kw name="Child Connection">
-<kw name="Open Connection" library="SSHLibrary">
-<arg>${CHILD_IP}</arg>
-<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
-<status status="PASS" starttime="20221220 12:58:07.022" endtime="20221220 12:58:07.022"/>
-</kw>
-<kw name="Login" library="SSHLibrary">
-<arg>pi</arg>
-<arg>thinedge</arg>
-<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
-<msg timestamp="20221220 12:58:07.023" level="INFO">Logging into '192.168.1.200:22' as 'pi'.</msg>
-<msg timestamp="20221220 12:58:08.707" level="INFO">Read output: Linux raspberrypi 5.15.61-v8+ #1579 SMP PREEMPT Fri Aug 26 11:16:44 BST 2022 aarch64
-
-The programs included with the Debian GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
-Last login: Tue Dec 20 10:19:57 2022 from 192.168.1.4
-[1m[7m%[m[1m[0m                                                                                [0m[m[m[J(pi:200) [334mpi[328m@[334mraspberrypi[39m:~[0m [32m$ [K[?1h=[?2004h</msg>
-<status status="PASS" starttime="20221220 12:58:07.023" endtime="20221220 12:58:08.708"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:07.022" endtime="20221220 12:58:08.709"/>
-</kw>
+<test id="s1-t2" name="Installing tedge on DUT" line="23">
+<kw name="Install Mosquitto">
 <kw name="Execute Command" library="SSHLibrary">
-<arg>sudo rm config1</arg>
+<var>${rc}</var>
+<arg>sudo apt-get --assume-yes install mosquitto</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
 <doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:58:08.711" level="INFO">Executing command 'sudo rm config1'.</msg>
-<msg timestamp="20221220 12:58:08.749" level="INFO">Command exited with return code 1.</msg>
-<status status="PASS" starttime="20221220 12:58:08.710" endtime="20221220 12:58:08.749"/>
+<msg timestamp="20230104 10:51:00.574" level="INFO">Executing command 'sudo apt-get --assume-yes install mosquitto'.</msg>
+<msg timestamp="20230104 10:51:02.526" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:51:02.526" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20230104 10:51:00.574" endtime="20230104 10:51:02.526"/>
 </kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230104 10:51:02.527" endtime="20230104 10:51:02.527"/>
+</kw>
+<status status="PASS" starttime="20230104 10:51:00.573" endtime="20230104 10:51:02.527"/>
+</kw>
+<kw name="Install Libmosquitto1">
 <kw name="Execute Command" library="SSHLibrary">
-<arg>sudo rm c8y-configuration-plugin</arg>
+<var>${rc}</var>
+<arg>sudo apt-get --assume-yes install libmosquitto1</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
 <doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:58:08.750" level="INFO">Executing command 'sudo rm c8y-configuration-plugin'.</msg>
-<msg timestamp="20221220 12:58:08.807" level="INFO">Command exited with return code 0.</msg>
-<status status="PASS" starttime="20221220 12:58:08.749" endtime="20221220 12:58:08.807"/>
+<msg timestamp="20230104 10:51:02.529" level="INFO">Executing command 'sudo apt-get --assume-yes install libmosquitto1'.</msg>
+<msg timestamp="20230104 10:51:04.540" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:51:04.542" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20230104 10:51:02.528" endtime="20230104 10:51:04.542"/>
 </kw>
-<kw name="Close Connection" library="SSHLibrary">
-<doc>Closes the current connection.</doc>
-<status status="PASS" starttime="20221220 12:58:08.808" endtime="20221220 12:58:08.808"/>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230104 10:51:04.543" endtime="20230104 10:51:04.544"/>
 </kw>
-<status status="PASS" starttime="20221220 12:58:07.021" endtime="20221220 12:58:08.809"/>
+<status status="PASS" starttime="20230104 10:51:02.528" endtime="20230104 10:51:04.544"/>
 </kw>
-<status status="PASS" starttime="20221220 12:58:07.014" endtime="20221220 12:58:08.809"/>
+<kw name="Install Collectd-core">
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo apt-get --assume-yes install collectd-core</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20230104 10:51:04.548" level="INFO">Executing command 'sudo apt-get --assume-yes install collectd-core'.</msg>
+<msg timestamp="20230104 10:51:06.576" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:51:06.578" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20230104 10:51:04.547" endtime="20230104 10:51:06.578"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230104 10:51:06.579" endtime="20230104 10:51:06.582"/>
+</kw>
+<status status="PASS" starttime="20230104 10:51:04.547" endtime="20230104 10:51:06.583"/>
+</kw>
+<kw name="Install thin-edge.io">
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo dpkg -i ./debian*/tedge_0*.deb</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20230104 10:51:06.584" level="INFO">Executing command 'sudo dpkg -i ./debian*/tedge_0*.deb'.</msg>
+<msg timestamp="20230104 10:51:08.685" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:51:08.686" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20230104 10:51:06.584" endtime="20230104 10:51:08.686"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230104 10:51:08.687" endtime="20230104 10:51:08.688"/>
+</kw>
+<status status="PASS" starttime="20230104 10:51:06.583" endtime="20230104 10:51:08.690"/>
+</kw>
+<kw name="Install tedge mapper">
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo dpkg -i ./debian*/tedge-mapper_0*.deb</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20230104 10:51:08.692" level="INFO">Executing command 'sudo dpkg -i ./debian*/tedge-mapper_0*.deb'.</msg>
+<msg timestamp="20230104 10:51:14.389" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:51:14.390" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20230104 10:51:08.692" endtime="20230104 10:51:14.390"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230104 10:51:14.391" endtime="20230104 10:51:14.392"/>
+</kw>
+<status status="PASS" starttime="20230104 10:51:08.691" endtime="20230104 10:51:14.393"/>
+</kw>
+<kw name="Install tedge agent">
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo dpkg -i ./debian*/tedge-agent_0*.deb</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20230104 10:51:14.397" level="INFO">Executing command 'sudo dpkg -i ./debian*/tedge-agent_0*.deb'.</msg>
+<msg timestamp="20230104 10:51:17.460" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:51:17.461" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20230104 10:51:14.396" endtime="20230104 10:51:17.461"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230104 10:51:17.463" endtime="20230104 10:51:17.464"/>
+</kw>
+<status status="PASS" starttime="20230104 10:51:14.395" endtime="20230104 10:51:17.464"/>
+</kw>
+<kw name="Install tedge apt plugin">
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo dpkg -i ./debian*/tedge-apt-plugin_0*.deb</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20230104 10:51:17.465" level="INFO">Executing command 'sudo dpkg -i ./debian*/tedge-apt-plugin_0*.deb'.</msg>
+<msg timestamp="20230104 10:51:18.334" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:51:18.335" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20230104 10:51:17.465" endtime="20230104 10:51:18.335"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230104 10:51:18.336" endtime="20230104 10:51:18.337"/>
+</kw>
+<status status="PASS" starttime="20230104 10:51:17.464" endtime="20230104 10:51:18.337"/>
+</kw>
+<kw name="Install tedge logfile request plugin">
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo dpkg -i ./debian*/c8y-log-plugin_0*.deb</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20230104 10:51:18.339" level="INFO">Executing command 'sudo dpkg -i ./debian*/c8y-log-plugin_0*.deb'.</msg>
+<msg timestamp="20230104 10:51:21.872" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:51:21.872" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20230104 10:51:18.338" endtime="20230104 10:51:21.872"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230104 10:51:21.873" endtime="20230104 10:51:21.873"/>
+</kw>
+<status status="PASS" starttime="20230104 10:51:18.338" endtime="20230104 10:51:21.874"/>
+</kw>
+<kw name="Install c8y configuration plugin">
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo dpkg -i ./debian*/c8y-configuration-plugin_0*.deb</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20230104 10:51:21.875" level="INFO">Executing command 'sudo dpkg -i ./debian*/c8y-configuration-plugin_0*.deb'.</msg>
+<msg timestamp="20230104 10:51:25.674" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:51:25.674" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20230104 10:51:21.875" endtime="20230104 10:51:25.674"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230104 10:51:25.675" endtime="20230104 10:51:25.675"/>
+</kw>
+<status status="PASS" starttime="20230104 10:51:21.874" endtime="20230104 10:51:25.675"/>
+</kw>
+<kw name="Install Watchdog">
+<kw name="Execute Command" library="SSHLibrary">
+<var>${rc}</var>
+<arg>sudo dpkg -i ./debian*/tedge-watchdog_0*.deb</arg>
+<arg>return_stdout=False</arg>
+<arg>return_rc=True</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20230104 10:51:25.676" level="INFO">Executing command 'sudo dpkg -i ./debian*/tedge-watchdog_0*.deb'.</msg>
+<msg timestamp="20230104 10:51:29.350" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:51:29.350" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20230104 10:51:25.676" endtime="20230104 10:51:29.350"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${rc}</arg>
+<arg>${0}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230104 10:51:29.351" endtime="20230104 10:51:29.352"/>
+</kw>
+<status status="PASS" starttime="20230104 10:51:25.675" endtime="20230104 10:51:29.352"/>
+</kw>
+<status status="PASS" starttime="20230104 10:51:00.569" endtime="20230104 10:51:29.353"/>
 </test>
-<test id="s1-t5" name="Prerequisite Cloud" line="58">
-<kw name="GET Parent ID">
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:58:08.823" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:58:08.823" endtime="20221220 12:58:08.823"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:58:08.823" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b474c90&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:58:08.823" endtime="20221220 12:58:08.824"/>
-</kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>identity/externalIds/c8y_Serial/${PARENT_NAME}</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:58:08.986" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/identity/externalIds/c8y_Serial/CH_DEV_CONF_MGMT 
- path_url=/identity/externalIds/c8y_Serial/CH_DEV_CONF_MGMT 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:58:08.986" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/identity/externalIds/c8y_Serial/CH_DEV_CONF_MGMT 
- status=200, reason=OK 
- headers={'Date': 'Tue, 20 Dec 2022 11:58:09 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.externalid+json;charset=UTF-8;ver=0.9', 'Content-Length': '276', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body={"managedObject":{"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214","id":"40214"},"externalId":"CH_DEV_CONF_MGMT","self":"https://qaenvironment.eu-latest.cumulocity.com/identity/externalIds/c8y_Serial/CH_DEV_CONF_MGMT","type":"c8y_Serial"} 
- </msg>
-<msg timestamp="20221220 12:58:08.987" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:58:08.988" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221220 12:58:08.824" endtime="20221220 12:58:08.989"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_response}</var>
-<arg>${Get_Response.json()}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:58:08.992" level="INFO">${json_response} = {'managedObject': {'self': 'https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214', 'id': '40214'}, 'externalId': 'CH_DEV_CONF_MGMT', 'self': 'https://qaenvironment.eu-latest.c...</msg>
-<status status="PASS" starttime="20221220 12:58:08.990" endtime="20221220 12:58:08.992"/>
-</kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>@{id}</var>
-<arg>${json_response}</arg>
-<arg>$..id</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20221220 12:58:09.009" level="INFO">@{id} = [ 40214 ]</msg>
-<status status="PASS" starttime="20221220 12:58:08.993" endtime="20221220 12:58:09.009"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${parent_id}</var>
-<arg>${id}</arg>
-<arg>0</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:09.009" level="INFO">${parent_id} = 40214</msg>
-<status status="PASS" starttime="20221220 12:58:09.009" endtime="20221220 12:58:09.009"/>
-</kw>
-<kw name="Set Suite Variable" library="BuiltIn">
-<arg>${parent_id}</arg>
-<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
-<msg timestamp="20221220 12:58:09.010" level="INFO">${parent_id} = 40214</msg>
-<status status="PASS" starttime="20221220 12:58:09.010" endtime="20221220 12:58:09.010"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:08.822" endtime="20221220 12:58:09.010"/>
-</kw>
-<kw name="GET Parent name">
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:58:09.011" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:58:09.011" endtime="20221220 12:58:09.011"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:58:09.011" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b517110&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:58:09.011" endtime="20221220 12:58:09.011"/>
-</kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>/identity/globalIds/${parent_id}/externalIds</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:58:09.161" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/identity/globalIds/40214/externalIds 
- path_url=/identity/globalIds/40214/externalIds 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:58:09.162" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/identity/globalIds/40214/externalIds 
- status=200, reason=OK 
- headers={'Date': 'Tue, 20 Dec 2022 11:58:09 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.externalidcollection+json;charset=UTF-8;ver=0.9', 'Content-Length': '387', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body={"externalIds":[{"managedObject":{"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214","id":"40214"},"externalId":"CH_DEV_CONF_MGMT","self":"https://qaenvironment.eu-latest.cumulocity.com/identity/externalIds/c8y_Serial/CH_DEV_CONF_MGMT","type":"c8y_Serial"}],"self":"https://qaenvironment.eu-latest.cumulocity.com/identity/globalIds/40214/externalIds"} 
- </msg>
-<msg timestamp="20221220 12:58:09.162" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:58:09.162" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221220 12:58:09.011" endtime="20221220 12:58:09.162"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_response}</var>
-<arg>${Get_Response.json()}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:58:09.164" level="INFO">${json_response} = {'externalIds': [{'managedObject': {'self': 'https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214', 'id': '40214'}, 'externalId': 'CH_DEV_CONF_MGMT', 'self': 'https://qaenviro...</msg>
-<status status="PASS" starttime="20221220 12:58:09.163" endtime="20221220 12:58:09.164"/>
-</kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>@{pd_name}</var>
-<arg>${json_response}</arg>
-<arg>$..externalId</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20221220 12:58:09.180" level="INFO">@{pd_name} = [ CH_DEV_CONF_MGMT ]</msg>
-<status status="PASS" starttime="20221220 12:58:09.164" endtime="20221220 12:58:09.180"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${pardev_name}</var>
-<arg>${pd_name}</arg>
-<arg>0</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:09.181" level="INFO">${pardev_name} = CH_DEV_CONF_MGMT</msg>
-<status status="PASS" starttime="20221220 12:58:09.180" endtime="20221220 12:58:09.181"/>
-</kw>
-<kw name="Set Suite Variable" library="BuiltIn">
-<arg>${pardev_name}</arg>
-<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
-<msg timestamp="20221220 12:58:09.181" level="INFO">${pardev_name} = CH_DEV_CONF_MGMT</msg>
-<status status="PASS" starttime="20221220 12:58:09.181" endtime="20221220 12:58:09.181"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:09.010" endtime="20221220 12:58:09.181"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:08.815" endtime="20221220 12:58:09.182"/>
-</test>
-<test id="s1-t6" name="Child device bootstrapping" line="61">
-<kw name="Startup child device">
-<kw name="Child Connection">
-<kw name="Open Connection" library="SSHLibrary">
-<arg>${CHILD_IP}</arg>
-<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
-<status status="PASS" starttime="20221220 12:58:09.189" endtime="20221220 12:58:09.189"/>
-</kw>
-<kw name="Login" library="SSHLibrary">
-<arg>pi</arg>
-<arg>thinedge</arg>
-<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
-<msg timestamp="20221220 12:58:09.190" level="INFO">Logging into '192.168.1.200:22' as 'pi'.</msg>
-<msg timestamp="20221220 12:58:10.590" level="INFO">Read output: Linux raspberrypi 5.15.61-v8+ #1579 SMP PREEMPT Fri Aug 26 11:16:44 BST 2022 aarch64
-
-The programs included with the Debian GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
-Last login: Tue Dec 20 11:58:07 2022 from 192.168.1.4
-[1m[7m%[m[1m[0m                                                                                [0m[m[m[J(pi:200) [334mpi[328m@[334mraspberrypi[39m:~[0m [32m$ [K[?1h=[?2004h</msg>
-<status status="PASS" starttime="20221220 12:58:09.189" endtime="20221220 12:58:10.591"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:09.189" endtime="20221220 12:58:10.593"/>
+<test id="s1-t3" name="Connecting to c8y" line="35">
+<kw name="Create self-signed certificate">
+<kw name="Execute Command" library="SSHLibrary">
+<arg>tedge cert remove</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20230104 10:51:29.359" level="INFO">Executing command 'tedge cert remove'.</msg>
+<msg timestamp="20230104 10:51:29.407" level="INFO">Command exited with return code 0.</msg>
+<status status="PASS" starttime="20230104 10:51:29.358" endtime="20230104 10:51:29.408"/>
 </kw>
 <kw name="Execute Command" library="SSHLibrary">
 <var>${rc}</var>
-<arg>printf ${config} &gt; c8y-configuration-plugin</arg>
+<arg>sudo tedge cert create --device-id ${DeviceID}</arg>
 <arg>return_stdout=False</arg>
 <arg>return_rc=True</arg>
 <doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:58:10.595" level="INFO">Executing command 'printf "files = [
-	 { path = '/home/pi/config1', type = 'config1' },
- ]
-" &gt; c8y-configuration-plugin'.</msg>
-<msg timestamp="20221220 12:58:10.613" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:58:10.614" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:58:10.594" endtime="20221220 12:58:10.614"/>
+<msg timestamp="20230104 10:51:29.409" level="INFO">Executing command 'sudo tedge cert create --device-id CH_DEV_CONF_MGMT'.</msg>
+<msg timestamp="20230104 10:51:29.521" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:51:29.523" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20230104 10:51:29.408" endtime="20230104 10:51:29.523"/>
 </kw>
 <kw name="Should Be Equal" library="BuiltIn">
 <arg>${rc}</arg>
 <arg>${0}</arg>
 <doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:10.614" endtime="20221220 12:58:10.615"/>
-</kw>
-<kw name="Write" library="SSHLibrary">
-<arg>curl -X PUT http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/c8y-configuration-plugin \\</arg>
-<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
-<msg timestamp="20221220 12:58:10.720" level="INFO">ccurl -X PUT http://192.168.1.110:8000/tedge/file-tra [K[Knnsfer/CD125754/c8y-configuration-plugin \[?1l&gt;[?2004l</msg>
-<status status="PASS" starttime="20221220 12:58:10.616" endtime="20221220 12:58:10.720"/>
-</kw>
-<kw name="Write" library="SSHLibrary">
-<arg>--data-binary @- &lt;&lt; EOF</arg>
-<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
-<msg timestamp="20221220 12:58:10.740" level="INFO">[0m[m[m[J&gt; [K[?1h=[?2004h---data-binary @- &lt;&lt; EOF[?1l&gt;[?2004l</msg>
-<status status="PASS" starttime="20221220 12:58:10.720" endtime="20221220 12:58:10.740"/>
-</kw>
-<kw name="Write" library="SSHLibrary">
-<arg>files = [</arg>
-<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
-<msg timestamp="20221220 12:58:10.750" level="INFO">[0m[m[m[Jheredoc&gt; [K[?1h=[?2004hffiles = [[?1l&gt;[?2004l</msg>
-<status status="PASS" starttime="20221220 12:58:10.740" endtime="20221220 12:58:10.750"/>
-</kw>
-<kw name="Write" library="SSHLibrary">
-<arg>{ path = '/home/pi/config1', type = 'config1' },</arg>
-<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
-<msg timestamp="20221220 12:58:10.791" level="INFO">[0m[m[m[Jheredoc&gt; [K[?1h=[?2004h{{ path = '/home/pi/config1', type = 'config1' },[?1l&gt;[?2004l</msg>
-<status status="PASS" starttime="20221220 12:58:10.751" endtime="20221220 12:58:10.791"/>
-</kw>
-<kw name="Write" library="SSHLibrary">
-<arg>]</arg>
-<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
-<msg timestamp="20221220 12:58:10.796" level="INFO">[0m[m[m[Jheredoc&gt; [K[?1h=[?2004h][?1l&gt;[?2004l</msg>
-<status status="PASS" starttime="20221220 12:58:10.791" endtime="20221220 12:58:10.796"/>
-</kw>
-<kw name="Write" library="SSHLibrary">
-<arg>EOF</arg>
-<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
-<msg timestamp="20221220 12:58:10.800" level="INFO">[0m[m[m[Jheredoc&gt; [K[?1h=[?2004hEEOF[?1l&gt;[?2004l</msg>
-<status status="PASS" starttime="20221220 12:58:10.796" endtime="20221220 12:58:10.800"/>
+<status status="PASS" starttime="20230104 10:51:29.523" endtime="20230104 10:51:29.524"/>
 </kw>
 <kw name="Execute Command" library="SSHLibrary">
-<arg>sudo apt-get install mosquitto-clients -y</arg>
+<var>${output}</var>
+<arg>sudo tedge cert show</arg>
 <doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:58:10.800" level="INFO">Executing command 'sudo apt-get install mosquitto-clients -y'.</msg>
-<msg timestamp="20221220 12:58:12.634" level="INFO">Command exited with return code 0.</msg>
-<status status="PASS" starttime="20221220 12:58:10.800" endtime="20221220 12:58:12.634"/>
-</kw>
-<kw name="Execute Command" library="SSHLibrary">
-<var>${rc}</var>
-<arg>mosquitto_pub -h ${PARENT_IP} -t "tedge/${CHILD}${topic_snap} -m ${payl_notify}</arg>
-<arg>return_stdout=False</arg>
-<arg>return_rc=True</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:58:12.635" level="INFO">Executing command 'mosquitto_pub -h 192.168.1.110 -t "tedge/CD125754/commands/res/config_snapshot" -m '{"status": null, "path": "", "type":"c8y-configuration-plugin", "reason": null}''.</msg>
-<msg timestamp="20221220 12:58:13.697" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:58:13.699" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:58:12.635" endtime="20221220 12:58:13.699"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${rc}</arg>
-<arg>${0}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:13.700" endtime="20221220 12:58:13.701"/>
-</kw>
-<kw name="Close Connection" library="SSHLibrary">
-<doc>Closes the current connection.</doc>
-<status status="PASS" starttime="20221220 12:58:13.701" endtime="20221220 12:58:13.702"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:09.188" endtime="20221220 12:58:13.703"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:09.184" endtime="20221220 12:58:13.705"/>
-</test>
-<test id="s1-t7" name="Get child credentials" line="63">
-<kw name="Get Child ID">
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:58:13.729" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:58:13.728" endtime="20221220 12:58:13.729"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:58:13.729" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b4cba50&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:58:13.729" endtime="20221220 12:58:13.730"/>
-</kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>/inventory/managedObjects/${parent_id}</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:58:13.889" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214 
- path_url=/inventory/managedObjects/40214 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:58:13.889" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214 
- status=200, reason=OK 
- headers={'Date': 'Tue, 20 Dec 2022 11:58:13 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.managedobject+json;charset=UTF-8;ver=0.9', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Content-Encoding': 'gzip', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body={"additionParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/additionParents"},"owner":"device_CH_DEV_CONF_MGMT","childDevices":{"references":[{"managedObject":{"name":"CD125754","self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40215","id":"40215"},"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/childDevices/40215"}],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/childDevices"},"childAssets":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/childAssets"},"creationTime":"2022-12-20T11:56:46.090Z","type":"thin-edge.io","lastUpdated":"2022-12-20T11:58:08.462Z","childAdditions":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/childAdditions"},"name":"CH_DEV_CONF_MGMT","assetParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/assetParents"},"deviceParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/deviceParents"},"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214","id":"40214","c8y_Agent":{"name":"thin-edge.io","version":"0.8.1","url":"https://thin-edge.io"},"com_cumulocity_model_Agent":{},"c8y_IsDevice":{},"c8y_SupportedOperations":["c8y_DownloadConfigFile","c8y_LogfileRequest","c8y_Restart","c8y_SoftwareUpdate","c8y_UploadConfigFile"],"c8y_SoftwareList":[{"name":"adduser","version":"3.118::apt","url":""},{"name":"apt-listchanges","version":"3.24::apt","url":""},{"name":"apt-utils","version":"2.2.4::apt","url":""},{"name":"apt","version":"2.2.4::apt","url":""},{"name":"avahi-daemon","version":"0.8-5+deb11u1::apt","url":""},{"name":"base-files","version":"11.1+deb11u5::apt","url":""},{"name":"base-passwd","version":"3.5.51::apt","url":""},{"name":"bash-completion","version":"1:2.11-2::apt","url":""},{"name":"bash","version":"5.1-2+deb11u1::apt","url":""},{"name":"bsdutils","version":"1:2.36.1-8+deb11u1::apt","url":""},{"name":"build-essential","version":"12.9::apt","url":""},{"name":"c8y-configuration-plugin","version":"0.8.1-125-g9eb87d44::apt","url":""},{"name":"c8y-log-plugin","version":"0.8.1-125-g9eb87d44::apt","url":""},{"name":"ca-certificates","version":"20210119::apt","url":""},{"name":"cifs-utils","version":"2:6.11-3.1+deb11u1::apt","url":""},{"name":"collectd-core","version":"5.12.0-7::apt","url":""},{"name":"console-setup","version":"1.205+rpt1::apt","url":""},{"name":"coreutils","version":"8.32-4::apt","url":""},{"name":"cpio","version":"2.13+dfsg-4::apt","url":""},{"name":"crda","version":"4.14+git20191112.9856751-1::apt","url":""},{"name":"cron","version":"3.0pl1-137::apt","url":""},{"name":"curl","version":"7.74.0-1.3+deb11u3::apt","url":""},{"name":"dash","version":"0.5.11+git20200708+dd9ef66-5::apt","url":""},{"name":"debconf-i18n","version":"1.5.77::apt","url":""},{"name":"debconf-utils","version":"1.5.77::apt","url":""},{"name":"debconf","version":"1.5.77::apt","url":""},{"name":"debian-archive-keyring","version":"2021.1.1::apt","url":""},{"name":"debianutils","version":"4.11.2::apt","url":""},{"name":"dhcpcd5","version":"1:8.1.2-1+rpt9::apt","url":""},{"name":"diffutils","version":"1:3.7-5::apt","url":""},{"name":"dmidecode","version":"3.3-2::apt","url":""},{"name":"dmsetup","version":"2:1.02.175-2.1::apt","url":""},{"name":"dosfstools","version":"4.2-1::apt","url":""},{"name":"dphys-swapfile","version":"20100506-7+rpt1::apt","url":""},{"name":"dpkg","version":"1.20.12::apt","url":""},{"name":"e2fsprogs","version":"1.46.2-2::apt","url":""},{"name":"ed","version":"1.17-1::apt","url":""},{"name":"ethtool","version":"1:5.9-1::apt","url":""},{"name":"fake-hwclock","version":"0.12::apt","url":""},{"name":"fbset","version":"2.1-32::apt","url":""},{"name":"fdisk","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"findutils","version":"4.8.0-1::apt","url":""},{"name":"firmware-atheros","version":"1:20210315-3+rpt7::apt","url":""},{"name":"firmware-brcm80211","version":"1:20210315-3+rpt7::apt","url":""},{"name":"firmware-libertas","version":"1:20210315-3+rpt7::apt","url":""},{"name":"firmware-misc-nonfree","version":"1:20210315-3+rpt7::apt","url":""},{"name":"firmware-realtek","version":"1:20210315-3+rpt7::apt","url":""},{"name":"gcc-10-base","version":"10.2.1-6::apt","url":""},{"name":"gcc-9-base","version":"9.3.0-22::apt","url":""},{"name":"gdb","version":"10.1-1.7::apt","url":""},{"name":"git","version":"1:2.30.2-1::apt","url":""},{"name":"gpgv","version":"2.2.27-2+deb11u2::apt","url":""},{"name":"grep","version":"3.6-1::apt","url":""},{"name":"gzip","version":"1.10-4+deb11u1::apt","url":""},{"name":"hardlink","version":"0.3.2+b1::apt","url":""},{"name":"hostname","version":"3.23::apt","url":""},{"name":"htop","version":"3.0.5-7::apt","url":""},{"name":"ifupdown","version":"0.8.36::apt","url":""},{"name":"init-system-helpers","version":"1.60::apt","url":""},{"name":"init","version":"1.60::apt","url":""},{"name":"iproute2","version":"5.10.0-4::apt","url":""},{"name":"iputils-ping","version":"3:20210202-1::apt","url":""},{"name":"isc-dhcp-client","version":"4.4.1-2.3+deb11u1::apt","url":""},{"name":"isc-dhcp-common","version":"4.4.1-2.3+deb11u1::apt","url":""},{"name":"keyboard-configuration","version":"1.205+rpt1::apt","url":""},{"name":"kmod","version":"28-1::apt","url":""},{"name":"less","version":"551-2::apt","url":""},{"name":"libacl1","version":"2.2.53-10::apt","url":""},{"name":"libapparmor1","version":"2.13.6-10::apt","url":""},{"name":"libapt-pkg6.0","version":"2.2.4::apt","url":""},{"name":"libargon2-1","version":"0~20171227-0.2::apt","url":""},{"name":"libattr1","version":"1:2.4.48-6::apt","url":""},{"name":"libaudit-common","version":"1:3.0-2::apt","url":""},{"name":"libaudit1","version":"1:3.0-2::apt","url":""},{"name":"libblkid1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libbpf0","version":"1:0.3-2::apt","url":""},{"name":"libbsd0","version":"0.11.3-1::apt","url":""},{"name":"libbz2-1.0","version":"1.0.8-4::apt","url":""},{"name":"libc-bin","version":"2.31-13+rpt2+rpi1+deb11u5::apt","url":""},{"name":"libc6","version":"2.31-13+rpt2+rpi1+deb11u5::apt","url":""},{"name":"libcamera-apps-lite","version":"0~git20221109+73ab09f-1::apt","url":""},{"name":"libcap-ng0","version":"0.7.9-2.2+b1::apt","url":""},{"name":"libcap2-bin","version":"1:2.44-1::apt","url":""},{"name":"libcap2","version":"1:2.44-1::apt","url":""},{"name":"libcom-err2","version":"1.46.2-2::apt","url":""},{"name":"libcrypt1","version":"1:4.4.18-4::apt","url":""},{"name":"libcryptsetup12","version":"2:2.3.7-1+deb11u1::apt","url":""},{"name":"libdb5.3","version":"5.3.28+dfsg1-0.8::apt","url":""},{"name":"libdebconfclient0","version":"0.260::apt","url":""},{"name":"libdevmapper1.02.1","version":"2:1.02.175-2.1::apt","url":""},{"name":"libdns-export1110","version":"1:9.11.19+dfsg-2.1::apt","url":""},{"name":"libedit2","version":"3.1-20191231-2+b1::apt","url":""},{"name":"libelf1","version":"0.183-1::apt","url":""},{"name":"libestr0","version":"0.1.10-2.1+b1::apt","url":""},{"name":"libext2fs2","version":"1.46.2-2::apt","url":""},{"name":"libfastjson4","version":"0.99.9-1::apt","url":""},{"name":"libfdisk1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libffi7","version":"3.3-6::apt","url":""},{"name":"libfreetype6-dev","version":"2.10.4+dfsg-1+deb11u1::apt","url":""},{"name":"libgcc-s1","version":"10.2.1-6::apt","url":""},{"name":"libgcrypt20","version":"1.8.7-6::apt","url":""},{"name":"libgmp10","version":"2:6.2.1+dfsg-1+deb11u1::apt","url":""},{"name":"libgnutls30","version":"3.7.1-5+deb11u2::apt","url":""},{"name":"libgpg-error0","version":"1.38-2::apt","url":""},{"name":"libgssapi-krb5-2","version":"1.18.3-6+deb11u2::apt","url":""},{"name":"libhogweed6","version":"3.7.3-1::apt","url":""},{"name":"libidn2-0","version":"2.3.0-5::apt","url":""},{"name":"libip4tc2","version":"1.8.7-1::apt","url":""},{"name":"libisc-export1105","version":"1:9.11.19+dfsg-2.1::apt","url":""},{"name":"libjansson4","version":"2.13.1-1.1::apt","url":""},{"name":"libjson-c5","version":"0.15-2::apt","url":""},{"name":"libk5crypto3","version":"1.18.3-6+deb11u2::apt","url":""},{"name":"libkeyutils1","version":"1.6.1-2::apt","url":""},{"name":"libkmod2","version":"28-1::apt","url":""},{"name":"libkrb5-3","version":"1.18.3-6+deb11u2::apt","url":""},{"name":"libkrb5support0","version":"1.18.3-6+deb11u2::apt","url":""},{"name":"liblocale-gettext-perl","version":"1.07-4+b1::apt","url":""},{"name":"liblognorm5","version":"2.0.5-1.1::apt","url":""},{"name":"liblz4-1","version":"1.9.3-2::apt","url":""},{"name":"liblzma5","version":"5.2.5-2.1~deb11u1::apt","url":""},{"name":"libmd0","version":"1.0.3-3::apt","url":""},{"name":"libmnl0","version":"1.0.4-3::apt","url":""},{"name":"libmosquitto1","version":"2.0.11-1::apt","url":""},{"name":"libmount1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libmtp-runtime","version":"1.1.17-3::apt","url":""},{"name":"libncurses6","version":"6.2+20201114-2::apt","url":""},{"name":"libncursesw6","version":"6.2+20201114-2::apt","url":""},{"name":"libnettle8","version":"3.7.3-1::apt","url":""},{"name":"libnewt0.52","version":"0.52.21-4+b3::apt","url":""},{"name":"libnftables1","version":"0.9.8-3.1::apt","url":""},{"name":"libnftnl11","version":"1.1.9-1::apt","url":""},{"name":"libnsl2","version":"1.3.0-2::apt","url":""},{"name":"libp11-kit0","version":"0.23.22-1::apt","url":""},{"name":"libpam-chksshpwd","version":"1.4.0-9+deb11u1+rpt2::apt","url":""},{"name":"libpam-modules-bin","version":"1.4.0-9+deb11u1+rpt2::apt","url":""},{"name":"libpam-modules","version":"1.4.0-9+deb11u1+rpt2::apt","url":""},{"name":"libpam-runtime","version":"1.4.0-9+deb11u1+rpt2::apt","url":""},{"name":"libpam0g","version":"1.4.0-9+deb11u1+rpt2::apt","url":""},{"name":"libpcre2-8-0","version":"10.36-2+deb11u1... (set the log level to DEBUG or TRACE to see the full content) 
- </msg>
-<msg timestamp="20221220 12:58:13.891" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:58:13.891" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221220 12:58:13.730" endtime="20221220 12:58:13.892"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_response}</var>
-<arg>${Get_Response.json()}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:58:13.894" level="INFO">${json_response} = {'additionParents': {'references': [], 'self': 'https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/additionParents'}, 'owner': 'device_CH_DEV_CONF_MGMT', 'childDevices': {'r...</msg>
-<status status="PASS" starttime="20221220 12:58:13.892" endtime="20221220 12:58:13.895"/>
-</kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>@{id}</var>
-<arg>${json_response}</arg>
-<arg>$..id</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20221220 12:58:13.917" level="INFO">@{id} = [ 40214 | 40215 ]</msg>
-<status status="PASS" starttime="20221220 12:58:13.895" endtime="20221220 12:58:13.917"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${child_id}</var>
-<arg>${id}</arg>
-<arg>1</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:13.917" level="INFO">${child_id} = 40215</msg>
-<status status="PASS" starttime="20221220 12:58:13.917" endtime="20221220 12:58:13.918"/>
-</kw>
-<kw name="Set Suite Variable" library="BuiltIn">
-<arg>${child_id}</arg>
-<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
-<msg timestamp="20221220 12:58:13.918" level="INFO">${child_id} = 40215</msg>
-<status status="PASS" starttime="20221220 12:58:13.918" endtime="20221220 12:58:13.918"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:13.728" endtime="20221220 12:58:13.918"/>
-</kw>
-<kw name="GET Child name">
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:58:13.920" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:58:13.919" endtime="20221220 12:58:13.920"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:58:13.920" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b503190&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:58:13.920" endtime="20221220 12:58:13.920"/>
-</kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>/inventory/managedObjects?fragmentType\=c8y_IsDevice</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:58:14.073" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?fragmentType=c8y_IsDevice 
- path_url=/inventory/managedObjects?fragmentType=c8y_IsDevice 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:58:14.074" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?fragmentType=c8y_IsDevice 
- status=200, reason=OK 
- headers={'Date': 'Tue, 20 Dec 2022 11:58:14 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.managedobjectcollection+json;charset=UTF-8;ver=0.9', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Content-Encoding': 'gzip', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body={"next":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?pageSize=5&amp;fragmentType=c8y_IsDevice&amp;currentPage=2","self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?pageSize=5&amp;fragmentType=c8y_IsDevice&amp;currentPage=1","managedObjects":[{"additionParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/additionParents"},"owner":"device_CH_DEV_CONF_MGMT","childDevices":{"references":[{"managedObject":{"name":"CD125754","self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40215","id":"40215"},"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/childDevices/40215"}],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/childDevices"},"childAssets":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/childAssets"},"creationTime":"2022-12-20T11:56:46.090Z","type":"thin-edge.io","lastUpdated":"2022-12-20T11:58:08.462Z","childAdditions":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/childAdditions"},"name":"CH_DEV_CONF_MGMT","deviceParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/deviceParents"},"assetParents":{"references":[],"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214/assetParents"},"self":"https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects/40214","id":"40214","c8y_Agent":{"name":"thin-edge.io","version":"0.8.1","url":"https://thin-edge.io"},"com_cumulocity_model_Agent":{},"c8y_IsDevice":{},"c8y_SupportedOperations":["c8y_DownloadConfigFile","c8y_LogfileRequest","c8y_Restart","c8y_SoftwareUpdate","c8y_UploadConfigFile"],"c8y_SoftwareList":[{"name":"adduser","version":"3.118::apt","url":""},{"name":"apt-listchanges","version":"3.24::apt","url":""},{"name":"apt-utils","version":"2.2.4::apt","url":""},{"name":"apt","version":"2.2.4::apt","url":""},{"name":"avahi-daemon","version":"0.8-5+deb11u1::apt","url":""},{"name":"base-files","version":"11.1+deb11u5::apt","url":""},{"name":"base-passwd","version":"3.5.51::apt","url":""},{"name":"bash-completion","version":"1:2.11-2::apt","url":""},{"name":"bash","version":"5.1-2+deb11u1::apt","url":""},{"name":"bsdutils","version":"1:2.36.1-8+deb11u1::apt","url":""},{"name":"build-essential","version":"12.9::apt","url":""},{"name":"c8y-configuration-plugin","version":"0.8.1-125-g9eb87d44::apt","url":""},{"name":"c8y-log-plugin","version":"0.8.1-125-g9eb87d44::apt","url":""},{"name":"ca-certificates","version":"20210119::apt","url":""},{"name":"cifs-utils","version":"2:6.11-3.1+deb11u1::apt","url":""},{"name":"collectd-core","version":"5.12.0-7::apt","url":""},{"name":"console-setup","version":"1.205+rpt1::apt","url":""},{"name":"coreutils","version":"8.32-4::apt","url":""},{"name":"cpio","version":"2.13+dfsg-4::apt","url":""},{"name":"crda","version":"4.14+git20191112.9856751-1::apt","url":""},{"name":"cron","version":"3.0pl1-137::apt","url":""},{"name":"curl","version":"7.74.0-1.3+deb11u3::apt","url":""},{"name":"dash","version":"0.5.11+git20200708+dd9ef66-5::apt","url":""},{"name":"debconf-i18n","version":"1.5.77::apt","url":""},{"name":"debconf-utils","version":"1.5.77::apt","url":""},{"name":"debconf","version":"1.5.77::apt","url":""},{"name":"debian-archive-keyring","version":"2021.1.1::apt","url":""},{"name":"debianutils","version":"4.11.2::apt","url":""},{"name":"dhcpcd5","version":"1:8.1.2-1+rpt9::apt","url":""},{"name":"diffutils","version":"1:3.7-5::apt","url":""},{"name":"dmidecode","version":"3.3-2::apt","url":""},{"name":"dmsetup","version":"2:1.02.175-2.1::apt","url":""},{"name":"dosfstools","version":"4.2-1::apt","url":""},{"name":"dphys-swapfile","version":"20100506-7+rpt1::apt","url":""},{"name":"dpkg","version":"1.20.12::apt","url":""},{"name":"e2fsprogs","version":"1.46.2-2::apt","url":""},{"name":"ed","version":"1.17-1::apt","url":""},{"name":"ethtool","version":"1:5.9-1::apt","url":""},{"name":"fake-hwclock","version":"0.12::apt","url":""},{"name":"fbset","version":"2.1-32::apt","url":""},{"name":"fdisk","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"findutils","version":"4.8.0-1::apt","url":""},{"name":"firmware-atheros","version":"1:20210315-3+rpt7::apt","url":""},{"name":"firmware-brcm80211","version":"1:20210315-3+rpt7::apt","url":""},{"name":"firmware-libertas","version":"1:20210315-3+rpt7::apt","url":""},{"name":"firmware-misc-nonfree","version":"1:20210315-3+rpt7::apt","url":""},{"name":"firmware-realtek","version":"1:20210315-3+rpt7::apt","url":""},{"name":"gcc-10-base","version":"10.2.1-6::apt","url":""},{"name":"gcc-9-base","version":"9.3.0-22::apt","url":""},{"name":"gdb","version":"10.1-1.7::apt","url":""},{"name":"git","version":"1:2.30.2-1::apt","url":""},{"name":"gpgv","version":"2.2.27-2+deb11u2::apt","url":""},{"name":"grep","version":"3.6-1::apt","url":""},{"name":"gzip","version":"1.10-4+deb11u1::apt","url":""},{"name":"hardlink","version":"0.3.2+b1::apt","url":""},{"name":"hostname","version":"3.23::apt","url":""},{"name":"htop","version":"3.0.5-7::apt","url":""},{"name":"ifupdown","version":"0.8.36::apt","url":""},{"name":"init-system-helpers","version":"1.60::apt","url":""},{"name":"init","version":"1.60::apt","url":""},{"name":"iproute2","version":"5.10.0-4::apt","url":""},{"name":"iputils-ping","version":"3:20210202-1::apt","url":""},{"name":"isc-dhcp-client","version":"4.4.1-2.3+deb11u1::apt","url":""},{"name":"isc-dhcp-common","version":"4.4.1-2.3+deb11u1::apt","url":""},{"name":"keyboard-configuration","version":"1.205+rpt1::apt","url":""},{"name":"kmod","version":"28-1::apt","url":""},{"name":"less","version":"551-2::apt","url":""},{"name":"libacl1","version":"2.2.53-10::apt","url":""},{"name":"libapparmor1","version":"2.13.6-10::apt","url":""},{"name":"libapt-pkg6.0","version":"2.2.4::apt","url":""},{"name":"libargon2-1","version":"0~20171227-0.2::apt","url":""},{"name":"libattr1","version":"1:2.4.48-6::apt","url":""},{"name":"libaudit-common","version":"1:3.0-2::apt","url":""},{"name":"libaudit1","version":"1:3.0-2::apt","url":""},{"name":"libblkid1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libbpf0","version":"1:0.3-2::apt","url":""},{"name":"libbsd0","version":"0.11.3-1::apt","url":""},{"name":"libbz2-1.0","version":"1.0.8-4::apt","url":""},{"name":"libc-bin","version":"2.31-13+rpt2+rpi1+deb11u5::apt","url":""},{"name":"libc6","version":"2.31-13+rpt2+rpi1+deb11u5::apt","url":""},{"name":"libcamera-apps-lite","version":"0~git20221109+73ab09f-1::apt","url":""},{"name":"libcap-ng0","version":"0.7.9-2.2+b1::apt","url":""},{"name":"libcap2-bin","version":"1:2.44-1::apt","url":""},{"name":"libcap2","version":"1:2.44-1::apt","url":""},{"name":"libcom-err2","version":"1.46.2-2::apt","url":""},{"name":"libcrypt1","version":"1:4.4.18-4::apt","url":""},{"name":"libcryptsetup12","version":"2:2.3.7-1+deb11u1::apt","url":""},{"name":"libdb5.3","version":"5.3.28+dfsg1-0.8::apt","url":""},{"name":"libdebconfclient0","version":"0.260::apt","url":""},{"name":"libdevmapper1.02.1","version":"2:1.02.175-2.1::apt","url":""},{"name":"libdns-export1110","version":"1:9.11.19+dfsg-2.1::apt","url":""},{"name":"libedit2","version":"3.1-20191231-2+b1::apt","url":""},{"name":"libelf1","version":"0.183-1::apt","url":""},{"name":"libestr0","version":"0.1.10-2.1+b1::apt","url":""},{"name":"libext2fs2","version":"1.46.2-2::apt","url":""},{"name":"libfastjson4","version":"0.99.9-1::apt","url":""},{"name":"libfdisk1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libffi7","version":"3.3-6::apt","url":""},{"name":"libfreetype6-dev","version":"2.10.4+dfsg-1+deb11u1::apt","url":""},{"name":"libgcc-s1","version":"10.2.1-6::apt","url":""},{"name":"libgcrypt20","version":"1.8.7-6::apt","url":""},{"name":"libgmp10","version":"2:6.2.1+dfsg-1+deb11u1::apt","url":""},{"name":"libgnutls30","version":"3.7.1-5+deb11u2::apt","url":""},{"name":"libgpg-error0","version":"1.38-2::apt","url":""},{"name":"libgssapi-krb5-2","version":"1.18.3-6+deb11u2::apt","url":""},{"name":"libhogweed6","version":"3.7.3-1::apt","url":""},{"name":"libidn2-0","version":"2.3.0-5::apt","url":""},{"name":"libip4tc2","version":"1.8.7-1::apt","url":""},{"name":"libisc-export1105","version":"1:9.11.19+dfsg-2.1::apt","url":""},{"name":"libjansson4","version":"2.13.1-1.1::apt","url":""},{"name":"libjson-c5","version":"0.15-2::apt","url":""},{"name":"libk5crypto3","version":"1.18.3-6+deb11u2::apt","url":""},{"name":"libkeyutils1","version":"1.6.1-2::apt","url":""},{"name":"libkmod2","version":"28-1::apt","url":""},{"name":"libkrb5-3","version":"1.18.3-6+deb11u2::apt","url":""},{"name":"libkrb5support0","version":"1.18.3-6+deb11u2::apt","url":""},{"name":"liblocale-gettext-perl","version":"1.07-4+b1::apt","url":""},{"name":"liblognorm5","version":"2.0.5-1.1::apt","url":""},{"name":"liblz4-1","version":"1.9.3-2::apt","url":""},{"name":"liblzma5","version":"5.2.5-2.1~deb11u1::apt","url":""},{"name":"libmd0","version":"1.0.3-3::apt","url":""},{"name":"libmnl0","version":"1.0.4-3::apt","url":""},{"name":"libmosquitto1","version":"2.0.11-1::apt","url":""},{"name":"libmount1","version":"2.36.1-8+deb11u1::apt","url":""},{"name":"libmtp-runtime","version":"1.1.17-3::apt","url":""},{"name":"libncurses6","version":"6.2+20201114-2::apt","url":""},{"name":"libncursesw6","version":"6.2+20201114-2::apt","url":""},{"name":"libnettle8","version":"3.7.3-1::apt","url":""},{"name":"libnewt0.52","version":"0.52.21-4+b3::apt","url":""},{"name":"libnftables1","version":"0.9.8-3.1::apt","url":""},{"name":"libnftnl11","version":"1.1.9-1::apt","url":""},{"name":"libnsl2","version":"1.3.0-2::apt","url":""},{"name":"libp11-kit0","version":"0.23.22-1::apt","url":""},{"name":"libpam-chksshpwd","version":"1.4.0-9+deb11u1+rpt2::apt","url":""},{"name":"libpam-modules-bin","version":"1.4.0-9+deb11u1+... (set the log level to DEBUG or TRACE to see the full content) 
- </msg>
-<msg timestamp="20221220 12:58:14.075" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:58:14.077" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221220 12:58:13.921" endtime="20221220 12:58:14.077"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_response}</var>
-<arg>${Get_Response.json()}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:58:14.081" level="INFO">${json_response} = {'next': 'https://qaenvironment.eu-latest.cumulocity.com/inventory/managedObjects?pageSize=5&amp;fragmentType=c8y_IsDevice&amp;currentPage=2', 'self': 'https://qaenvironment.eu-latest.cumulocity.com/inventory...</msg>
-<status status="PASS" starttime="20221220 12:58:14.078" endtime="20221220 12:58:14.081"/>
-</kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>@{name}</var>
-<arg>${json_response}</arg>
-<arg>$..managedObject.name</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20221220 12:58:14.116" level="INFO">@{name} = [ CD125754 ]</msg>
-<status status="PASS" starttime="20221220 12:58:14.082" endtime="20221220 12:58:14.116"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${child_name}</var>
-<arg>${name}</arg>
-<arg>0</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:14.117" level="INFO">${child_name} = CD125754</msg>
-<status status="PASS" starttime="20221220 12:58:14.117" endtime="20221220 12:58:14.117"/>
-</kw>
-<kw name="Set Suite Variable" library="BuiltIn">
-<arg>${child_name}</arg>
-<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
-<msg timestamp="20221220 12:58:14.118" level="INFO">${child_name} = CD125754</msg>
-<status status="PASS" starttime="20221220 12:58:14.117" endtime="20221220 12:58:14.118"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:13.919" endtime="20221220 12:58:14.118"/>
-</kw>
-<kw name="Validate child Name">
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${CHILD}</arg>
-<arg>${child_name}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:14.119" endtime="20221220 12:58:14.119"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:14.118" endtime="20221220 12:58:14.119"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:13.715" endtime="20221220 12:58:14.120"/>
-</test>
-<test id="s1-t8" name="Snapshot from device" line="67">
-<kw name="Request snapshot from child device">
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_snap}</var>
-<arg>{"deviceId":"${child_id}","description":"Retrieve config1 configuration snapshot from device ${CHILD}","c8y_UploadConfigFile":{"type":"config1"}}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:58:14.128" level="INFO">${json_snap} = {"deviceId":"40215","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}}</msg>
-<status status="PASS" starttime="20221220 12:58:14.128" endtime="20221220 12:58:14.128"/>
-</kw>
-<kw name="Connect" library="MQTTLibrary">
-<arg>${PARENT_IP}</arg>
-<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
-and subscribe keywords.</doc>
-<msg timestamp="20221220 12:58:14.128" level="INFO">Connecting to 192.168.1.110 at port 1883</msg>
-<status status="PASS" starttime="20221220 12:58:14.128" endtime="20221220 12:58:14.133"/>
-</kw>
-<kw name="Subscribe" library="MQTTLibrary">
-<var>@{messages}</var>
-<arg>tedge/${CHILD}/commands/req/config_snapshot</arg>
-<arg>qos=1</arg>
-<arg>timeout=0</arg>
-<arg>limit=0</arg>
-<doc>Subscribe to a topic and return a list of message payloads received
-    within the specified time.</doc>
-<msg timestamp="20221220 12:58:14.134" level="INFO">Subscribing to topic: tedge/CD125754/commands/req/config_snapshot</msg>
-<msg timestamp="20221220 12:58:14.134" level="INFO">Starting background loop</msg>
-<msg timestamp="20221220 12:58:14.135" level="INFO">@{messages} = [ ]</msg>
-<status status="PASS" starttime="20221220 12:58:14.134" endtime="20221220 12:58:14.135"/>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:58:14.136" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:58:14.135" endtime="20221220 12:58:14.136"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:58:14.136" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b5dc290&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:58:14.136" endtime="20221220 12:58:14.136"/>
-</kw>
-<kw name="POST On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>/devicecontrol/operations</arg>
-<arg>${json_snap}</arg>
-<doc>Sends a POST request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:58:14.308" level="INFO">POST Request : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- path_url=/devicecontrol/operations 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '139', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body={"deviceId":"40215","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}} 
- </msg>
-<msg timestamp="20221220 12:58:14.309" level="INFO">POST Response : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- status=201, reason=Created 
- headers={'Date': 'Tue, 20 Dec 2022 11:58:14 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.operation+json;charset=UTF-8;ver=0.9', 'Content-Length': '0', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Location': 'https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42215', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:58:14.309" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:58:14.309" level="INFO">${Get_Response} = &lt;Response [201]&gt;</msg>
-<status status="PASS" starttime="20221220 12:58:14.137" endtime="20221220 12:58:14.310"/>
-</kw>
-<kw name="Listen" library="MQTTLibrary">
-<var>@{listen}</var>
-<arg>tedge/${CHILD}/commands/req/config_snapshot</arg>
-<arg>timeout=20</arg>
-<arg>limit=1</arg>
-<doc>Listen to a topic and return a list of message payloads received
-    within the specified time. Requires an async Subscribe to have been called previously.</doc>
-<msg timestamp="20221220 12:58:14.312" level="INFO">Listening on topic: tedge/CD125754/commands/req/config_snapshot</msg>
-<msg timestamp="20221220 12:58:16.317" level="INFO">@{listen} = [ {"url":"http://192.168.1.110:8000/tedge/file-transfer/CD125754/config_snapshot/config1","path":"/home/pi/config1","type":"config1"} ]</msg>
-<status status="PASS" starttime="20221220 12:58:14.311" endtime="20221220 12:58:16.318"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>@{listen}</arg>
-<arg>{"url":"http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/config_snapshot/config1","path":"/home/pi/config1","type":"config1"}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:16.319" endtime="20221220 12:58:16.320"/>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:58:16.321" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:58:16.320" endtime="20221220 12:58:16.321"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:58:16.322" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b5de150&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:58:16.321" endtime="20221220 12:58:16.324"/>
-</kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>/devicecontrol/operations</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:58:16.481" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- path_url=/devicecontrol/operations 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:58:16.482" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- status=200, reason=OK 
- headers={'Date': 'Tue, 20 Dec 2022 11:58:16 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.operationcollection+json;charset=UTF-8;ver=0.9', 'Content-Length': '689', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body={"operations":[{"delivery":{"log":[{"time":"2022-12-20T11:58:14.357Z","status":"PENDING"},{"time":"2022-12-20T11:58:14.378Z","status":"SEND"}],"time":"2022-12-20T11:58:14.455Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:14.298Z","deviceId":"40215","deviceName":"CD125754","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42215","id":"42215","status":"PENDING","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}}],"self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations?pageSize=5&amp;currentPage=1","statistics":{"totalPages":1,"pageSize":5,"currentPage":1}} 
- </msg>
-<msg timestamp="20221220 12:58:16.482" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:58:16.482" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221220 12:58:16.325" endtime="20221220 12:58:16.482"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_response}</var>
-<arg>${Get_Response.json()}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:58:16.484" level="INFO">${json_response} = {'operations': [{'delivery': {'log': [{'time': '2022-12-20T11:58:14.357Z', 'status': 'PENDING'}, {'time': '2022-12-20T11:58:14.378Z', 'status': 'SEND'}], 'time': '2022-12-20T11:58:14.455Z', 'status': ...</msg>
-<status status="PASS" starttime="20221220 12:58:16.483" endtime="20221220 12:58:16.484"/>
-</kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>@{pd_name}</var>
-<arg>${json_response}</arg>
-<arg>$..status</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20221220 12:58:16.510" level="INFO">@{pd_name} = [ PENDING | DELIVERED | PENDING | SEND ]</msg>
-<status status="PASS" starttime="20221220 12:58:16.485" endtime="20221220 12:58:16.510"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${first}</var>
-<arg>${pd_name}</arg>
-<arg>0</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:16.511" level="INFO">${first} = PENDING</msg>
-<status status="PASS" starttime="20221220 12:58:16.510" endtime="20221220 12:58:16.511"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${second}</var>
-<arg>${pd_name}</arg>
-<arg>1</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:16.511" level="INFO">${second} = DELIVERED</msg>
-<status status="PASS" starttime="20221220 12:58:16.511" endtime="20221220 12:58:16.511"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${third}</var>
-<arg>${pd_name}</arg>
-<arg>2</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:16.512" level="INFO">${third} = PENDING</msg>
-<status status="PASS" starttime="20221220 12:58:16.512" endtime="20221220 12:58:16.512"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${fourth}</var>
-<arg>${pd_name}</arg>
-<arg>3</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:16.512" level="INFO">${fourth} = SEND</msg>
-<status status="PASS" starttime="20221220 12:58:16.512" endtime="20221220 12:58:16.512"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${first}</arg>
-<arg>PENDING</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:16.512" endtime="20221220 12:58:16.513"/>
-</kw>
-<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
-<doc>Disconnect from MQTT Broker.</doc>
-<status status="PASS" starttime="20221220 12:58:16.513" endtime="20221220 12:58:16.514"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:14.128" endtime="20221220 12:58:16.514"/>
-</kw>
-<kw name="Child device response on snapshot request">
-<kw name="Child Connection">
-<kw name="Open Connection" library="SSHLibrary">
-<arg>${CHILD_IP}</arg>
-<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
-<status status="PASS" starttime="20221220 12:58:16.515" endtime="20221220 12:58:16.515"/>
-</kw>
-<kw name="Login" library="SSHLibrary">
-<arg>pi</arg>
-<arg>thinedge</arg>
-<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
-<msg timestamp="20221220 12:58:16.515" level="INFO">Logging into '192.168.1.200:22' as 'pi'.</msg>
-<msg timestamp="20221220 12:58:17.907" level="INFO">Read output: Linux raspberrypi 5.15.61-v8+ #1579 SMP PREEMPT Fri Aug 26 11:16:44 BST 2022 aarch64
-
-The programs included with the Debian GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
-Last login: Tue Dec 20 11:58:09 2022 from 192.168.1.4
-[1m[7m%[m[1m[0m                                                                                [0m[m[m[J(pi:200) [334mpi[328m@[334mraspberrypi[39m:~[0m [32m$ [K[?1h=[?2004h</msg>
-<status status="PASS" starttime="20221220 12:58:16.515" endtime="20221220 12:58:17.908"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:16.515" endtime="20221220 12:58:17.908"/>
-</kw>
-<kw name="Execute Command" library="SSHLibrary">
-<var>${rc}</var>
-<arg>mosquitto_pub -h ${PARENT_IP} -t "tedge/${CHILD}${topic_snap} -m ${payl_exec}</arg>
-<arg>return_stdout=False</arg>
-<arg>return_rc=True</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:58:17.909" level="INFO">Executing command 'mosquitto_pub -h 192.168.1.110 -t "tedge/CD125754/commands/res/config_snapshot" -m '{"status": "executing", "path": "/home/pi/config1", "type": "config1", "reason": null}''.</msg>
-<msg timestamp="20221220 12:58:17.939" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:58:17.939" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:58:17.908" endtime="20221220 12:58:17.939"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${rc}</arg>
-<arg>${0}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:17.939" endtime="20221220 12:58:17.940"/>
-</kw>
-<kw name="Execute Command" library="SSHLibrary">
-<var>${rc}</var>
-<arg>curl -X PUT --data-binary @/home/pi/config1 http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/config_snapshot/config1</arg>
-<arg>return_stdout=False</arg>
-<arg>return_rc=True</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:58:17.940" level="INFO">Executing command 'curl -X PUT --data-binary @/home/pi/config1 http://192.168.1.110:8000/tedge/file-transfer/CD125754/config_snapshot/config1'.</msg>
-<msg timestamp="20221220 12:58:18.037" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:58:18.038" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:58:17.940" endtime="20221220 12:58:18.038"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${rc}</arg>
-<arg>${0}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:18.039" endtime="20221220 12:58:18.040"/>
-</kw>
-<kw name="Sleep" library="BuiltIn">
-<arg>5s</arg>
-<doc>Pauses the test executed for the given time.</doc>
-<msg timestamp="20221220 12:58:23.043" level="INFO">Slept 5 seconds</msg>
-<status status="PASS" starttime="20221220 12:58:18.041" endtime="20221220 12:58:23.044"/>
-</kw>
-<kw name="Execute Command" library="SSHLibrary">
-<var>${rc}</var>
-<arg>mosquitto_pub -h ${PARENT_IP} -t "tedge/${CHILD}${topic_snap} -m ${payl_succ}</arg>
-<arg>return_stdout=False</arg>
-<arg>return_rc=True</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:58:23.046" level="INFO">Executing command 'mosquitto_pub -h 192.168.1.110 -t "tedge/CD125754/commands/res/config_snapshot" -m '{"status": "successful", "path": "/home/pi/config1", "type": "config1", "reason": null}''.</msg>
-<msg timestamp="20221220 12:58:23.085" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:58:23.085" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:58:23.045" endtime="20221220 12:58:23.086"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${rc}</arg>
-<arg>${0}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:23.086" endtime="20221220 12:58:23.087"/>
-</kw>
-<kw name="Sleep" library="BuiltIn">
-<arg>2s</arg>
-<doc>Pauses the test executed for the given time.</doc>
-<msg timestamp="20221220 12:58:25.089" level="INFO">Slept 2 seconds</msg>
-<status status="PASS" starttime="20221220 12:58:23.088" endtime="20221220 12:58:25.089"/>
-</kw>
-<kw name="Close Connection" library="SSHLibrary">
-<doc>Closes the current connection.</doc>
-<status status="PASS" starttime="20221220 12:58:25.090" endtime="20221220 12:58:25.093"/>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:58:25.094" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:58:25.094" endtime="20221220 12:58:25.095"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:58:25.095" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b5dd2d0&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:58:25.095" endtime="20221220 12:58:25.096"/>
-</kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>/devicecontrol/operations</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:58:25.247" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- path_url=/devicecontrol/operations 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:58:25.247" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- status=200, reason=OK 
- headers={'Date': 'Tue, 20 Dec 2022 11:58:25 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.operationcollection+json;charset=UTF-8;ver=0.9', 'Content-Length': '692', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body={"operations":[{"delivery":{"log":[{"time":"2022-12-20T11:58:14.357Z","status":"PENDING"},{"time":"2022-12-20T11:58:14.378Z","status":"SEND"}],"time":"2022-12-20T11:58:14.455Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:14.298Z","deviceId":"40215","deviceName":"CD125754","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42215","id":"42215","status":"SUCCESSFUL","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}}],"self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations?pageSize=5&amp;currentPage=1","statistics":{"totalPages":1,"pageSize":5,"currentPage":1}} 
- </msg>
-<msg timestamp="20221220 12:58:25.248" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:58:25.248" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221220 12:58:25.096" endtime="20221220 12:58:25.249"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_response}</var>
-<arg>${Get_Response.json()}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:58:25.250" level="INFO">${json_response} = {'operations': [{'delivery': {'log': [{'time': '2022-12-20T11:58:14.357Z', 'status': 'PENDING'}, {'time': '2022-12-20T11:58:14.378Z', 'status': 'SEND'}], 'time': '2022-12-20T11:58:14.455Z', 'status': ...</msg>
-<status status="PASS" starttime="20221220 12:58:25.249" endtime="20221220 12:58:25.250"/>
-</kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>@{pd_name}</var>
-<arg>${json_response}</arg>
-<arg>$..status</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20221220 12:58:25.268" level="INFO">@{pd_name} = [ SUCCESSFUL | DELIVERED | PENDING | SEND ]</msg>
-<status status="PASS" starttime="20221220 12:58:25.251" endtime="20221220 12:58:25.268"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${first}</var>
-<arg>${pd_name}</arg>
-<arg>0</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:25.269" level="INFO">${first} = SUCCESSFUL</msg>
-<status status="PASS" starttime="20221220 12:58:25.269" endtime="20221220 12:58:25.269"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${second}</var>
-<arg>${pd_name}</arg>
-<arg>1</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:25.269" level="INFO">${second} = DELIVERED</msg>
-<status status="PASS" starttime="20221220 12:58:25.269" endtime="20221220 12:58:25.269"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${third}</var>
-<arg>${pd_name}</arg>
-<arg>2</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:25.270" level="INFO">${third} = PENDING</msg>
-<status status="PASS" starttime="20221220 12:58:25.270" endtime="20221220 12:58:25.270"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${fourth}</var>
-<arg>${pd_name}</arg>
-<arg>3</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:25.270" level="INFO">${fourth} = SEND</msg>
-<status status="PASS" starttime="20221220 12:58:25.270" endtime="20221220 12:58:25.270"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${first}</arg>
-<arg>SUCCESSFUL</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:25.270" endtime="20221220 12:58:25.271"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:16.514" endtime="20221220 12:58:25.271"/>
-</kw>
-<kw name="No response from child device on snapshot request">
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_snap}</var>
-<arg>{"deviceId":"${child_id}","description":"Retrieve config1 configuration snapshot from device ${CHILD}","c8y_UploadConfigFile":{"type":"config1"}}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:58:25.272" level="INFO">${json_snap} = {"deviceId":"40215","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}}</msg>
-<status status="PASS" starttime="20221220 12:58:25.272" endtime="20221220 12:58:25.272"/>
-</kw>
-<kw name="Connect" library="MQTTLibrary">
-<arg>${PARENT_IP}</arg>
-<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
-and subscribe keywords.</doc>
-<msg timestamp="20221220 12:58:25.272" level="INFO">Connecting to 192.168.1.110 at port 1883</msg>
-<status status="PASS" starttime="20221220 12:58:25.272" endtime="20221220 12:58:25.278"/>
-</kw>
-<kw name="Subscribe" library="MQTTLibrary">
-<var>@{messages}</var>
-<arg>tedge/${CHILD}/commands/req/config_snapshot</arg>
-<arg>qos=1</arg>
-<arg>timeout=0</arg>
-<arg>limit=0</arg>
-<doc>Subscribe to a topic and return a list of message payloads received
-    within the specified time.</doc>
-<msg timestamp="20221220 12:58:25.278" level="INFO">Subscribing to topic: tedge/CD125754/commands/req/config_snapshot</msg>
-<msg timestamp="20221220 12:58:25.278" level="INFO">Starting background loop</msg>
-<msg timestamp="20221220 12:58:25.279" level="INFO">@{messages} = [ ]</msg>
-<status status="PASS" starttime="20221220 12:58:25.278" endtime="20221220 12:58:25.279"/>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:58:25.280" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:58:25.279" endtime="20221220 12:58:25.280"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:58:25.280" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b57ed10&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:58:25.280" endtime="20221220 12:58:25.280"/>
-</kw>
-<kw name="POST On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>/devicecontrol/operations</arg>
-<arg>${json_snap}</arg>
-<doc>Sends a POST request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:58:25.451" level="INFO">POST Request : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- path_url=/devicecontrol/operations 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '139', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body={"deviceId":"40215","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}} 
- </msg>
-<msg timestamp="20221220 12:58:25.452" level="INFO">POST Response : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- status=201, reason=Created 
- headers={'Date': 'Tue, 20 Dec 2022 11:58:25 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.operation+json;charset=UTF-8;ver=0.9', 'Content-Length': '0', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Location': 'https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42218', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:58:25.452" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:58:25.452" level="INFO">${Get_Response} = &lt;Response [201]&gt;</msg>
-<status status="PASS" starttime="20221220 12:58:25.281" endtime="20221220 12:58:25.453"/>
-</kw>
-<kw name="Listen" library="MQTTLibrary">
-<var>@{listen}</var>
-<arg>tedge/${CHILD}/commands/req/config_snapshot</arg>
-<arg>timeout=20</arg>
-<arg>limit=1</arg>
-<doc>Listen to a topic and return a list of message payloads received
-    within the specified time. Requires an async Subscribe to have been called previously.</doc>
-<msg timestamp="20221220 12:58:25.455" level="INFO">Listening on topic: tedge/CD125754/commands/req/config_snapshot</msg>
-<msg timestamp="20221220 12:58:27.461" level="INFO">@{listen} = [ {"url":"http://192.168.1.110:8000/tedge/file-transfer/CD125754/config_snapshot/config1","path":"/home/pi/config1","type":"config1"} ]</msg>
-<status status="PASS" starttime="20221220 12:58:25.453" endtime="20221220 12:58:27.462"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>@{listen}</arg>
-<arg>{"url":"http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/config_snapshot/config1","path":"/home/pi/config1","type":"config1"}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:27.465" endtime="20221220 12:58:27.467"/>
-</kw>
-<kw name="Sleep" library="BuiltIn">
-<arg>11s</arg>
-<doc>Pauses the test executed for the given time.</doc>
-<msg timestamp="20221220 12:58:38.469" level="INFO">Slept 11 seconds</msg>
-<status status="PASS" starttime="20221220 12:58:27.468" endtime="20221220 12:58:38.470"/>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:58:38.473" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:58:38.471" endtime="20221220 12:58:38.473"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:58:38.474" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b5b0790&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:58:38.473" endtime="20221220 12:58:38.475"/>
-</kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>/devicecontrol/operations</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:58:38.767" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- path_url=/devicecontrol/operations 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:58:38.768" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- status=200, reason=OK 
- headers={'Date': 'Tue, 20 Dec 2022 11:58:38 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.operationcollection+json;charset=UTF-8;ver=0.9', 'Content-Length': '1302', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body={"operations":[{"delivery":{"log":[{"time":"2022-12-20T11:58:14.357Z","status":"PENDING"},{"time":"2022-12-20T11:58:14.378Z","status":"SEND"}],"time":"2022-12-20T11:58:14.455Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:14.298Z","deviceId":"40215","deviceName":"CD125754","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42215","id":"42215","status":"SUCCESSFUL","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}},{"delivery":{"log":[{"time":"2022-12-20T11:58:25.484Z","status":"PENDING"},{"time":"2022-12-20T11:58:25.503Z","status":"SEND"}],"time":"2022-12-20T11:58:25.579Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:25.440Z","deviceId":"40215","deviceName":"CD125754","failureReason":"Timeout due to lack of response from child device: CD125754 for config type: config1","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42218","id":"42218","status":"FAILED","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}}],"self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations?pageSize=5&amp;currentPage=1","statistics":{"totalPages":1,"pageSize":5,"currentPage":1}} 
- </msg>
-<msg timestamp="20221220 12:58:38.768" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:58:38.768" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221220 12:58:38.475" endtime="20221220 12:58:38.769"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_response}</var>
-<arg>${Get_Response.json()}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:58:38.770" level="INFO">${json_response} = {'operations': [{'delivery': {'log': [{'time': '2022-12-20T11:58:14.357Z', 'status': 'PENDING'}, {'time': '2022-12-20T11:58:14.378Z', 'status': 'SEND'}], 'time': '2022-12-20T11:58:14.455Z', 'status': ...</msg>
-<status status="PASS" starttime="20221220 12:58:38.769" endtime="20221220 12:58:38.770"/>
-</kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>@{pd_name}</var>
-<arg>${json_response}</arg>
-<arg>$..failureReason</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20221220 12:58:38.795" level="INFO">@{pd_name} = [ Timeout due to lack of response from child device: CD125754 for config type: config1 ]</msg>
-<status status="PASS" starttime="20221220 12:58:38.771" endtime="20221220 12:58:38.795"/>
+<msg timestamp="20230104 10:51:29.524" level="INFO">Executing command 'sudo tedge cert show'.</msg>
+<msg timestamp="20230104 10:51:29.616" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:51:29.618" level="INFO">${output} = Device certificate: /etc/tedge/device-certs/tedge-certificate.pem
+Subject: CN=CH_DEV_CONF_MGMT, O=Thin Edge, OU=Test Device
+Issuer: CN=CH_DEV_CONF_MGMT, O=Thin Edge, OU=Test Device
+Valid from: Tue, 03...</msg>
+<status status="PASS" starttime="20230104 10:51:29.524" endtime="20230104 10:51:29.618"/>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
-<arg>${pd_name}</arg>
-<arg>Timeout due to lack of response from child device: ${CHILD} for config type: config1</arg>
+<arg>${output}</arg>
+<arg>Device certificate: /etc/tedge/device-certs/tedge-certificate.pem</arg>
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" starttime="20221220 12:58:38.795" endtime="20221220 12:58:38.796"/>
+<status status="PASS" starttime="20230104 10:51:29.618" endtime="20230104 10:51:29.619"/>
 </kw>
-<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
-<doc>Disconnect from MQTT Broker.</doc>
-<status status="PASS" starttime="20221220 12:58:38.796" endtime="20221220 12:58:38.797"/>
+<status status="PASS" starttime="20230104 10:51:29.358" endtime="20230104 10:51:29.619"/>
 </kw>
-<status status="PASS" starttime="20221220 12:58:25.271" endtime="20221220 12:58:38.797"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:14.123" endtime="20221220 12:58:38.798"/>
-</test>
-<test id="s1-t9" name="Child device config update" line="71">
-<kw name="Send configuration to device">
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_conf}</var>
-<arg>{"deviceId":"${child_id}","description":"Send configuration snapshot config1 of configuration type config1 to device ${CHILD}","c8y_DownloadConfigFile":{"url":"https://${url_tedge}/inventory/binaries/21315","type":"config1"}}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:58:38.806" level="INFO">${json_conf} = {"deviceId":"40215","description":"Send configuration snapshot config1 of configuration type config1 to device CD125754","c8y_DownloadConfigFile":{"url":"https://qaenvironment.eu-latest.cumulocity.com...</msg>
-<status status="PASS" starttime="20221220 12:58:38.806" endtime="20221220 12:58:38.806"/>
-</kw>
-<kw name="Connect" library="MQTTLibrary">
-<arg>${PARENT_IP}</arg>
-<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
-and subscribe keywords.</doc>
-<msg timestamp="20221220 12:58:38.806" level="INFO">Connecting to 192.168.1.110 at port 1883</msg>
-<status status="PASS" starttime="20221220 12:58:38.806" endtime="20221220 12:58:38.812"/>
-</kw>
-<kw name="Subscribe" library="MQTTLibrary">
-<var>@{messages}</var>
-<arg>tedge/${CHILD}/commands/req/config_update</arg>
-<arg>qos=1</arg>
-<arg>timeout=0</arg>
-<arg>limit=0</arg>
-<doc>Subscribe to a topic and return a list of message payloads received
-    within the specified time.</doc>
-<msg timestamp="20221220 12:58:38.812" level="INFO">Subscribing to topic: tedge/CD125754/commands/req/config_update</msg>
-<msg timestamp="20221220 12:58:38.813" level="INFO">Starting background loop</msg>
-<msg timestamp="20221220 12:58:38.814" level="INFO">@{messages} = [ ]</msg>
-<status status="PASS" starttime="20221220 12:58:38.812" endtime="20221220 12:58:38.814"/>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:58:38.814" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:58:38.814" endtime="20221220 12:58:38.814"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:58:38.815" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b5bce50&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:58:38.814" endtime="20221220 12:58:38.815"/>
-</kw>
-<kw name="POST On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>/devicecontrol/operations</arg>
-<arg>${json_conf}</arg>
-<doc>Sends a POST request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:58:38.976" level="INFO">POST Request : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- path_url=/devicecontrol/operations 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '245', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body={"deviceId":"40215","description":"Send configuration snapshot config1 of configuration type config1 to device CD125754","c8y_DownloadConfigFile":{"url":"https://qaenvironment.eu-latest.cumulocity.com/inventory/binaries/21315","type":"config1"}} 
- </msg>
-<msg timestamp="20221220 12:58:38.976" level="INFO">POST Response : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- status=201, reason=Created 
- headers={'Date': 'Tue, 20 Dec 2022 11:58:39 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.operation+json;charset=UTF-8;ver=0.9', 'Content-Length': '0', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Location': 'https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42220', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:58:38.976" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:58:38.977" level="INFO">${Get_Response} = &lt;Response [201]&gt;</msg>
-<status status="PASS" starttime="20221220 12:58:38.815" endtime="20221220 12:58:38.977"/>
-</kw>
-<kw name="Listen" library="MQTTLibrary">
-<var>@{listen}</var>
-<arg>tedge/${CHILD}/commands/req/config_update</arg>
-<arg>timeout=20</arg>
-<arg>limit=1</arg>
-<doc>Listen to a topic and return a list of message payloads received
-    within the specified time. Requires an async Subscribe to have been called previously.</doc>
-<msg timestamp="20221220 12:58:38.978" level="INFO">Listening on topic: tedge/CD125754/commands/req/config_update</msg>
-<msg timestamp="20221220 12:58:47.010" level="INFO">@{listen} = [ {"url":"http://192.168.1.110:8000/tedge/file-transfer/CD125754/config_update/config1","path":"/home/pi/config1","type":"config1"} ]</msg>
-<status status="PASS" starttime="20221220 12:58:38.977" endtime="20221220 12:58:47.011"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>@{listen}</arg>
-<arg>{"url":"http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/config_update/config1","path":"/home/pi/config1","type":"config1"}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:47.012" endtime="20221220 12:58:47.013"/>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:58:47.014" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:58:47.014" endtime="20221220 12:58:47.014"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:58:47.015" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b551f10&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:58:47.014" endtime="20221220 12:58:47.015"/>
-</kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>/devicecontrol/operations</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:58:47.190" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- path_url=/devicecontrol/operations 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:58:47.190" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- status=200, reason=OK 
- headers={'Date': 'Tue, 20 Dec 2022 11:58:47 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.operationcollection+json;charset=UTF-8;ver=0.9', 'Content-Length': '1916', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body={"operations":[{"delivery":{"log":[{"time":"2022-12-20T11:58:14.357Z","status":"PENDING"},{"time":"2022-12-20T11:58:14.378Z","status":"SEND"}],"time":"2022-12-20T11:58:14.455Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:14.298Z","deviceId":"40215","deviceName":"CD125754","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42215","id":"42215","status":"SUCCESSFUL","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}},{"delivery":{"log":[{"time":"2022-12-20T11:58:25.484Z","status":"PENDING"},{"time":"2022-12-20T11:58:25.503Z","status":"SEND"}],"time":"2022-12-20T11:58:25.579Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:25.440Z","deviceId":"40215","deviceName":"CD125754","failureReason":"Timeout due to lack of response from child device: CD125754 for config type: config1","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42218","id":"42218","status":"FAILED","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}},{"delivery":{"log":[{"time":"2022-12-20T11:58:39.022Z","status":"PENDING"},{"time":"2022-12-20T11:58:39.054Z","status":"SEND"}],"time":"2022-12-20T11:58:39.415Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:38.973Z","deviceId":"40215","deviceName":"CD125754","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42220","id":"42220","status":"PENDING","c8y_DownloadConfigFile":{"type":"config1","url":"https://qaenvironment.eu-latest.cumulocity.com/inventory/binaries/21315"},"description":"Send configuration snapshot config1 of configuration type config1 to device CD125754"}],"self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations?pageSize=5&amp;currentPage=1","statistics":{"totalPages":1,"pageSize":5,"currentPage":1}} 
- </msg>
-<msg timestamp="20221220 12:58:47.191" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:58:47.192" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221220 12:58:47.016" endtime="20221220 12:58:47.194"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_response}</var>
-<arg>${Get_Response.json()}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:58:47.197" level="INFO">${json_response} = {'operations': [{'delivery': {'log': [{'time': '2022-12-20T11:58:14.357Z', 'status': 'PENDING'}, {'time': '2022-12-20T11:58:14.378Z', 'status': 'SEND'}], 'time': '2022-12-20T11:58:14.455Z', 'status': ...</msg>
-<status status="PASS" starttime="20221220 12:58:47.194" endtime="20221220 12:58:47.197"/>
-</kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>@{pd_name}</var>
-<arg>${json_response}</arg>
-<arg>$..status</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20221220 12:58:47.217" level="INFO">@{pd_name} = [ SUCCESSFUL | DELIVERED | PENDING | SEND | FAILED | DELIVERED | PENDING | SEND | PENDING | DELIVERED | PENDING | SEND ]</msg>
-<status status="PASS" starttime="20221220 12:58:47.197" endtime="20221220 12:58:47.217"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${first}</var>
-<arg>${pd_name}</arg>
-<arg>0</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:47.217" level="INFO">${first} = SUCCESSFUL</msg>
-<status status="PASS" starttime="20221220 12:58:47.217" endtime="20221220 12:58:47.217"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${second}</var>
-<arg>${pd_name}</arg>
-<arg>1</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:47.218" level="INFO">${second} = DELIVERED</msg>
-<status status="PASS" starttime="20221220 12:58:47.218" endtime="20221220 12:58:47.218"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${third}</var>
-<arg>${pd_name}</arg>
-<arg>2</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:47.218" level="INFO">${third} = PENDING</msg>
-<status status="PASS" starttime="20221220 12:58:47.218" endtime="20221220 12:58:47.218"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${fourth}</var>
-<arg>${pd_name}</arg>
-<arg>3</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:47.219" level="INFO">${fourth} = SEND</msg>
-<status status="PASS" starttime="20221220 12:58:47.219" endtime="20221220 12:58:47.219"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${second}</arg>
-<arg>DELIVERED</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:47.219" endtime="20221220 12:58:47.219"/>
-</kw>
-<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
-<doc>Disconnect from MQTT Broker.</doc>
-<status status="PASS" starttime="20221220 12:58:47.220" endtime="20221220 12:58:47.220"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:38.805" endtime="20221220 12:58:47.220"/>
-</kw>
-<kw name="Child device response on update request">
-<kw name="Child Connection">
-<kw name="Open Connection" library="SSHLibrary">
-<arg>${CHILD_IP}</arg>
-<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
-<status status="PASS" starttime="20221220 12:58:47.221" endtime="20221220 12:58:47.221"/>
-</kw>
-<kw name="Login" library="SSHLibrary">
-<arg>pi</arg>
-<arg>thinedge</arg>
-<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
-<msg timestamp="20221220 12:58:47.222" level="INFO">Logging into '192.168.1.200:22' as 'pi'.</msg>
-<msg timestamp="20221220 12:58:48.905" level="INFO">Read output: Linux raspberrypi 5.15.61-v8+ #1579 SMP PREEMPT Fri Aug 26 11:16:44 BST 2022 aarch64
-
-The programs included with the Debian GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
-Last login: Tue Dec 20 11:58:16 2022 from 192.168.1.4
-[1m[7m%[m[1m[0m                                                                                [0m[m[m[J(pi:200) [334mpi[328m@[334mraspberrypi[39m:~[0m [32m$ [K[?1h=[?2004h</msg>
-<status status="PASS" starttime="20221220 12:58:47.221" endtime="20221220 12:58:48.907"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:47.221" endtime="20221220 12:58:48.908"/>
-</kw>
+<kw name="Set c8y URL">
 <kw name="Execute Command" library="SSHLibrary">
 <var>${rc}</var>
-<arg>mosquitto_pub -h ${PARENT_IP} -t "tedge/${CHILD}${topic_upd} -m ${payl_exec}</arg>
+<arg>sudo tedge config set c8y.url ${url_tedge}</arg>
 <arg>return_stdout=False</arg>
 <arg>return_rc=True</arg>
 <doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:58:48.909" level="INFO">Executing command 'mosquitto_pub -h 192.168.1.110 -t "tedge/CD125754/commands/res/config_update" -m '{"status": "executing", "path": "/home/pi/config1", "type": "config1", "reason": null}''.</msg>
-<msg timestamp="20221220 12:58:48.930" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:58:48.931" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:58:48.908" endtime="20221220 12:58:48.931"/>
+<msg timestamp="20230104 10:51:29.621" level="INFO">Executing command 'sudo tedge config set c8y.url qaenvironment.eu-latest.cumulocity.com'.</msg>
+<msg timestamp="20230104 10:51:29.706" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:51:29.707" level="INFO">${rc} = 0</msg>
+<status status="PASS" starttime="20230104 10:51:29.620" endtime="20230104 10:51:29.707"/>
 </kw>
 <kw name="Should Be Equal" library="BuiltIn">
 <arg>${rc}</arg>
 <arg>${0}</arg>
 <doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:48.932" endtime="20221220 12:58:48.932"/>
+<status status="PASS" starttime="20230104 10:51:29.707" endtime="20230104 10:51:29.708"/>
 </kw>
-<kw name="Execute Command" library="SSHLibrary">
-<var>${rc}</var>
-<arg>curl http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/config_update/config1 --output config1</arg>
-<arg>return_stdout=False</arg>
-<arg>return_rc=True</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:58:48.933" level="INFO">Executing command 'curl http://192.168.1.110:8000/tedge/file-transfer/CD125754/config_update/config1 --output config1'.</msg>
-<msg timestamp="20221220 12:58:49.012" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:58:49.013" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:58:48.933" endtime="20221220 12:58:49.014"/>
+<status status="PASS" starttime="20230104 10:51:29.620" endtime="20230104 10:51:29.709"/>
 </kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${rc}</arg>
-<arg>${0}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:49.014" endtime="20221220 12:58:49.016"/>
+<kw name="Upload certificate">
+<kw name="Write" library="SSHLibrary">
+<arg>sudo tedge cert upload c8y --user ${user}</arg>
+<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
+<msg timestamp="20230104 10:51:29.753" level="INFO">sudo tedge cert upload c8y --user systest_preparation [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kn</msg>
+<status status="PASS" starttime="20230104 10:51:29.712" endtime="20230104 10:51:29.753"/>
 </kw>
-<kw name="Execute Command" library="SSHLibrary">
-<var>${rc}</var>
-<arg>mosquitto_pub -h ${PARENT_IP} -t "tedge/${CHILD}${topic_upd} -m ${payl_succ}</arg>
-<arg>return_stdout=False</arg>
-<arg>return_rc=True</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20221220 12:58:49.017" level="INFO">Executing command 'mosquitto_pub -h 192.168.1.110 -t "tedge/CD125754/commands/res/config_update" -m '{"status": "successful", "path": "/home/pi/config1", "type": "config1", "reason": null}''.</msg>
-<msg timestamp="20221220 12:58:49.067" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20221220 12:58:49.068" level="INFO">${rc} = 0</msg>
-<status status="PASS" starttime="20221220 12:58:49.016" endtime="20221220 12:58:49.068"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${rc}</arg>
-<arg>${0}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:49.069" endtime="20221220 12:58:49.070"/>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
+<kw name="Write" library="SSHLibrary">
 <arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:58:49.071" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:58:49.071" endtime="20221220 12:58:49.072"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:58:49.073" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b72c550&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:58:49.072" endtime="20221220 12:58:49.074"/>
-</kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>/devicecontrol/operations</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:58:49.324" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- path_url=/devicecontrol/operations 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:58:49.329" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- status=200, reason=OK 
- headers={'Date': 'Tue, 20 Dec 2022 11:58:49 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.operationcollection+json;charset=UTF-8;ver=0.9', 'Content-Length': '1919', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body={"operations":[{"delivery":{"log":[{"time":"2022-12-20T11:58:14.357Z","status":"PENDING"},{"time":"2022-12-20T11:58:14.378Z","status":"SEND"}],"time":"2022-12-20T11:58:14.455Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:14.298Z","deviceId":"40215","deviceName":"CD125754","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42215","id":"42215","status":"SUCCESSFUL","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}},{"delivery":{"log":[{"time":"2022-12-20T11:58:25.484Z","status":"PENDING"},{"time":"2022-12-20T11:58:25.503Z","status":"SEND"}],"time":"2022-12-20T11:58:25.579Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:25.440Z","deviceId":"40215","deviceName":"CD125754","failureReason":"Timeout due to lack of response from child device: CD125754 for config type: config1","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42218","id":"42218","status":"FAILED","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}},{"delivery":{"log":[{"time":"2022-12-20T11:58:39.022Z","status":"PENDING"},{"time":"2022-12-20T11:58:39.054Z","status":"SEND"}],"time":"2022-12-20T11:58:39.415Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:38.973Z","deviceId":"40215","deviceName":"CD125754","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42220","id":"42220","status":"SUCCESSFUL","c8y_DownloadConfigFile":{"type":"config1","url":"https://qaenvironment.eu-latest.cumulocity.com/inventory/binaries/21315"},"description":"Send configuration snapshot config1 of configuration type config1 to device CD125754"}],"self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations?pageSize=5&amp;currentPage=1","statistics":{"totalPages":1,"pageSize":5,"currentPage":1}} 
- </msg>
-<msg timestamp="20221220 12:58:49.329" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:58:49.330" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221220 12:58:49.074" endtime="20221220 12:58:49.330"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_response}</var>
-<arg>${Get_Response.json()}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:58:49.333" level="INFO">${json_response} = {'operations': [{'delivery': {'log': [{'time': '2022-12-20T11:58:14.357Z', 'status': 'PENDING'}, {'time': '2022-12-20T11:58:14.378Z', 'status': 'SEND'}], 'time': '2022-12-20T11:58:14.455Z', 'status': ...</msg>
-<status status="PASS" starttime="20221220 12:58:49.331" endtime="20221220 12:58:49.334"/>
-</kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>@{pd_name}</var>
-<arg>${json_response}</arg>
-<arg>$..status</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20221220 12:58:49.363" level="INFO">@{pd_name} = [ SUCCESSFUL | DELIVERED | PENDING | SEND | FAILED | DELIVERED | PENDING | SEND | SUCCESSFUL | DELIVERED | PENDING | SEND ]</msg>
-<status status="PASS" starttime="20221220 12:58:49.335" endtime="20221220 12:58:49.363"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${first}</var>
-<arg>${pd_name}</arg>
-<arg>0</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:49.364" level="INFO">${first} = SUCCESSFUL</msg>
-<status status="PASS" starttime="20221220 12:58:49.364" endtime="20221220 12:58:49.364"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${second}</var>
-<arg>${pd_name}</arg>
-<arg>1</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:49.365" level="INFO">${second} = DELIVERED</msg>
-<status status="PASS" starttime="20221220 12:58:49.365" endtime="20221220 12:58:49.365"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${third}</var>
-<arg>${pd_name}</arg>
-<arg>2</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:49.365" level="INFO">${third} = PENDING</msg>
-<status status="PASS" starttime="20221220 12:58:49.365" endtime="20221220 12:58:49.366"/>
-</kw>
-<kw name="Get From List" library="Collections">
-<var>${fourth}</var>
-<arg>${pd_name}</arg>
-<arg>3</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:58:49.366" level="INFO">${fourth} = SEND</msg>
-<status status="PASS" starttime="20221220 12:58:49.366" endtime="20221220 12:58:49.366"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${first}</arg>
-<arg>SUCCESSFUL</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:49.366" endtime="20221220 12:58:49.367"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:47.221" endtime="20221220 12:58:49.367"/>
-</kw>
-<kw name="No response from child device on config update">
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_conf}</var>
-<arg>{"deviceId":"${child_id}","description":"Send configuration snapshot config1 of configuration type config1 to device ${CHILD}","c8y_DownloadConfigFile":{"url":"https://${url_tedge}/inventory/binaries/21315","type":"config1"}}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:58:49.368" level="INFO">${json_conf} = {"deviceId":"40215","description":"Send configuration snapshot config1 of configuration type config1 to device CD125754","c8y_DownloadConfigFile":{"url":"https://qaenvironment.eu-latest.cumulocity.com...</msg>
-<status status="PASS" starttime="20221220 12:58:49.367" endtime="20221220 12:58:49.368"/>
-</kw>
-<kw name="Connect" library="MQTTLibrary">
-<arg>${PARENT_IP}</arg>
-<doc>Connect to an MQTT broker. This is a pre-requisite step for publish
-and subscribe keywords.</doc>
-<msg timestamp="20221220 12:58:49.368" level="INFO">Connecting to 192.168.1.110 at port 1883</msg>
-<status status="PASS" starttime="20221220 12:58:49.368" endtime="20221220 12:58:49.373"/>
-</kw>
-<kw name="Subscribe" library="MQTTLibrary">
-<var>@{messages}</var>
-<arg>tedge/${CHILD}/commands/req/config_update</arg>
-<arg>qos=1</arg>
-<arg>timeout=0</arg>
-<arg>limit=0</arg>
-<doc>Subscribe to a topic and return a list of message payloads received
-    within the specified time.</doc>
-<msg timestamp="20221220 12:58:49.374" level="INFO">Subscribing to topic: tedge/CD125754/commands/req/config_update</msg>
-<msg timestamp="20221220 12:58:49.374" level="INFO">Starting background loop</msg>
-<msg timestamp="20221220 12:58:49.375" level="INFO">@{messages} = [ ]</msg>
-<status status="PASS" starttime="20221220 12:58:49.374" endtime="20221220 12:58:49.375"/>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:58:49.376" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:58:49.375" endtime="20221220 12:58:49.376"/>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:58:49.376" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b7295d0&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:58:49.376" endtime="20221220 12:58:49.376"/>
-</kw>
-<kw name="POST On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>/devicecontrol/operations</arg>
-<arg>${json_conf}</arg>
-<doc>Sends a POST request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:58:49.545" level="INFO">POST Request : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- path_url=/devicecontrol/operations 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '245', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body={"deviceId":"40215","description":"Send configuration snapshot config1 of configuration type config1 to device CD125754","c8y_DownloadConfigFile":{"url":"https://qaenvironment.eu-latest.cumulocity.com/inventory/binaries/21315","type":"config1"}} 
- </msg>
-<msg timestamp="20221220 12:58:49.546" level="INFO">POST Response : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- status=201, reason=Created 
- headers={'Date': 'Tue, 20 Dec 2022 11:58:49 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.operation+json;charset=UTF-8;ver=0.9', 'Content-Length': '0', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Location': 'https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42222', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:58:49.546" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:58:49.546" level="INFO">${Get_Response} = &lt;Response [201]&gt;</msg>
-<status status="PASS" starttime="20221220 12:58:49.376" endtime="20221220 12:58:49.546"/>
-</kw>
-<kw name="Listen" library="MQTTLibrary">
-<var>@{listen}</var>
-<arg>tedge/${CHILD}/commands/req/config_update</arg>
-<arg>timeout=20</arg>
-<arg>limit=1</arg>
-<doc>Listen to a topic and return a list of message payloads received
-    within the specified time. Requires an async Subscribe to have been called previously.</doc>
-<msg timestamp="20221220 12:58:49.547" level="INFO">Listening on topic: tedge/CD125754/commands/req/config_update</msg>
-<msg timestamp="20221220 12:58:51.555" level="INFO">@{listen} = [ {"url":"http://192.168.1.110:8000/tedge/file-transfer/CD125754/config_update/config1","path":"/home/pi/config1","type":"config1"} ]</msg>
-<status status="PASS" starttime="20221220 12:58:49.547" endtime="20221220 12:58:51.556"/>
-</kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>@{listen}</arg>
-<arg>{"url":"http://${PARENT_IP}:${HTTP_PORT}/tedge/file-transfer/${CHILD}/config_update/config1","path":"/home/pi/config1","type":"config1"}</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:58:51.557" endtime="20221220 12:58:51.558"/>
+<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
+<msg timestamp="20230104 10:51:29.757" level="INFO">[?2004l***</msg>
+<status status="PASS" starttime="20230104 10:51:29.753" endtime="20230104 10:51:29.757"/>
 </kw>
 <kw name="Sleep" library="BuiltIn">
-<arg>11s</arg>
+<arg>60s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<msg timestamp="20221220 12:59:02.561" level="INFO">Slept 11 seconds</msg>
-<status status="PASS" starttime="20221220 12:58:51.559" endtime="20221220 12:59:02.562"/>
+<msg timestamp="20230104 10:52:29.758" level="INFO">Slept 1 minute</msg>
+<status status="PASS" starttime="20230104 10:51:29.757" endtime="20230104 10:52:29.759"/>
 </kw>
-<kw name="Create List" library="BuiltIn">
-<var>${auth}</var>
-<arg>${user}</arg>
-<arg>${pass}</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20221220 12:59:02.564" level="INFO">${auth} = ['systest_preparation', '***']</msg>
-<status status="PASS" starttime="20221220 12:59:02.563" endtime="20221220 12:59:02.564"/>
+<status status="PASS" starttime="20230104 10:51:29.709" endtime="20230104 10:52:29.759"/>
 </kw>
-<kw name="Create Session" library="RequestsLibrary">
-<arg>API_Testing</arg>
-<arg>https://${url_tedge}</arg>
-<arg>auth=${auth}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20221220 12:59:02.565" level="INFO">Creating Session using : alias=API_Testing, url=https://qaenvironment.eu-latest.cumulocity.com, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x10b556750&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20221220 12:59:02.564" endtime="20221220 12:59:02.565"/>
+<kw name="Connect to c8y">
+<kw name="Execute Command" library="SSHLibrary">
+<var>${output}</var>
+<arg>sudo tedge connect c8y</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20230104 10:52:29.760" level="INFO">Executing command 'sudo tedge connect c8y'.</msg>
+<msg timestamp="20230104 10:52:43.454" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20230104 10:52:43.455" level="INFO">${output} = The system config file '/etc/tedge/system.toml' doesn't exist. Use '/bin/systemctl' as a service manager.
+
+Checking if systemd is available.
+
+Checking if configuration for requested bridge already exi...</msg>
+<status status="PASS" starttime="20230104 10:52:29.760" endtime="20230104 10:52:43.455"/>
 </kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Testing</arg>
-<arg>/devicecontrol/operations</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20221220 12:59:02.751" level="INFO">GET Request : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- path_url=/devicecontrol/operations 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic c3lzdGVzdF9wcmVwYXJhdGlvbjpBbGV4QDIxMDI5NQ=='} 
- body=None 
- </msg>
-<msg timestamp="20221220 12:59:02.752" level="INFO">GET Response : url=https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations 
- status=200, reason=OK 
- headers={'Date': 'Tue, 20 Dec 2022 11:59:02 GMT', 'Content-Type': 'application/vnd.com.nsn.cumulocity.operationcollection+json;charset=UTF-8;ver=0.9', 'Content-Length': '607', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache,no-store,must-revalidate', 'Pragma': 'no-cache', 'Expires': '-1', 'X-XSS-Protection': '1; mode=block', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Vary': 'Accept-Encoding, User-Agent', 'Content-Encoding': 'gzip', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'} 
- body={"operations":[{"delivery":{"log":[{"time":"2022-12-20T11:58:14.357Z","status":"PENDING"},{"time":"2022-12-20T11:58:14.378Z","status":"SEND"}],"time":"2022-12-20T11:58:14.455Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:14.298Z","deviceId":"40215","deviceName":"CD125754","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42215","id":"42215","status":"SUCCESSFUL","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}},{"delivery":{"log":[{"time":"2022-12-20T11:58:25.484Z","status":"PENDING"},{"time":"2022-12-20T11:58:25.503Z","status":"SEND"}],"time":"2022-12-20T11:58:25.579Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:25.440Z","deviceId":"40215","deviceName":"CD125754","failureReason":"Timeout due to lack of response from child device: CD125754 for config type: config1","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42218","id":"42218","status":"FAILED","description":"Retrieve config1 configuration snapshot from device CD125754","c8y_UploadConfigFile":{"type":"config1"}},{"delivery":{"log":[{"time":"2022-12-20T11:58:39.022Z","status":"PENDING"},{"time":"2022-12-20T11:58:39.054Z","status":"SEND"}],"time":"2022-12-20T11:58:39.415Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:38.973Z","deviceId":"40215","deviceName":"CD125754","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42220","id":"42220","status":"SUCCESSFUL","c8y_DownloadConfigFile":{"type":"config1","url":"https://qaenvironment.eu-latest.cumulocity.com/inventory/binaries/21315"},"description":"Send configuration snapshot config1 of configuration type config1 to device CD125754"},{"delivery":{"log":[{"time":"2022-12-20T11:58:49.577Z","status":"PENDING"},{"time":"2022-12-20T11:58:49.598Z","status":"SEND"}],"time":"2022-12-20T11:58:49.690Z","status":"DELIVERED"},"creationTime":"2022-12-20T11:58:49.538Z","deviceId":"40215","deviceName":"CD125754","failureReason":"Timeout due to lack of response from child device: CD125754 for config type: config1","self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations/42222","id":"42222","status":"FAILED","c8y_DownloadConfigFile":{"type":"config1","url":"https://qaenvironment.eu-latest.cumulocity.com/inventory/binaries/21315"},"description":"Send configuration snapshot config1 of configuration type config1 to device CD125754"}],"self":"https://qaenvironment.eu-latest.cumulocity.com/devicecontrol/operations?pageSize=5&amp;currentPage=1","statistics":{"totalPages":1,"pageSize":5,"currentPage":1}} 
- </msg>
-<msg timestamp="20221220 12:59:02.752" level="INFO">/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'qaenvironment.eu-latest.cumulocity.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(</msg>
-<msg timestamp="20221220 12:59:02.753" level="INFO">${Get_Response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221220 12:59:02.566" endtime="20221220 12:59:02.753"/>
+<kw name="Sleep" library="BuiltIn">
+<arg>3s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20230104 10:52:46.458" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" starttime="20230104 10:52:43.456" endtime="20230104 10:52:46.459"/>
 </kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${json_response}</var>
-<arg>${Get_Response.json()}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20221220 12:59:02.762" level="INFO">${json_response} = {'operations': [{'delivery': {'log': [{'time': '2022-12-20T11:58:14.357Z', 'status': 'PENDING'}, {'time': '2022-12-20T11:58:14.378Z', 'status': 'SEND'}], 'time': '2022-12-20T11:58:14.455Z', 'status': ...</msg>
-<status status="PASS" starttime="20221220 12:59:02.760" endtime="20221220 12:59:02.762"/>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${output}</arg>
+<arg>tedge-agent service successfully started and enabled!</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20230104 10:52:46.460" endtime="20230104 10:52:46.461"/>
 </kw>
-<kw name="Get Value From Json" library="JSONLibrary">
-<var>@{pd_name}</var>
-<arg>${json_response}</arg>
-<arg>$..failureReason</arg>
-<doc>Get Value From JSON using JSONPath</doc>
-<msg timestamp="20221220 12:59:02.810" level="INFO">@{pd_name} = [ Timeout due to lack of response from child device: CD125754 for config type: config1 | Timeout due to lack of response from child device: CD125754 for config type: config1 ]</msg>
-<status status="PASS" starttime="20221220 12:59:02.762" endtime="20221220 12:59:02.810"/>
+<kw name="Execute Command" library="SSHLibrary">
+<arg>rm *.deb | rm *.zip | rm *.sh*</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<msg timestamp="20230104 10:52:46.462" level="INFO">Executing command 'rm *.deb | rm *.zip | rm *.sh*'.</msg>
+<msg timestamp="20230104 10:52:47.111" level="INFO">Command exited with return code 0.</msg>
+<status status="PASS" starttime="20230104 10:52:46.461" endtime="20230104 10:52:47.112"/>
 </kw>
-<kw name="Get From List" library="Collections">
-<var>${first}</var>
-<arg>${pd_name}</arg>
-<arg>0</arg>
-<doc>Returns the value specified with an ``index`` from ``list``.</doc>
-<msg timestamp="20221220 12:59:02.811" level="INFO">${first} = Timeout due to lack of response from child device: CD125754 for config type: config1</msg>
-<status status="PASS" starttime="20221220 12:59:02.811" endtime="20221220 12:59:02.811"/>
+<status status="PASS" starttime="20230104 10:52:29.760" endtime="20230104 10:52:47.113"/>
 </kw>
-<kw name="Should Be Equal" library="BuiltIn">
-<arg>${first}</arg>
-<arg>Timeout due to lack of response from child device: ${CHILD} for config type: config1</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" starttime="20221220 12:59:02.811" endtime="20221220 12:59:02.811"/>
-</kw>
-<kw name="Disconnect" library="MQTTLibrary" type="TEARDOWN">
-<doc>Disconnect from MQTT Broker.</doc>
-<status status="PASS" starttime="20221220 12:59:02.811" endtime="20221220 12:59:02.812"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:49.367" endtime="20221220 12:59:02.812"/>
-</kw>
-<status status="PASS" starttime="20221220 12:58:38.801" endtime="20221220 12:59:02.812"/>
+<status status="PASS" starttime="20230104 10:51:29.353" endtime="20230104 10:52:47.114"/>
 </test>
-<status status="FAIL" starttime="20221220 12:57:49.714" endtime="20221220 12:59:02.814"/>
+<kw name="Close All Connections" library="SSHLibrary" type="TEARDOWN">
+<doc>Closes all open connections.</doc>
+<status status="PASS" starttime="20230104 10:52:47.115" endtime="20230104 10:52:47.117"/>
+</kw>
+<status status="PASS" starttime="20230104 10:50:21.711" endtime="20230104 10:52:47.117"/>
 </suite>
 <statistics>
 <total>
-<stat pass="8" fail="1" skip="0">All Tests</stat>
+<stat pass="3" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="8" fail="1" skip="0" id="s1" name="Child Conf Mgmt Plugin">Child Conf Mgmt Plugin</stat>
+<stat pass="3" fail="0" skip="0" id="s1" name="Install Debian Pckg">Install Debian Pckg</stat>
 </suite>
 </statistics>
 <errors>
